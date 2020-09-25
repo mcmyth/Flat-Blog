@@ -21,11 +21,13 @@
         balabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabalabala
       </div>
       <div id="post-comment">
+        <span id="submit-comment-title">有什么想说的吗?</span>
         <textarea name="" id="" cols="30" rows="10"></textarea>
         <button id="submit-comment">发表评论</button>
       </div>
       <div id="post-comment-context">
         <div class="post-comment">
+          <span id="post-comment-title">Comments</span>
           <div class="post-comment-header">
             <span class="avatar"><img src="../assets/logo_512.png" height="512" width="512"/> MC Myth</span>
             <span class="time">2020/09/25</span>
@@ -46,14 +48,21 @@ export default {
 <style scoped lang="sass">
 $foreground-color: #2196f3
 $font-color: #2b2b2b
-$page-weight: 90vw
+$page-width: 80vw
 @import "src/assets/style/public"
 #post-container
   font-size: 15px
   color: $font-color
   #post-body
-    width: $page-weight
+    width: $page-width
     margin: 25px auto
+    background: white
+    padding: 25px
+    border-radius: 10px
+    transition: box-shadow 0.3s ease-in-out
+    box-shadow: rgba(0,0,0,.09) 5px 5px 0px
+    &:hover
+      box-shadow: rgba(0,0,0,.09) 7px 7px 0px
     #post-context
       word-break: break-all
       margin: 15px 0
@@ -61,9 +70,13 @@ $page-weight: 90vw
       border-top: solid #bababa 1px
       padding-top: 15px
       margin-top: 10px
+      #submit-comment-title
+        color: #7e7e7e
+        margin-bottom: 10px
+        display: block
       textarea
-        max-width: $page-weight
-        width: $page-weight !important
+        max-width: $page-width
+        width: $page-width !important
         outline: none
         box-sizing: border-box
         margin: 0 !important
@@ -114,7 +127,7 @@ $page-weight: 90vw
         position: relative
         &::before
           content: ''
-          width: 90vw
+          width: $page-width
           position: absolute
           top: -3px
           border-top: solid #bababa 1px
@@ -165,6 +178,12 @@ $page-weight: 90vw
         opacity: 1 !important
   #post-comment-context
     clear: both
+    position: relative
+    #post-comment-title
+      font-size: 1.5rem
+      position: absolute
+      top: -45px
+      color: $foreground-color
     .post-comment
       .post-comment-header
         display: flex
