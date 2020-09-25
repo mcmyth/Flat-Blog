@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <PageButton :maxpage="10"></PageButton>
+        <PageButton :maxpage="1"></PageButton>
       </div>
     </div>
     <div id="user">
@@ -63,24 +63,7 @@ export default {
 }
 </script>
 <style scoped lang="sass">
-$font-color: #444
-$foreground-color: #2196f3
-$background-color: #414141
-@mixin button
-  background-color: $foreground-color
-  color: #fff
-  outline: none
-  margin: 15px auto
-  padding: 15px 0
-  border: none
-  border-radius: 3px
-  display: block
-  cursor: pointer
-  transition: background-color 0.2s ease-in-out
-  &:active
-    background-color: darken($foreground-color,5%) !important
-  &:hover
-    background-color: lighten($foreground-color,5%)
+@import "/src/assets/style/public"
 #home-container
   display: flex
   width: 75vw
@@ -152,7 +135,11 @@ $background-color: #414141
         height: 100%
         border-radius: 50%
   .post-container
-    overflow: hidden
+    box-shadow: rgba(0,0,0,.06) 5px 5px 0px
+    transition: box-shadow 0.3s ease-in-out
+    border-radius: 5px
+    &:hover
+      box-shadow: rgba(0,0,0,.09) 7px 7px 0px
     .post-image
       height: 150px
       width: 100%
@@ -178,10 +165,6 @@ $background-color: #414141
     border-bottom-right-radius: 5px
     padding: 20px
     margin-bottom: 25px
-    box-shadow: rgba(0,0,0,.06) 5px 5px 0px
-    transition: box-shadow 0.3s ease-in-out
-    &:hover
-      box-shadow: rgba(0,0,0,.09) 7px 7px 0px
     .post-title
       font-size: 1.5rem
       margin-bottom: 10px

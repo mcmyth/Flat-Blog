@@ -67,15 +67,7 @@ export default {
 $main-menubar-bgcolor: #2196f3
 $main-menubar-fgcolor: #fff
 $small-width: 410px
-@mixin input
-  $padding: 12px
-  border: 0
-  outline: none
-  padding: $padding
-  margin: 10px 0 15px 0
-  width: calc(100% - #{$padding * 2})
-  background-color: #e0e0e0
-  border-radius: 3px
+@import "/src/assets/style/public"
 nav#main-menubar
   color: $main-menubar-fgcolor
   background-color: transparentize(darken($main-menubar-bgcolor,3%), .2)

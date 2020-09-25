@@ -1,0 +1,43 @@
+$font-color: #444
+$foreground-color: #2196f3
+@mixin button
+  background-color: $foreground-color
+  color: #fff
+  outline: none
+  margin: 15px auto
+  padding: 15px 0
+  border: none
+  border-radius: 3px
+  display: block
+  cursor: pointer
+  transition: background-color 0.2s ease-in-out
+  &:active
+    background-color: darken($foreground-color,5%) !important
+  &:hover
+    background-color: lighten($foreground-color,5%)
+
+@mixin input
+  $padding: 12px
+  border: 0
+  outline: none
+  padding: $padding
+  margin: 10px 0 15px 0
+  width: calc(100% - #{$padding * 2})
+  background-color: #e0e0e0
+  border-radius: 3px
+
+@mixin btn-post-option
+  margin: 0 5px
+  background-color: rgba(0,0,0,.1)
+  border-radius: 50%
+  width: 30px
+  height: 30px
+  text-align: center
+  line-height: 30px
+  color: rgb(100, 100, 100)
+  font-size: 12px
+  display: inline-block
+  cursor: pointer
+  transition: background-color .2s ease-in-out
+  &:hover
+    background-color: rgba(0,0,0,.2)

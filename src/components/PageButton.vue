@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-$foreground-color: #2196f3
+@import "/src/assets/style/public"
 @mixin page-btn
   display: flex
   align-items: center

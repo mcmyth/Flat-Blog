@@ -87,6 +87,7 @@ export default {
 $font-color: #444
 $foreground-color: #2196f3
 $background-color: #414141
+@import "src/assets/style/public"
 #profile-container
   font-size: 15px
   color: $font-color
@@ -169,7 +170,6 @@ $background-color: #414141
     color: lighten($font-color,15%)
     &::before
       content: '@'
-
 #content
   width: 80vw
   max-width: 1000px
@@ -229,20 +229,7 @@ $background-color: #414141
         right: 15px
         position: absolute
         span
-          margin: 0 5px
-          background-color: rgba(0,0,0,.1)
-          border-radius: 50%
-          width: 30px
-          height: 30px
-          text-align: center
-          line-height: 30px
-          color: rgb(100, 100, 100)
-          font-size: 12px
-          display: inline-block
-          cursor: pointer
-          transition: background-color .2s ease-in-out
-          &:hover
-            background-color: rgba(0,0,0,.2)
+          @include btn-post-option
       .post-title
         font-size: 1.5rem
         margin-bottom: 10px
