@@ -29,7 +29,10 @@
         <div class="post-comment">
           <span id="post-comment-title">Comments</span>
           <div class="post-comment-header">
-            <span class="avatar"><img src="../assets/logo_512.png" height="512" width="512"/> MC Myth</span>
+            <span class="avatar">
+              <img src="../assets/logo_512.png" height="512" width="512"/>
+              <span class="comment-nickname">MC Myth</span>
+            </span>
             <span class="time">2020/09/25</span>
           </div>
           <div class="post-comment-context">Comment</div>
@@ -49,12 +52,16 @@ export default {
 $foreground-color: #2196f3
 $font-color: #2b2b2b
 $page-width: 80vw
+$min-page-width: 70vw
 @import "src/assets/style/public"
 #post-container
   font-size: 15px
   color: $font-color
   #post-body
     width: $page-width
+    @media screen and (max-width: 600px)
+      width: $min-page-width
+      padding: 15px
     margin: 25px auto
     background: white
     padding: 25px
@@ -77,6 +84,9 @@ $page-width: 80vw
       textarea
         max-width: $page-width
         width: $page-width !important
+        @media screen and (max-width: 600px)
+          width: $min-page-width
+          max-width: $min-page-width
         outline: none
         box-sizing: border-box
         margin: 0 !important
@@ -128,6 +138,8 @@ $page-width: 80vw
         &::before
           content: ''
           width: $page-width
+          @media screen and (max-width: 600px)
+            width: $min-page-width
           position: absolute
           top: -3px
           border-top: solid #bababa 1px
@@ -184,6 +196,8 @@ $page-width: 80vw
       position: absolute
       top: -45px
       color: $foreground-color
+      @media screen and (max-width: 400px)
+        font-size: 1.2rem
     .post-comment
       .post-comment-header
         display: flex
@@ -191,6 +205,8 @@ $page-width: 80vw
         border-bottom: solid #b7b7b7 1px
         padding-bottom: 10px
         margin-bottom: 10px
+        .comment-nickname
+          display: inline-block
         .time
           flex: 1
           text-align: right
@@ -206,4 +222,11 @@ $page-width: 80vw
             border-radius: 50%
             vertical-align: middle
             margin-right: 10px
+        @media screen and (max-width: 400px)
+          .avatar img
+            width: 20px
+            height: 20px
+            margin-right: 5px
+          .comment-nickname
+            font-size: .8rem
 </style>
