@@ -44,3 +44,13 @@ $foreground-color: #2196f3
   &:active
     color: white
     background-color: rgba(0,0,0,.3)
+@mixin shadow-ani
+  box-shadow: rgba(0,0,0,.09) 5px 5px 0px
+  &:hover
+    box-shadow: rgba(0,0,0,.09) 7px 7px 0px
+
+@mixin base-container
+  color: #808080
+  background-color: #F9F9F9
+  border-radius: 5px
+  @include shadow-ani

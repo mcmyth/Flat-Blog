@@ -131,7 +131,6 @@ $background-color: #414141
     left: 50%
     width: 180px
     height: 180px
-    border-radius: 50%
     overflow: hidden
     border: solid #fff 5px
     transition: transform 0.3s ease-in-out , border 0.3s ease-in-out
@@ -216,15 +215,10 @@ $background-color: #414141
     margin: 15px 0
     .post
       word-break: break-all
-      color: #808080
-      background-color: #F9F9F9
-      border-radius: 5px
       padding: 20px
       margin: 25px 0
-      box-shadow: rgba(0,0,0,.06) 5px 5px 0px
       transition: box-shadow 0.3s ease-in-out
-      &:hover
-        box-shadow: rgba(0,0,0,.09) 7px 7px 0px
+      @include base-container
       .post-option
         right: 15px
         position: absolute
@@ -243,13 +237,14 @@ $background-color: #414141
           margin: 15px 0
       .post-footer
         margin-top: 15px
+        text-align: right
         a.post-more
-          color: $foreground-color
+          @include button
+          margin: 0 !important
+          padding: 10px 20px
           text-decoration: none
           transition: text-shadow .3s ease-in-out
           display: inline-block
-          &:hover
-            text-shadow: 5px 5px 9px
 @keyframes jump
   0%
     transform: scale(1)

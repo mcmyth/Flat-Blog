@@ -1,8 +1,9 @@
 <template>
   <div id="post-container">
     <div id="post-body">
+      <div id="header-img"><img src="../assets/banner.jpg" height="1080" width="1920"/></div>
       <div id="post-header">
-        <div id="post-title">Title</div>
+        <div id="post-title">Title{{$route.params.id}}</div>
         <div id="post-avatar"><img src="../assets/logo_512.png" height="512" width="512"/></div>
         <div id="nickname">MC Myth</div>
         <div id="post-toolbar">
@@ -58,6 +59,7 @@ $min-page-width: 70vw
   font-size: 15px
   color: $font-color
   #post-body
+    overflow: hidden
     width: $page-width
     @media screen and (max-width: 600px)
       width: $min-page-width
@@ -65,11 +67,18 @@ $min-page-width: 70vw
     margin: 25px auto
     background: white
     padding: 25px
-    border-radius: 10px
+    border-radius: 10px !important
     transition: box-shadow 0.3s ease-in-out
-    box-shadow: rgba(0,0,0,.09) 5px 5px 0px
-    &:hover
-      box-shadow: rgba(0,0,0,.09) 7px 7px 0px
+    @include base-container
+    #header-img
+      height: 180px
+      width: 100%
+      margin-bottom: 20px
+      img
+        height: 100%
+        object-fit: cover
+        width: 100%
+        border-radius: 10px
     #post-context
       word-break: break-all
       margin: 15px 0
@@ -173,17 +182,16 @@ $min-page-width: 70vw
             height: 100%
             border-radius: 50%
     #post-avatar
-      display: inline-block
-      height: 40px
-      width: 40px
+      width: 30px
+      height: 30px
       position: absolute
-      right: 0
-      top: -5px
+      right: 15px
+      top: 1px
+      cursor: pointer
       img
         width: 100%
         height: 100%
         border-radius: 50%
-      cursor: pointer
       &:hover + #nickname
         transform: translateX(-0) !important
         transition: transform .3s ease-in-out , opacity .3s ease-in-out !important

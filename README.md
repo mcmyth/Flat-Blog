@@ -1,4 +1,4 @@
-# blog
+# Flat Blog
 
 ## Project setup
 ```

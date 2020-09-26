@@ -242,6 +242,8 @@ nav#main-menubar
     #name
       margin-left: 10px
       font-size: 1.2rem
+      @media screen and (max-width: 400px)
+        font-size: .9rem
     .logo
       width: 3rem
       height: 3rem
@@ -250,9 +252,9 @@ nav#main-menubar
       margin-left: 1rem
       transition: all 0.3s linear
       animation: logo-rotae 1.5s infinite
-      @media screen and (max-width: $small-width)
-        #main-menubar #menu-header .logo
-          display: none
+      @media screen and (max-width: 400px)
+        width: 2rem
+        height: 2rem
       &:hover
         animation: logo-rotae .2s infinite
         cursor: pointer

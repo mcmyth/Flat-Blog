@@ -135,11 +135,8 @@ export default {
         height: 100%
         border-radius: 50%
   .post-container
-    box-shadow: rgba(0,0,0,.06) 5px 5px 0px
     transition: box-shadow 0.3s ease-in-out
-    border-radius: 5px
-    &:hover
-      box-shadow: rgba(0,0,0,.09) 7px 7px 0px
+    @include base-container
     .post-image
       height: 150px
       width: 100%
