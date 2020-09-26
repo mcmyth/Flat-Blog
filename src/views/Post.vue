@@ -27,8 +27,8 @@
         <button id="submit-comment">发表评论</button>
       </div>
       <div id="post-comment-context">
-        <div class="post-comment">
-          <span id="post-comment-title">Comments</span>
+        <span id="post-comment-title">Comments{{item}}</span>
+        <div v-for="(item, index) of 5" :key="index" class="post-comment">
           <div class="post-comment-header">
             <span class="avatar">
               <img src="../assets/logo_512.png" height="512" width="512"/>
@@ -100,6 +100,7 @@ $min-page-width: 70vw
         box-sizing: border-box
         margin: 0 !important
         height: 120px
+        min-height: 120px
         @include input
       #submit-comment
         float: right
@@ -199,14 +200,21 @@ $min-page-width: 70vw
   #post-comment-context
     clear: both
     position: relative
+    word-break: break-all
     #post-comment-title
       font-size: 1.5rem
       position: absolute
-      top: -45px
+      top: -44px
       color: $foreground-color
       @media screen and (max-width: 400px)
         font-size: 1.2rem
     .post-comment
+      margin-bottom: 25px
+      padding: 15px
+      border-radius: 5px
+      background-color: #ebedf0
+      &:not(:last-child)
+        margin-bottom: 20px
       .post-comment-header
         display: flex
         align-items: center
@@ -230,6 +238,7 @@ $min-page-width: 70vw
             border-radius: 50%
             vertical-align: middle
             margin-right: 10px
+            cursor: pointer
         @media screen and (max-width: 400px)
           .avatar img
             width: 20px
