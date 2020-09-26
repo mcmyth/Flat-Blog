@@ -9,7 +9,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import { get, post } from './netowrk/netowrk'
+import { get, post } from './netowrk/network'
 Vue.prototype.$get = get
 Vue.prototype.$post = post
 Vue.use(ElementUi)
