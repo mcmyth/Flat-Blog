@@ -50,7 +50,7 @@ export default {
     let p = this.$route.query.p
     if (p === undefined) p = 1
     this.current = Number(p)
-    console.log(this.$route.query)
+    // console.log(this.$route.query)
   }
 }
 </script>

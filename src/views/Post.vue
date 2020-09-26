@@ -27,7 +27,7 @@
         <button id="submit-comment">发表评论</button>
       </div>
       <div id="post-comment-context">
-        <span id="post-comment-title">Comments{{item}}</span>
+        <span id="post-comment-title">Comments</span>
         <div v-for="(item, index) of 5" :key="index" class="post-comment">
           <div class="post-comment-header">
             <span class="avatar">

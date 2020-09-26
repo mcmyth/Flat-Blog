@@ -213,7 +213,8 @@ export default {
     order: 2
     width: 90vw !important
     #posts
-      margin: 0
+      margin: 0 auto
+      width: 80vw!important
   #user
     order: 1
     padding-top: 16px
