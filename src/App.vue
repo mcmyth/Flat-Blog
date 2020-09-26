@@ -1,6 +1,7 @@
 <template>
   <div id="app" v-cloak>
     <Navbar v-if="noNavbar.indexOf($route.path) === -1 && invalidRoute === false"></Navbar>
+    <BackToTop></BackToTop>
     <Error404 v-if="invalidRoute"></Error404>
     <router-view v-else/>
   </div>
@@ -8,6 +9,7 @@
 <script>
 import Navbar from '@/components/Navbar'
 import Error404 from '@/components/Error404'
+import BackToTop from '@/components/BackToTop'
 export default {
   name: 'App',
   data() {
@@ -22,7 +24,8 @@ export default {
   },
   components: {
     Navbar,
-    Error404
+    Error404,
+    BackToTop
   },
   created () {
   }
