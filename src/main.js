@@ -16,8 +16,12 @@ Vue.use(ElementUi)
 Vue.config.productionTip = false
 library.add(fas, far, fab)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+if (!!window.ActiveXObject || 'ActiveXObject' in window) {
+  window.location.href = 'notsupport.html'
+} else {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+}
