@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import { get, post } from './netowrk/network'
+import cookie from 'vue-cookie'
+Vue.prototype.$cookie = cookie
 Vue.prototype.$get = get
 Vue.prototype.$post = post
 Vue.use(ElementUi)

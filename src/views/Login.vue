@@ -12,11 +12,11 @@
         <div id="login-form">
           <div id="login-username">
             USERNAME<br/>
-            <input type="text">
+            <input v-model="username" type="text">
           </div>
           <div id="login-password">
             PASSWORD<br/>
-            <input type="text">
+            <input v-model="password"  type="text">
           </div>
           <div id="login-captcha">
             SECURITY CHECK<br/>
@@ -35,22 +35,22 @@
         <div id="register-form">
           <div id="register-username">
             USERNAME<br/>
-            <input type="text">
+            <input v-model="username" type="text">
           </div>
           <div id="register-password">
             PASSWORD<br/>
-            <input type="text">
+            <input v-model="password" type="text">
           </div>
           <div id="register-email">
             EMAIL<br/>
-            <input type="text">
+            <input v-model="email" type="text">
           </div>
           <div id="register-captcha">
             SECURITY CHECK<br/>
-            <input type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
+            <input v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
           </div>
         </div>
-        <button id="register-button">REGISTER</button>
+        <button @click="register" id="register-button">REGISTER</button>
       </div>
       </div>
     </div>
@@ -63,7 +63,10 @@ export default {
     return {
       isRegisterActive: '',
       captchaCodeLink: '',
-      captchaKey: ''
+      captchaKey: '',
+      username: '',
+      password: '',
+      email: ''
     }
   },
   methods: {
@@ -77,7 +80,26 @@ export default {
     login() {
       const captchaKey = this.captchaKey
       this.$post('login', {
+        username: this.username,
+        password: this.password,
         captchaKey
+      }).then(res => {
+        this.refreshCaptchaKey()
+        if (res.status === 'ok') {
+          this.$cookie.set('token', res.token, 1)
+        }
+        alert(res.msg)
+      })
+    },
+    register() {
+      this.$post('register', {
+        username: this.username,
+        password: this.password,
+        email: this.email,
+        captchaKey: this.captchaKey
+      }).then(res => {
+        this.refreshCaptchaKey()
+        alert(res.msg)
       })
     }
   },
