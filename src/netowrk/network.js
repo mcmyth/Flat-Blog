@@ -1,9 +1,10 @@
 import axios from 'axios'
-
+import { BlogConfig } from '@/config/blog.config'
 // 1.Create axios instance
 const instance = axios.create({
-  baseURL: 'http://127.0.0.1/',
-  timeout: 5000
+  baseURL: BlogConfig.apiURL,
+  timeout: 50000,
+  withCredentials: true
 })
 
 // Response interceptors
@@ -18,9 +19,9 @@ instance.interceptors.request.use(res => {
   return res
 })
 
-export function get(options) {
+export function get(url, options) {
   return new Promise((resolve, reject) => {
-    instance.get(options.url, options)
+    instance.get(url, options)
       .then(res => {
         resolve(res)
       }).catch(err => {
@@ -29,9 +30,9 @@ export function get(options) {
   })
 }
 
-export function post(options) {
+export function post(url, options) {
   return new Promise((resolve, reject) => {
-    instance.post(options.url, options)
+    instance.post(url, options)
       .then(res => {
         resolve(res)
       }).catch(err => {

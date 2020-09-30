@@ -3,7 +3,7 @@
     <nav id="main-menubar" class="main-menubar-color">
     <div id="menu-header">
       <img src="@/assets/logo_70.jpg" class="logo" alt="MC Myth">
-      <span id="name">{{ $store.state.blog_name }}</span>
+      <span id="name">{{ $store.state.blogName }}</span>
     </div>
     <div class="menu-btn" v-bind:class="menu_open" @click="isMenuOpen">
       <div class="menu-btn__burger"></div>

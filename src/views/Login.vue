@@ -6,6 +6,7 @@
         <font-awesome-icon v-if="this.isRegisterActive === ''" class="menu-icon login" :icon="['fas', 'user-circle']" />
         <font-awesome-icon v-if="this.isRegisterActive === 'register-active'" class="menu-icon register" :icon="['fas', 'times']" />
       </div>
+      <!--Login UI-->
       <div id="login-box">
         <div id="login-title">ACCOUNT LOGIN</div>
         <div id="login-form">
@@ -17,13 +18,18 @@
             PASSWORD<br/>
             <input type="text">
           </div>
+          <div id="login-captcha">
+            SECURITY CHECK<br/>
+            <input v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
+          </div>
           <div id="pw-group" >
             <span><el-checkbox id="remember">REMEMBER ME</el-checkbox></span>
             <span>FORGOT?</span>
           </div>
-          <button id="login-button">LOGIN</button>
+          <button id="login-button" @click="login">LOGIN</button>
         </div>
       </div>
+      <!--Register UI-->
       <div :class="isRegisterActive" id="register-box">
         <div id="register-title">REGISTER ACCOUNT</div>
         <div id="register-form">
@@ -39,6 +45,10 @@
             EMAIL<br/>
             <input type="text">
           </div>
+          <div id="register-captcha">
+            SECURITY CHECK<br/>
+            <input type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
+          </div>
         </div>
         <button id="register-button">REGISTER</button>
       </div>
@@ -51,13 +61,28 @@ export default {
   name: 'Login',
   data() {
     return {
-      isRegisterActive: ''
+      isRegisterActive: '',
+      captchaCodeLink: '',
+      captchaKey: ''
     }
   },
   methods: {
     changeRegisterActive() {
       this.isRegisterActive = this.isRegisterActive === '' ? 'register-active' : ''
+      this.refreshCaptchaKey()
+    },
+    refreshCaptchaKey () {
+      this.captchaCodeLink = this.$store.state.apiURL + 'captcha?rnd' + Math.random()
+    },
+    login() {
+      const captchaKey = this.captchaKey
+      this.$post('login', {
+        captchaKey
+      })
     }
+  },
+  mounted() {
+    this.refreshCaptchaKey()
   }
 }
 </script>
@@ -111,6 +136,10 @@ $small-width: 410px
   justify-content: center
   align-items: center
   font-family: sans-serif
+  .captcha-img
+    height: 40px
+    width: 120px
+    border-radius: 5px
   //account container
   #account-box
     width: 600px
@@ -118,7 +147,7 @@ $small-width: 410px
     background-color: white
     overflow: hidden
     position: relative
-    height: 420px
+    height: 500px
     max-height: 90vh
     overflow-y: auto
     transition: height .2s ease-in-out
@@ -150,7 +179,7 @@ $small-width: 410px
         position: absolute
         left: $box-width
     &.register-active
-      height: 460px
+      height: 540px
     #show-register-box
       width: 50px
       height: 50px
@@ -189,10 +218,16 @@ $small-width: 410px
     //login form
     #login-form
       margin: 15px 0
-      #login-username, #login-password
+      #login-username, #login-password,#login-captcha
         font-size: 0.8rem
         input
           @include input
+      #login-captcha
+        input
+          width: calc(100% - 160px)
+        img.captcha-img
+          transform: translateY(15px)
+          margin-left: 10px
       #pw-group
         display: flex
         margin-bottom: 35px
@@ -222,10 +257,16 @@ $small-width: 410px
     //register form
     #register-form
       margin: 15px 0
-      #register-username, #register-password,#register-email
+      #register-username, #register-password,#register-email,#register-captcha
         font-size: 0.8rem
         input
           @include input
+      #register-captcha
+        input
+          width: calc(100% - 160px)
+        img.captcha-img
+          transform: translateY(15px)
+          margin-left: 10px
     #register-button
       @include button
 

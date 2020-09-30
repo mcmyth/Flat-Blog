@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { BlogConfig } from '@/config/blog.config'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    blog_name: 'MC Myth Blog'
+    blogName: BlogConfig.blogName,
+    apiURL: BlogConfig.apiURL
   },
   mutations: {
   },
