@@ -79,7 +79,7 @@ export default {
     },
     login() {
       const captchaKey = this.captchaKey
-      this.$post('login', {
+      this.$post('user/login', {
         username: this.username,
         password: this.password,
         captchaKey
@@ -92,7 +92,7 @@ export default {
       })
     },
     register() {
-      this.$post('register', {
+      this.$post('user/register', {
         username: this.username,
         password: this.password,
         email: this.email,
