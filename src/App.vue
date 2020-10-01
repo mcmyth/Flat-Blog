@@ -1,8 +1,8 @@
 <template>
   <div id="app" v-cloak>
-    <Navbar v-if="noNavbar.indexOf($route.path) === -1 && invalidRoute === false"></Navbar>
-    <BackToTop></BackToTop>
-    <Error404 v-if="invalidRoute"></Error404>
+    <navbar v-if="noNavbar.indexOf($route.path) === -1 && invalidRoute === false"></navbar>
+    <back-to-top></back-to-top>
+    <error404 v-if="invalidRoute"></error404>
     <router-view v-else/>
   </div>
 </template>

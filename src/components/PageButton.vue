@@ -56,45 +56,5 @@ export default {
 </script>
 
 <style scoped lang="sass">
-@import "/src/assets/style/public"
-@mixin page-btn
-  display: flex
-  align-items: center
-  font-size: 15px
-  justify-content: center
-  background-color: $foreground-color
-  transition: background-color .3s ease-in-out
-  border-radius: 4px
-  &:hover
-    background-color: lighten($foreground-color,10%)
-  &:active
-    background-color: darken($foreground-color,10%)
-#page-container
-  color: #565656
-  #page-btn
-    display: flex
-    align-items: center
-    justify-content: center
-    .page-number,#page-previous,#page-next
-      a
-        @include page-btn
-        padding: 5px
-        box-sizing: border-box
-        height: 30px
-        margin: 0 5px
-        color: white
-        user-select: none
-        cursor: pointer
-        text-decoration: none
-        min-width: 30px
-    .page-number.middle
-      a
-        background-color: #c0c5cb
-        cursor: default
-    @media screen and (max-width: 480px)
-      .page-number.before,.page-number.after
-        display: none
-  #page-count
-    margin-top: 10px
-    text-align: center
+  @import "src/assets/style/components/PageButton"
 </style>
