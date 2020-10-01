@@ -27,7 +27,8 @@ export default {
     Error404,
     BackToTop
   },
-  created () {
+  mounted () {
+    this.$store.commit('updateLoginState')
   }
 }
 </script>
@@ -39,7 +40,6 @@ body,html{
   margin: 0;
   font-size: 15px;
   color: #535353;
-  font-family: "微软雅黑";
   background-color: #ececec;
 }
 </style>

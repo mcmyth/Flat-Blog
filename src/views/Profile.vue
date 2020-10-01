@@ -9,8 +9,8 @@
       </div>
     </div>
     <div id="user">
-      <div id="nickname">MC Myth</div>
-      <div id="username">mc_myth</div>
+      <div id="nickname">{{ profile.nickname }}</div>
+      <div id="username" v-if="profile.username !== undefined">{{ profile.username }}</div>
     </div>
     <hr>
     <div id="content">
@@ -64,7 +64,8 @@ export default {
   data() {
     return {
       a: '555',
-      post: ['', '', '', '', '', '']
+      post: ['', '', '', '', '', ''],
+      profile: {}
     }
   },
   methods: {
@@ -75,10 +76,26 @@ export default {
     },
     calculateTransform(horizontal, vertical, offset) {
       return `translate(calc(${horizontal * offset / 0.5}px - 50%), calc(${vertical * offset / 0.5}px - 50%))`
+    },
+    setupProfile() {
+      if (this.profile.avatar === '') this.profile.avatar = 'assets/default-avatar.svg'
     }
   },
   components: {
     PageButton
+  },
+  mounted() {
+    const token = this.$cookie.get('token')
+    if (token !== null) {
+      this.profile.username = '登陆中...'
+      this.$get('/user/profile').then(res => {
+        this.profile = res
+        this.setupProfile()
+      })
+    } else {
+      this.profile.nickname = '未登录'
+      this.profile.avatar = 'assets/default-avatar.svg'
+    }
   }
 }
 </script>

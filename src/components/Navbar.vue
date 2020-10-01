@@ -23,7 +23,12 @@
 
       </div>
       <router-link to="/" tag="a"><li><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
-      <router-link to="/login" tag="a"><li><font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />登录</li></router-link>
+      <a href="javascript:void(0)" @click="Login">
+        <li>
+          <font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />
+          {{ $store.state.isLogin ? '登出' : '登录'}}
+       </li>
+      </a>
       <router-link to="" tag="a"><li @click="isSearchOpen()"><font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />搜索</li></router-link>
     </ul>
       <div id="black-bg" :class="menu_open" @click="isMenuOpen"></div>
@@ -58,6 +63,15 @@ export default {
     },
     handleResize (event) {
       this.viewport_width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    },
+    Login() {
+      const token = this.$cookie.get('token')
+      if (token !== null) {
+        this.$cookie.delete('token')
+        location.reload()
+      } else {
+        this.$router.push('/login')
+      }
     }
   }
 }

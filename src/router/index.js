@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,22 +12,22 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/profile/:id',
     name: 'Profile',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
+    component: () => import('../views/Profile.vue')
   },
   {
     path: '/post/:id',
     name: 'Post',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue')
+    component: () => import('../views/Post.vue')
   },
   {
     path: '/postedit/:id',
     name: 'PostEdit',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PostEdit.vue')
+    component: () => import('../views/PostEdit.vue')
   }
 ]
 

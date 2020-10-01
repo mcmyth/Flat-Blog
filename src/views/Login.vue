@@ -23,7 +23,8 @@
             <input v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
           </div>
           <div id="pw-group" >
-            <span><el-checkbox id="remember">REMEMBER ME</el-checkbox></span>
+<!--            <span><el-checkbox id="remember">REMEMBER ME</el-checkbox></span>-->
+            <span><input type="checkbox" id="remember" name="remember"><label for="remember">REMEMBER ME</label></span>
             <span>FORGOT?</span>
           </div>
           <button id="login-button" @click="login">LOGIN</button>
@@ -87,8 +88,10 @@ export default {
         this.refreshCaptchaKey()
         if (res.status === 'ok') {
           this.$cookie.set('token', res.token, 1)
+          this.$store.commit('updateLoginState')
         }
         alert(res.msg)
+        this.$router.back()
       })
     },
     register() {
@@ -100,6 +103,7 @@ export default {
       }).then(res => {
         this.refreshCaptchaKey()
         alert(res.msg)
+        this.$router.push('/')
       })
     }
   },
@@ -268,7 +272,7 @@ $small-width: 410px
     position: absolute
     width: 90vw
     max-width: 600px
-    top: -500px
+    top: -630px
     transition: top .2s ease-in-out
     background-color: white
     z-index: 2

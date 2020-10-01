@@ -6,7 +6,7 @@
           <div class="post-image"><img src="../assets/banner.jpg"/></div>
           <div class="post">
             <div class="post-content">
-              <div class="post-avatar"><img src="../assets/logo_512.png" height="512" width="512"/></div>
+              <div class="post-avatar"><img src="../../public/assets/default-avatar.svg" height="512" width="512"/></div>
               <div class="post-title"><a href="/post/1">Title{{item}}</a></div>
               <hr>
               <div class="post-context">
@@ -15,7 +15,7 @@
               <div class="post-footer">
                 <div class="post-detail">
             <span class="post-time">
-              <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
+              <font-awesome-icon class="menu-icon login"  :icon="['fas', 'clock']" />
               2020/09/24 00:00
             </span>
                   <span class="post-author">
@@ -38,10 +38,10 @@
           <div id="user-image">
             <img id="user-banner" src="../assets/banner.jpg"/>
           </div>
-          <div id="user-avatar"><img src="../assets/logo_512.png"/></div>
-          <div id="user-nickname">MC Myth</div>
-          <div id="user-username">@mcmyth</div>
-          <a href="/profile/mcmyth"><button id="user-profile-btn">个人中心</button></a>
+          <div id="user-avatar"><img :src="profile.avatar"/></div>
+          <div id="user-nickname">{{profile.nickname}}</div>
+          <div id="user-username">{{profile.username}}</div>
+          <a href="/profile/mcmyth"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
 
         </div>
     </div>
@@ -54,11 +54,34 @@ export default {
   name: 'Home',
   data() {
     return {
-      posts: ['', '', '', '', '', '']
+      posts: ['', '', '', '', '', ''],
+      profile: {
+        username: '',
+        nickname: '',
+        avatar: 'assets/default-avatar.svg'
+      }
     }
   },
   components: {
     PageButton
+  },
+  methods: {
+    setupProfile(username, avatar) {
+      this.profile.username = username
+      this.profile.nickname = '@' + username
+      if (avatar !== '') this.profile.avatar = avatar
+    }
+  },
+  mounted() {
+    const token = this.$cookie.get('token')
+    if (token !== null) {
+      this.profile.username = '登陆中...'
+      this.$get('/user/profile').then(res => {
+        this.setupProfile(res.username, res.avatar)
+      })
+    } else {
+      this.profile.username = '未登录'
+    }
   }
 }
 </script>

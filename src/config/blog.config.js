@@ -1,4 +1,4 @@
 export const BlogConfig = {
-  blogName: 'MC Myth Blog/',
+  blogName: 'MC Myth Blog',
   apiURL: 'http://localhost:3003/'
 }
