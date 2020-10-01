@@ -17,7 +17,7 @@ $background-color: #414141
     width: 40px
     height: 40px
     background-color: white
-    z-index: 10
+    z-index: 9
     text-align: center
     line-height: 40px
     border-radius: 8px
@@ -34,24 +34,110 @@ $background-color: #414141
       font-size: 1rem
     #edit-container
       clear: both
+      text-align: left
+      padding: 20px
+      transition: opacity .2s ease-in-out
+      opacity: 0
     #header-edit-btn
       cursor: pointer
       width: 40px
       height: 40px
       float: right
+    #edit-container-title
+      font-size: 2rem
+      margin-bottom: 2rem
+      width: 80vw
+      max-width: 650px
+    .edit-container-item
+      font-size: 1.5rem
+      &:not(:last-child)
+        border-bottom: solid #ccc 1px
+      &.header-banner
+        $bg-color: #bec8d6
+        background-color: rgba($bg-color,50%)
+        height: 150px
+        border-radius: 10px
+        cursor: pointer
+        color: #fff
+        display: flex
+        justify-content: center
+        flex-direction: column
+        align-items: center
+        margin: 20px 20px
+        transition: background-color .3s ease-in-out
+        .icon-upload
+          font-size: 3rem
+        &:hover
+          background-color: lighten($bg-color,3%)
+        & span
+          font-size: 2rem
+      &.header-avatar
+          width: 128px
+          height: 128px
+          overflow: hidden
+          border: none
+          margin: 0 auto
+          $bg-color: #bec8d6
+          background: $bg-color
+          border-radius: 50%
+          text-align: center
+          color: #fff
+          font-size: 3rem
+          cursor: pointer
+          transition: background-color .3s ease-in-out
+          .icon-upload
+            font-size: 2rem
+          &:hover
+            background-color: lighten($bg-color,3%)
+          img
+            border-radius: 50%
+            width: 100%
+            height: 100%
+      &.password
+        padding: 15px 0
+      &.username
+        margin-top: 15px
+        text-align: center
+        input
+          text-align: center
+          width: auto
+      & button
+        @include button
+        margin: 0
+        padding: 10px 20px
+        display: inline-block
+      & input
+        @include input
+        margin: 0
+        display: inline-block
+      & span
+        margin-right: 20px
+        font-size: 1rem
+      & .edit-container-tips
+        font-size: .8rem
+        color: #777
+        display: inline-block
+        line-height: 15px
+    #header-edit-btn .menu-icon.close
+      font-size: 2rem
+      margin-top: 5px
     #header-edit-btn:hover .menu-icon.close
       transition: transform .2s ease-in-out
     #header-edit-btn:hover .menu-icon.close
       transform: scale(1.3) rotate(180deg)
+  #header-edit.active #edit-container
+    opacity: 1
+    transition: opacity .8s ease-in-out
   #header-edit.active
     z-index: 12
-    width: calc(100vw - 60px)
-    max-width: 1200px
+    width: auto
+    max-width: 80%
     height: 80vh
     transform: translateX(50%)
     right: 50%
     position: fixed
     border: none
+    overflow-y: auto
     &:hover
       font-size: 1rem
       animation: none

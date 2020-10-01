@@ -7,8 +7,28 @@
           <font-awesome-icon v-else  class="menu-icon close" :icon="['fas', 'times']" />
         </div>
         <div id="edit-container">
-          <div id="edit-container-title">
-            修改资料
+          <div id="edit-container-title">更改资料</div>
+          <div class="edit-container-item header-banner">
+            <div class="icon-container"><font-awesome-icon class="icon-upload" :icon="['fas', 'arrow-circle-up']" /></div>
+            更改头图
+          </div>
+          <div class="edit-container-item header-avatar">
+            <div>
+              <img/>
+              <div ><font-awesome-icon class="menu-icon icon-upload" :icon="['fas', 'camera']" /></div>
+            </div>
+          </div>
+          <div class="edit-container-item username">
+            <input type="text" value="MC Myth"><br/>
+            <span class="edit-container-tips">*仅支持10位英文/数字/下划线组成的字符</span>
+          </div>
+          <div class="edit-container-item password">
+            <span>修改密码</span>
+            <button>发送验证邮件</button>
+          </div>
+          <div class="edit-container-item password">
+            <span>更改邮箱</span>
+            <button>发送验证邮件</button>
           </div>
         </div>
       </div>
