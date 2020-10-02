@@ -73,7 +73,7 @@ export default {
     }
   },
   mounted() {
-    const token = this.$cookie.get('token')
+    const token = localStorage.getItem('accessToken')
     if (token !== null) {
       this.profile.username = '登陆中...'
       this.$get('/user/profile').then(res => {

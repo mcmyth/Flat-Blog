@@ -8,7 +8,8 @@
         </div>
         <div id="edit-container">
           <div id="edit-container-title">更改资料</div>
-          <div class="edit-container-item header-banner">
+          <div @click="beforeUploadBanner" class="edit-container-item header-banner">
+            <input @change="uploadBanner" v-show="false" ref="bannerIMG" class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg"/>
             <div class="icon-container"><font-awesome-icon class="icon-upload" :icon="['fas', 'arrow-circle-up']" /></div>
             更改头图
           </div>
@@ -20,7 +21,8 @@
           </div>
           <div class="edit-container-item username">
             <input type="text" value="MC Myth"><br/>
-            <span class="edit-container-tips">*仅支持10位英文/数字/下划线组成的字符</span>
+            <span class="edit-container-tips">*仅支持10位英文/数字/下划线组成的字符</span><br/>
+              <button>保存更改</button>
           </div>
           <div class="edit-container-item password">
             <span>修改密码</span>
@@ -51,7 +53,7 @@
             <span class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
-          <div class="post-title"><a href="/post">文章标题{{item}}</a></div>
+          <div class="post-title"><a href="/post">文章标题</a></div>
           <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
@@ -114,6 +116,21 @@ export default {
     },
     openProfileEditor() {
       this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
+    },
+    beforeUploadBanner() {
+      this.$refs.bannerIMG.click()
+    },
+    uploadBanner(event) {
+      console.log(event)
+      const file = event.target.files[0]
+      const formData = new FormData()
+      formData.append('111', '222')
+      formData.append('banner_img', file)
+      if (formData.get('banner_img') !== undefined && file !== undefined) {
+        this.$post('cos/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+      }
     }
   },
   components: {
@@ -121,7 +138,7 @@ export default {
     BlackMask
   },
   mounted() {
-    const token = this.$cookie.get('token')
+    const token = localStorage.getItem('accessToken')
     if (token !== null) {
       this.profile.username = '登陆中...'
       this.$get('/user/profile').then(res => {

@@ -87,7 +87,7 @@ export default {
       }).then(res => {
         this.refreshCaptchaKey()
         if (res.status === 'ok') {
-          this.$cookie.set('token', res.token, 1)
+          localStorage.setItem('accessToken', res.token)
           this.$store.commit('updateLoginState')
         }
         alert(res.msg)

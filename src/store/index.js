@@ -7,12 +7,16 @@ export default new Vuex.Store({
   state: {
     blogName: BlogConfig.blogName,
     apiURL: BlogConfig.apiURL,
-    isLogin: false
+    isLogin: false,
+    token: ''
   },
   mutations: {
     updateLoginState(state) {
-      const token = Vue.prototype.$cookie.get('token')
+      const token = localStorage.getItem('accessToken')
       state.isLogin = (token !== null)
+    },
+    set_token(state, token) {
+      state.token = token
     }
   },
   getters: {

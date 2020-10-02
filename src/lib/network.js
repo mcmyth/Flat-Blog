@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 import { BlogConfig } from '@/config/blog.config'
 // 1.Create axios instance
 const instance = axios.create({
@@ -8,15 +9,19 @@ const instance = axios.create({
 })
 
 // Response interceptors
-instance.interceptors.response.use(res => {
+instance.interceptors.response.use(config => {
   console.log('Response拦截器')
-  return res.data
+  return config.data
 })
 
 // Request interceptors
-instance.interceptors.request.use(res => {
+instance.interceptors.request.use(config => {
   console.log('Request拦截器')
-  return res
+  if (localStorage.getItem('accessToken')) {
+    store.commit('set_token', localStorage.getItem('accessToken'))
+    config.headers.common.Authorization = store.state.token
+  }
+  return config
 })
 
 export function get(url, options) {
@@ -29,10 +34,19 @@ export function get(url, options) {
       })
   })
 }
-
-export function post(url, options) {
+export function _get(url, options, callback) {
   return new Promise((resolve, reject) => {
-    instance.post(url, options)
+    instance.get(url, options)
+      .then(res => {
+        callback(res)
+      }).catch(err => {
+        callback(err)
+      })
+  })
+}
+export function post(url, data, options) {
+  return new Promise((resolve, reject) => {
+    instance.post(url, data, options)
       .then(res => {
         resolve(res)
       }).catch(err => {

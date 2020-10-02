@@ -66,9 +66,9 @@ export default {
       this.viewport_width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     },
     Login() {
-      const token = this.$cookie.get('token')
+      const token = localStorage.getItem('accessToken')
       if (token !== null) {
-        this.$cookie.delete('token')
+        localStorage.removeItem('accessToken')
         location.reload()
       } else {
         this.$router.push('/login')
