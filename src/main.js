@@ -8,7 +8,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 // import { far } from '@fortawesome/free-regular-svg-icons'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 // import ElementUi from 'element-ui'
-import { get, post } from './lib/network'
+import { get, post } from './network/network'
 import cookie from 'vue-cookie'
 Vue.prototype.$cookie = cookie
 Vue.prototype.$get = get

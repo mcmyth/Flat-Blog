@@ -52,23 +52,32 @@ $background-color: #414141
       font-size: 1.5rem
       &:not(:last-child)
         border-bottom: solid #ccc 1px
-      &.header-banner
-        $bg-color: #bec8d6
-        background-color: rgba($bg-color,50%)
-        height: 150px
+      .black-mask
+        background-color: rgba(0,0,0,.2)
         border-radius: 10px
-        cursor: pointer
-        color: #fff
+        width: 100%
+        height: 100%
+        position: absolute
         display: flex
         justify-content: center
         flex-direction: column
         align-items: center
-        margin: 20px 20px
         transition: background-color .3s ease-in-out
+        &:hover
+          background-color: rgba(0,0,0,.3)
+      &.header-banner
+        $bg-color: #d7dee9
+        background-color: rgba($bg-color,50%)
+        background-position: center
+        background-size: cover
+        height: 150px
+        border-radius: 10px
+        cursor: pointer
+        color: #fff
+        margin: 20px 20px
+        position: relative
         .icon-upload
           font-size: 3rem
-        &:hover
-          background-color: lighten($bg-color,3%)
         & span
           font-size: 2rem
       &.header-avatar
@@ -78,13 +87,16 @@ $background-color: #414141
           border: none
           margin: 0 auto
           $bg-color: #bec8d6
-          background: $bg-color
+          background-color: $bg-color
           border-radius: 50%
           text-align: center
           color: #fff
           font-size: 3rem
           cursor: pointer
           transition: background-color .3s ease-in-out
+          position: relative
+          background-position: center
+          background-size: cover
           .icon-upload
             font-size: 2rem
           &:hover
