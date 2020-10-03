@@ -38,11 +38,10 @@
           <div id="user-image">
             <img id="user-banner" src="../assets/banner.jpg"/>
           </div>
-          <div id="user-avatar"><img :src="profile.avatar"/></div>
+          <div id="user-avatar"><img :src="profile.avatar_img"/></div>
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{profile.username}}</div>
-          <a href="/profile/mcmyth"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
-
+          <a :href="'/profile/' + profile.username"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
         </div>
     </div>
   </div>
@@ -56,9 +55,6 @@ export default {
     return {
       posts: ['', '', '', '', '', ''],
       profile: {
-        username: '',
-        nickname: '',
-        avatar: 'assets/default-avatar.svg'
       }
     }
   },
@@ -66,21 +62,17 @@ export default {
     PageButton
   },
   methods: {
-    setupProfile(username, avatar) {
-      this.profile.username = username
-      this.profile.nickname = '@' + username
-      if (avatar !== '') this.profile.avatar = avatar
-    }
   },
   mounted() {
-    const token = localStorage.getItem('accessToken')
-    if (token !== null) {
-      this.profile.username = '登陆中...'
-      this.$get('/user/profile').then(res => {
-        this.setupProfile(res.username, res.avatar)
-      })
-    } else {
-      this.profile.username = '未登录'
+  },
+  watch: {
+    '$store.state.profile': {
+      deep: true,
+      handler: function (newValue, oldValue) {
+        if (newValue !== null) {
+          this.profile = newValue
+        }
+      }
     }
   }
 }

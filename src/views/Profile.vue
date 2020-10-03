@@ -1,7 +1,7 @@
 <template>
   <div @mousemove="move($event)" id="profile-container">
     <div id="header">
-      <div id="header-edit" :class="isProfileEditorActive">
+      <div id="header-edit" :class="isProfileEditorActive" v-if="isMe">
         <div id="header-edit-btn" @click="openProfileEditor">
           <font-awesome-icon v-if="isProfileEditorActive === 'disable'"  class="menu-icon login" :icon="['fas', 'pen']" />
           <font-awesome-icon v-else  class="menu-icon close" :icon="['fas', 'times']" />
@@ -36,9 +36,9 @@
           </div>
         </div>
       </div>
-      <img id="banner" :style="'transform:' + imgTransform" src="../assets/banner.jpg" height="1080" width="1920" alt="header"/>
+      <img id="banner" :style="'transform:' + imgTransform" :src="bannerImg === null ? $store.state.profile.banner_img : bannerImg" height="1080" width="1920" alt="header"/>
       <div id="avatar">
-        <img src="../assets/logo_512.png" height="512" width="512"/>
+        <img :src="avatarImg === null ? $store.state.profile.avatar_img : avatarImg" height="512" width="512"/>
         <div id="avatar-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></div>
       </div>
     </div>
@@ -102,8 +102,9 @@ export default {
       imgTransform: '555',
       profile: {},
       isProfileEditorActive: 'disable',
-      bannerImg: '',
-      avatarImg: ''
+      bannerImg: null,
+      avatarImg: null,
+      isMe: false
     }
   },
   methods: {
@@ -121,6 +122,7 @@ export default {
     },
     openProfileEditor() {
       this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
+      profileUpload.load(this)
     },
     beforeUpload(type) {
       if (type === 'banner_img') {
@@ -142,7 +144,14 @@ export default {
       this.profile.username = '登陆中...'
       this.$get('/user/profile').then(res => {
         this.profile = res
-        this.setupProfile()
+        if (this.$route.params.id === this.$store.state.profile.username) {
+          // is Me
+          this.isMe = true
+          this.setupProfile()
+        } else {
+          // is Not Me
+          this.isMe = false
+        }
       })
     } else {
       this.profile.nickname = '未登录'

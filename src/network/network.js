@@ -18,7 +18,7 @@ instance.interceptors.response.use(config => {
 instance.interceptors.request.use(config => {
   console.log('Request拦截器')
   if (localStorage.getItem('accessToken')) {
-    store.commit('set_token', localStorage.getItem('accessToken'))
+    store.commit('setToken', localStorage.getItem('accessToken'))
     config.headers.common.Authorization = store.state.token
   }
   return config
@@ -34,16 +34,7 @@ export function get(url, options) {
       })
   })
 }
-export function _get(url, options, callback) {
-  return new Promise((resolve, reject) => {
-    instance.get(url, options)
-      .then(res => {
-        callback(res)
-      }).catch(err => {
-        callback(err)
-      })
-  })
-}
+
 export function post(url, data, options) {
   return new Promise((resolve, reject) => {
     instance.post(url, data, options)
