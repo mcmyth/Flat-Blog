@@ -9,7 +9,9 @@ export default new Vuex.Store({
     apiURL: BlogConfig.apiURL,
     isLogin: false,
     token: '',
-    profile: null
+    profile: {
+      s: null
+    }
   },
   mutations: {
     updateLoginState(state) {
@@ -20,13 +22,18 @@ export default new Vuex.Store({
       state.token = token
     },
     getProfile(state) {
-      if (state.token !== '' && state.profile == null) {
+      if (state.token !== '' && state.profile.s === null) {
+        state.profile.s = 'ok'
         Vue.prototype.$get(state.apiURL + 'user/profile', {
           headers: { Authorization: state.token }
         }).then(res => {
           state.profile = res
         })
       }
+    },
+    defaultProfile (state) {
+      state.profile.username = '未登录'
+      state.profile.avatar_img = 'assets/default-avatar.svg'
     }
   },
   getters: {

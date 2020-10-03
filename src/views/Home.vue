@@ -64,6 +64,10 @@ export default {
   methods: {
   },
   mounted() {
+    const token = localStorage.getItem('accessToken')
+    if (token === null) {
+      this.profile = this.$store.state.profile
+    }
   },
   watch: {
     '$store.state.profile': {

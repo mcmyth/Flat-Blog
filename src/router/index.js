@@ -39,8 +39,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  store.commit('setToken', localStorage.getItem('accessToken'))
-  store.commit('getProfile')
+  const token = localStorage.getItem('accessToken')
+  if (token !== null) {
+    store.commit('setToken', token)
+    store.commit('getProfile')
+  } else {
+    store.commit('defaultProfile', token)
+  }
   next()
 })
 
