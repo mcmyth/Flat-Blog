@@ -122,7 +122,6 @@ export default {
     },
     openProfileEditor() {
       this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
-      profileUpload.load(this)
     },
     beforeUpload(type) {
       if (type === 'banner_img') {
@@ -141,21 +140,28 @@ export default {
   mounted() {
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
-      this.profile.username = '登陆中...'
-      this.$get('/user/profile').then(res => {
-        this.profile = res
-        if (this.$route.params.id === this.$store.state.profile.username) {
-          // is Me
-          this.isMe = true
-          this.setupProfile()
-        } else {
-          // is Not Me
-          this.isMe = false
-        }
-      })
+      this.profile = this.$store.state.profile
+      if (this.$route.params.id === this.profile.username) {
+        // is Me
+        this.isMe = true
+        this.setupProfile()
+      } else {
+        // is Not Me
+        this.isMe = false
+      }
     } else {
       this.profile.nickname = '未登录'
       this.profile.avatar = 'assets/default-avatar.svg'
+    }
+  },
+  watch: {
+    '$store.state.profile': {
+      deep: true,
+      handler: function (newValue, oldValue) {
+        if (newValue !== null) {
+          this.profile = newValue
+        }
+      }
     }
   }
 }
