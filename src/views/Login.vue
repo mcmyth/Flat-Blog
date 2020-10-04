@@ -91,7 +91,7 @@ export default {
           this.$store.commit('updateLoginState')
         }
         alert(res.msg)
-        this.$router.back()
+        this.$router.push('/')
       })
     },
     register() {
@@ -103,7 +103,7 @@ export default {
       }).then(res => {
         this.refreshCaptchaKey()
         alert(res.msg)
-        this.$router.push('/')
+        if (res.status === 'ok') this.$router.push('/')
       })
     }
   },

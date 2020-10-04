@@ -1,7 +1,7 @@
 <template>
   <div id="post-container">
     <div id="post-body">
-      <div id="header-img"><img src="../assets/banner.jpg" height="1080" width="1920"/></div>
+      <div id="header-img"><img src="/assets/default-banner.jpg" height="1080" width="1920"/></div>
       <div id="post-header">
         <div id="post-title">Title{{$route.params.id}}</div>
         <div id="post-avatar"><img src="../assets/logo_512.png" height="512" width="512"/></div>

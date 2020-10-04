@@ -6,7 +6,7 @@
           <font-awesome-icon :icon="['fas', 'arrow-circle-up']" />
           <span>选择图片进行上传...<br/>(不上传以用户主页头图作为封面)</span>
         </div>
-        <img src="../assets/banner.jpg" height="1080" width="1920"/>
+        <img src="/assets/default-banner.jpg" height="1080" width="1920"/>
       </div>
       <div id="postedit-header">
         <span id="hashtag">#</span>

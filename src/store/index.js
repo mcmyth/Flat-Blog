@@ -33,7 +33,8 @@ export default new Vuex.Store({
     },
     defaultProfile (state) {
       state.profile.username = '未登录'
-      state.profile.avatar_img = 'assets/default-avatar.svg'
+      state.profile.avatar_img = '/assets/default-avatar.svg'
+      state.profile.banner_img = '/assets/default-banner.jpg'
     }
   },
   getters: {

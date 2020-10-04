@@ -36,10 +36,10 @@
           </div>
         </div>
       </div>
-      <img id="banner" :style="'transform:' + imgTransform" :src="bannerImg === null ? $store.state.profile.banner_img : bannerImg" height="1080" width="1920" alt="header"/>
+      <img @error="imgError('banner')" id="banner" :style="'transform:' + imgTransform" :src="bannerImg === null ? $store.state.profile.banner_img : bannerImg" height="1080" width="1920" alt="header"/>
       <div id="avatar">
-        <img :src="avatarImg === null ? $store.state.profile.avatar_img : avatarImg" height="512" width="512"/>
-        <div id="avatar-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></div>
+        <img @error="imgError('avatar')" :src="avatarImg === null ? $store.state.profile.avatar_img : avatarImg" height="512" width="512"/>
+        <div v-if="isMe" id="avatar-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></div>
       </div>
     </div>
     <div id="user">
@@ -120,6 +120,10 @@ export default {
     setupProfile() {
       if (this.profile.avatar === '') this.profile.avatar = 'assets/default-avatar.svg'
     },
+    imgError(type) {
+      if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
+      if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
+    },
     openProfileEditor() {
       this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
     },
@@ -137,7 +141,7 @@ export default {
     PageButton,
     BlackMask
   },
-  mounted() {
+  created() {
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
       this.profile = this.$store.state.profile

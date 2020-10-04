@@ -3,10 +3,10 @@
     <div id="content">
       <div id="posts">
         <div v-for="(item, index) in posts" :key="index" class="post-container">
-          <div class="post-image"><img src="../assets/banner.jpg"/></div>
+          <div class="post-image"><img alt="banner" src="../../public/assets/default-banner.jpg"/></div>
           <div class="post">
             <div class="post-content">
-              <div class="post-avatar"><img src="../../public/assets/default-avatar.svg" height="512" width="512"/></div>
+              <div class="post-avatar"><img alt="avatar" src="../../public/assets/default-avatar.svg" height="512" width="512"/></div>
               <div class="post-title"><a href="/post/1">Title{{item}}</a></div>
               <hr>
               <div class="post-context">
@@ -36,9 +36,9 @@
     <div id="user">
         <div class="user-panel" id="user-main">
           <div id="user-image">
-            <img id="user-banner" src="../assets/banner.jpg"/>
+            <img id="user-banner" @error="imgError('banner')"  :src="profile.banner_img"/>
           </div>
-          <div id="user-avatar"><img :src="profile.avatar_img"/></div>
+          <div id="user-avatar"><img @error="imgError('avatar')" :src="profile.avatar_img"/></div>
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{profile.username}}</div>
           <a :href="'/profile/' + profile.username"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
@@ -62,12 +62,13 @@ export default {
     PageButton
   },
   methods: {
+    imgError(type) {
+      if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
+      if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
+    }
   },
   mounted() {
-    const token = localStorage.getItem('accessToken')
-    if (token === null) {
-      this.profile = this.$store.state.profile
-    }
+    this.profile = this.$store.state.profile
   },
   watch: {
     '$store.state.profile': {
