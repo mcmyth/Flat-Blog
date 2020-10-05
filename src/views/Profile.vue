@@ -37,7 +37,7 @@
         </div>
       </div>
       <img @error="imgError('banner')" id="banner" :style="'transform:' + imgTransform" :src="bannerImg === null ? $store.state.profile.banner_img : bannerImg" height="1080" width="1920" alt="header"/>
-      <div id="avatar">
+      <div @click="openProfileEditor" id="avatar">
         <img @error="imgError('avatar')" :src="avatarImg === null ? $store.state.profile.avatar_img : avatarImg" height="512" width="512"/>
         <div v-if="isMe" id="avatar-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></div>
       </div>
@@ -125,7 +125,7 @@ export default {
       if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
     },
     openProfileEditor() {
-      this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
+      if (this.isMe) this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
     },
     beforeUpload(type) {
       if (type === 'banner_img') {
@@ -164,6 +164,13 @@ export default {
       handler: function (newValue, oldValue) {
         if (newValue !== null) {
           this.profile = newValue
+          if (this.$route.params.id === this.profile.username) {
+            // is Me
+            this.isMe = true
+          } else {
+            // is Not Me
+            this.isMe = false
+          }
         }
       }
     }

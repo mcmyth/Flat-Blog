@@ -34,6 +34,8 @@
           transform: translate(-50%, -50%)
           left: 50%
           top: 50%
+          min-width: 120%
+          height: 120%
       #user-avatar
         $avatar-size: 70px
         border-radius: 50%
@@ -132,6 +134,7 @@
 
 #user-main
   overflow: hidden
+  width: 320px
   #user-image
     margin-bottom: 45px
   #user-profile-btn
@@ -155,6 +158,8 @@
     padding-top: 16px
     margin: 0 auto 15px auto
     width: 65vw !important
+#user-main
+  width: unset
 @media screen and (max-width: 480px)
   #user
     width: 80vw !important
