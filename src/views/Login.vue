@@ -36,15 +36,17 @@
         <div id="register-form">
           <div id="register-username">
             USERNAME<br/>
-            <input v-model="username" type="text">
+            <input  v-model="username" id="reg-name" type="text">
+            <label for="reg-name"><span>长度3-8且必须包含大写或小写字母,可包含数字或下划线</span></label>
           </div>
           <div id="register-password">
             PASSWORD<br/>
-            <input v-model="password" type="text">
+            <input v-model="password" id="reg-password" type="text">
+            <label for="reg-password"><span>长度6-16且必须包含以下2种组合(0-9,A-Z,a-z,@#$%^&*?+_)</span></label>
           </div>
           <div id="register-email">
             EMAIL<br/>
-            <input v-model="email" type="text">
+            <input v-model="email" id="reg-email" type="text">
           </div>
           <div id="register-captcha">
             SECURITY CHECK<br/>
@@ -89,9 +91,15 @@ export default {
         if (res.status === 'ok') {
           localStorage.setItem('accessToken', res.token)
           this.$store.commit('updateLoginState')
+          this.$noty.success(res.msg, {
+            killer: true
+          })
+          this.$router.push('/')
+        } else {
+          this.$noty.error(res.msg, {
+            killer: true
+          })
         }
-        alert(res.msg)
-        this.$router.push('/')
       })
     },
     register() {
@@ -102,8 +110,16 @@ export default {
         captchaKey: this.captchaKey
       }).then(res => {
         this.refreshCaptchaKey()
-        alert(res.msg)
-        if (res.status === 'ok') this.$router.push('/')
+        if (res.status === 'ok') {
+          this.$noty.success(res.msg, {
+            killer: true
+          })
+          this.$router.push('/')
+        } else {
+          this.$noty.error(res.msg, {
+            killer: true
+          })
+        }
       })
     }
   },

@@ -41,7 +41,7 @@
           <div id="user-avatar"><img @error="imgError('avatar')" :src="profile.avatar_img"/></div>
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{profile.username}}</div>
-          <a :href="'/profile/' + profile.username"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
+          <a :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
         </div>
     </div>
   </div>

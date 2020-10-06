@@ -5,6 +5,8 @@ import store from './store'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import VueNoty from 'vuejs-noty'
+import 'vuejs-noty/dist/vuejs-noty.css'
 // import { far } from '@fortawesome/free-regular-svg-icons'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 // import ElementUi from 'element-ui'
@@ -17,6 +19,11 @@ Vue.prototype.$post = post
 Vue.config.productionTip = false
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(VueNoty, {
+  timeout: 3000,
+  progressBar: true,
+  layout: 'topRight'
+})
 if (!!window.ActiveXObject || 'ActiveXObject' in window) {
   window.location.href = 'notsupport.html'
 } else {

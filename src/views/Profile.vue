@@ -1,8 +1,8 @@
 <template>
   <div @mousemove="move($event)" id="profile-container">
     <div id="header">
-      <div id="header-edit" :class="isProfileEditorActive" v-if="isMe">
-        <div id="header-edit-btn" @click="openProfileEditor">
+      <div id="header-edit" ref="headerEditor" :class="isProfileEditorActive" v-if="isMe">
+        <div id="header-edit-btn" @click="openProfileEditor" >
           <font-awesome-icon v-if="isProfileEditorActive === 'disable'"  class="menu-icon login" :icon="['fas', 'pen']" />
           <font-awesome-icon v-else  class="menu-icon close" :icon="['fas', 'times']" />
         </div>
@@ -125,6 +125,8 @@ export default {
       if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
     },
     openProfileEditor() {
+      this.$refs.headerEditor.scrollTop = 0
+      console.log(this.$refs.headerEditor)
       if (this.isMe) this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
     },
     beforeUpload(type) {

@@ -57,7 +57,7 @@ $small-width: 410px
     background-color: white
     overflow: hidden
     position: relative
-    height: 500px
+    height: 520px
     max-height: 90vh
     overflow-y: auto
     transition: height .2s ease-in-out
@@ -89,7 +89,7 @@ $small-width: 410px
         position: absolute
         left: $box-width
     &.register-active
-      height: 540px
+      height: 550px
     #show-register-box
       width: 50px
       height: 50px
@@ -167,6 +167,36 @@ $small-width: 410px
     //register form
     #register-form
       margin: 15px 0
+      position: relative
+      input + label
+        position: absolute
+        opacity: 0
+        width: 80%
+        left: 50%
+        transform: translate(-50%,-120px)
+        text-align: center
+        background-color:  $foreground-color
+        color: #fff
+        padding: 10px 10px
+        border-radius: 7px
+        transition: opacity .3s ease-in-out
+        pointer-events: none
+        height: 30px
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: .8rem
+        & span
+        &::before
+          position: absolute
+          content: ''
+          border: 10px solid
+          border-color: $foreground-color transparent transparent transparent
+          top: 50px
+          left: 50%
+          transform: translateX(-50%)
+      input:focus + label
+        opacity: 1
       #register-username, #register-password,#register-email,#register-captcha
         font-size: 0.8rem
         input
