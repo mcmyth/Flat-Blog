@@ -48,10 +48,13 @@
     </div>
     <hr>
     <div id="content">
-      <div id="title">Posts</div>
+      <div id="post-title">
+        <span>Posts</span>
+        <router-link v-if="isMe" tag="span" to="/postedit/new" id="post-add"><font-awesome-icon class="menu-icon login" :icon="['fas', 'plus']" /></router-link>
+      </div>
       <div id="posts">
         <div v-for="index of 5" :key="index" class="post">
-          <div class="post-option">
+          <div v-if="isMe" class="post-option">
             <span class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>

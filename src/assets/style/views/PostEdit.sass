@@ -108,13 +108,4 @@ $min-page-width: 70vw
         pointer-events: none
         opacity: 0
         &::before
-          content: ''
-          width: 0
-          height: 0
-          border-top: 5px solid transparent
-          border-bottom: 5px solid transparent
-          border-left: 5px solid #2196f3
-          position: absolute
-          right: -5px
-          top: 50%
-          transform: translateY(-50%)
+          @include post-username

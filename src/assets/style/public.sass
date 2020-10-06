@@ -54,3 +54,15 @@ $foreground-color: #2196f3
   background-color: #F9F9F9
   border-radius: 5px
   @include shadow-ani
+
+@mixin post-username
+  content: ''
+  width: 0
+  height: 0
+  border-top: 5px solid transparent
+  border-bottom: 5px solid transparent
+  border-left: 5px solid #2196f3
+  position: absolute
+  right: -5px
+  top: 50%
+  transform: translateY(-50%)

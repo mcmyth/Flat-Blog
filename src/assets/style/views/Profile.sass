@@ -245,9 +245,25 @@ $background-color: #414141
     #page-count
       margin: 10px 0
       text-align: center
-  #title
+  #post-title
     font-size: 2rem
     color: $foreground-color
+    #post-add
+      float: right
+      background-color: $foreground-color
+      color: #fff
+      width: 40px
+      height: 40px
+      text-align: center
+      border-radius: 50%
+      font-size: 20px
+      display: flex
+      justify-content: center
+      align-items: center
+      cursor: pointer
+      &:hover
+        transition: transform .5s ease-in-out
+        transform: rotate(180deg)
   #posts
     position: relative
     margin: 15px 0
@@ -283,6 +299,13 @@ $background-color: #414141
           text-decoration: none
           transition: text-shadow .3s ease-in-out
           display: inline-block
+@media screen and (max-width: 480px)
+  #header
+    height: 150px
+    #avatar
+      width: 150px !important
+      height: 150px !important
+      top: 150px
 @keyframes jump
   0%
     transform: scale(1)
