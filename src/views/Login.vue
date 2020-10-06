@@ -16,15 +16,15 @@
           </div>
           <div id="login-password">
             PASSWORD<br/>
-            <input v-model="password"  type="text">
+            <input v-model="password"  type="password">
           </div>
           <div id="login-captcha">
             SECURITY CHECK<br/>
-            <input v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
+            <input @keypress.enter="login" v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
           </div>
           <div id="pw-group" >
 <!--            <span><el-checkbox id="remember">REMEMBER ME</el-checkbox></span>-->
-            <span><input type="checkbox" id="remember" name="remember"><label for="remember">REMEMBER ME</label></span>
+            <span><input type="checkbox" id="remember" ref="remember" name="remember"><label for="remember">REMEMBER ME</label></span>
             <span>FORGOT?</span>
           </div>
           <button id="login-button" @click="login">LOGIN</button>
@@ -41,7 +41,7 @@
           </div>
           <div id="register-password">
             PASSWORD<br/>
-            <input v-model="password" id="reg-password" type="text">
+            <input v-model="password" id="reg-password" type="password">
             <label for="reg-password"><span>长度6-16且必须包含以下2种组合(0-9,A-Z,a-z,@#$%^&*?+_)</span></label>
           </div>
           <div id="register-email">
@@ -50,7 +50,7 @@
           </div>
           <div id="register-captcha">
             SECURITY CHECK<br/>
-            <input v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
+            <input @keypress.enter="register" v-model="captchaKey" type="text"> <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">
           </div>
         </div>
         <button @click="register" id="register-button">REGISTER</button>
@@ -76,55 +76,72 @@ export default {
     changeRegisterActive() {
       this.isRegisterActive = this.isRegisterActive === '' ? 'register-active' : ''
       this.refreshCaptchaKey()
+      this.captchaKey = ''
+      this.username = ''
+      this.password = ''
     },
     refreshCaptchaKey () {
       this.captchaCodeLink = this.$store.state.apiURL + 'captcha?rnd' + Math.random()
     },
-    login() {
+    async login() {
       const captchaKey = this.captchaKey
-      this.$post('user/login', {
+      const res = await this.$post('user/login', {
         username: this.username,
         password: this.password,
         captchaKey
-      }).then(res => {
-        this.refreshCaptchaKey()
-        if (res.status === 'ok') {
-          localStorage.setItem('accessToken', res.token)
-          this.$store.commit('updateLoginState')
-          this.$noty.success(res.msg, {
-            killer: true
-          })
-          this.$router.push('/')
-        } else {
-          this.$noty.error(res.msg, {
-            killer: true
-          })
-        }
       })
+      this.refreshCaptchaKey()
+      if (res.status === 'ok') {
+        localStorage.setItem('accessToken', res.token)
+        this.$store.commit('updateLoginState')
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+        if (this.$refs.remember.checked) {
+          localStorage.setItem('account', JSON.stringify({
+            username: this.username,
+            password: this.password
+          }))
+        } else {
+          localStorage.removeItem('account')
+        }
+        this.$router.push('/')
+      } else {
+        this.$noty.error(res.msg, {
+          killer: true
+        })
+      }
     },
-    register() {
-      this.$post('user/register', {
+    async register() {
+      const res = await this.$post('user/register', {
         username: this.username,
         password: this.password,
         email: this.email,
         captchaKey: this.captchaKey
-      }).then(res => {
-        this.refreshCaptchaKey()
-        if (res.status === 'ok') {
-          this.$noty.success(res.msg, {
-            killer: true
-          })
-          this.$router.push('/')
-        } else {
-          this.$noty.error(res.msg, {
-            killer: true
-          })
-        }
       })
+      this.refreshCaptchaKey()
+      if (res.status === 'ok') {
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+        localStorage.setItem('accessToken', res.token)
+        this.$store.commit('updateLoginState')
+        this.$router.push('/')
+      } else {
+        this.$noty.error(res.msg, {
+          killer: true
+        })
+      }
     }
   },
   mounted() {
     this.refreshCaptchaKey()
+    const rememberUser = JSON.parse(window.localStorage.getItem('account'))
+    if (rememberUser !== null) {
+      this.$refs.remember.checked = true
+      this.username = rememberUser.username
+      this.password = rememberUser.password
+    }
   }
 }
 </script>
