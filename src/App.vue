@@ -1,5 +1,6 @@
 <template>
   <div id="app" v-cloak>
+    <loading :style="isLoading === true ? 'opacity: 1' : 'opacity: 0;pointer-events:none;'"></loading>
     <navbar v-if="noNavbar.indexOf($route.path) === -1 && invalidRoute === false"></navbar>
     <back-to-top></back-to-top>
     <error404 v-if="invalidRoute"></error404>
@@ -10,11 +11,13 @@
 import Navbar from '@/components/Navbar'
 import Error404 from '@/components/Error404'
 import BackToTop from '@/components/BackToTop'
+import Loading from '@/components/Loading'
 export default {
   name: 'App',
   data() {
     return {
-      noNavbar: ['/login']
+      noNavbar: ['/login'],
+      isLoading: false
     }
   },
   computed: {
@@ -25,10 +28,20 @@ export default {
   components: {
     Navbar,
     Error404,
-    BackToTop
+    BackToTop,
+    Loading
   },
   mounted () {
     this.$store.commit('updateLoginState')
+  },
+  watch: {
+    '$store.state.isLoading': {
+      deep: true,
+      immediate: true,
+      handler: function (newValue, oldValue) {
+        this.isLoading = newValue
+      }
+    }
   }
 }
 </script>

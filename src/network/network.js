@@ -10,13 +10,14 @@ const instance = axios.create({
 
 // Response interceptors
 instance.interceptors.response.use(config => {
+  store.commit('setLoadingStatus', false)
   console.log('Response拦截器')
   return config.data
 })
 
 // Request interceptors
 instance.interceptors.request.use(config => {
-  console.log('Request拦截器')
+  store.commit('setLoadingStatus', true)
   if (localStorage.getItem('accessToken')) {
     store.commit('setToken', localStorage.getItem('accessToken'))
     config.headers.common.Authorization = store.state.token

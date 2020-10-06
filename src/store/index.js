@@ -11,7 +11,8 @@ export default new Vuex.Store({
     token: '',
     profile: {
       s: null
-    }
+    },
+    isLoading: false
   },
   mutations: {
     updateLoginState(state) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
       state.profile.username = '未登录'
       state.profile.avatar_img = '/assets/default-avatar.svg'
       state.profile.banner_img = '/assets/default-banner.jpg'
+    },
+    setLoadingStatus (state, isLoading) {
+      state.isLoading = isLoading
     }
   },
   getters: {
