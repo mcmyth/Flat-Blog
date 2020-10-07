@@ -17,5 +17,23 @@ export default {
 </script>
 
 <style scoped lang="sass">
-  @import "src/assets/style/components/BlackMask"
+$small-width: 410px
+#black-mask
+  background-color: rgba(0, 0, 0, 0.3)
+  width: 100vw
+  height: 100vh
+  position: fixed
+  top: 0
+  z-index: 11
+  opacity: 0
+  pointer-events: none
+  transition: opacity .2s ease-in-out
+  &.active
+    pointer-events: unset
+    opacity: 1
+@media screen and (max-width: $small-width)
+  .menubar-mask.open
+    opacity: 1 !important
+    pointer-events: unset !important
+
 </style>
