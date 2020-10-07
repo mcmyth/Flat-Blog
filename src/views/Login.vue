@@ -22,7 +22,7 @@
             SECURITY CHECK<br/>
             <input @keypress.enter="login" v-model="captchaKey" type="text">
 <!--            <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">-->
-            <captcha-key ref="captchaKey" class="captcha-img"></captcha-key>
+            <captcha-key ref="LoginCaptchaKey" class="captcha-img"></captcha-key>
           </div>
           <div id="pw-group" >
 <!--            <span><el-checkbox id="remember">REMEMBER ME</el-checkbox></span>-->
@@ -54,7 +54,7 @@
             SECURITY CHECK<br/>
 <!--             <img @click="refreshCaptchaKey" :src="captchaCodeLink" alt="" class="captcha-img">-->
             <input @keypress.enter="register" v-model="captchaKey" type="text">
-            <captcha-key ref="captchaKey" class="captcha-img"></captcha-key>
+            <captcha-key ref="RegisterCaptchaKey" class="captcha-img"></captcha-key>
           </div>
         </div>
         <button @click="register" id="register-button">REGISTER</button>
@@ -79,10 +79,17 @@ export default {
   methods: {
     changeRegisterActive() {
       this.isRegisterActive = this.isRegisterActive === '' ? 'register-active' : ''
-      this.$refs.captchaKey.refreshCaptchaKey()
+      this.refreshCaptchaKey()
       this.captchaKey = ''
       this.username = ''
       this.password = ''
+    },
+    refreshCaptchaKey() {
+      if (this.isRegisterActive === '') {
+        this.$refs.LoginCaptchaKey.refreshCaptchaKey()
+      } else {
+        this.$refs.RegisterCaptchaKey.refreshCaptchaKey()
+      }
     },
     async login() {
       const captchaKey = this.captchaKey
@@ -91,7 +98,7 @@ export default {
         password: this.password,
         captchaKey
       })
-      this.$refs.captchaKey.refreshCaptchaKey()
+      this.refreshCaptchaKey()
       if (res.status === 'ok') {
         localStorage.setItem('accessToken', res.token)
         this.$store.commit('updateLoginState')
@@ -120,7 +127,7 @@ export default {
         email: this.email,
         captchaKey: this.captchaKey
       })
-      this.$refs.captchaKey.refreshCaptchaKey()
+      this.refreshCaptchaKey()
       if (res.status === 'ok') {
         this.$noty.success(res.msg, {
           killer: true
@@ -136,6 +143,7 @@ export default {
     }
   },
   mounted() {
+    this.refreshCaptchaKey()
     const rememberUser = JSON.parse(window.localStorage.getItem('account'))
     if (rememberUser !== null) {
       this.$refs.remember.checked = true
