@@ -13,6 +13,9 @@ instance.interceptors.response.use(config => {
   store.commit('setLoadingStatus', false)
   console.log('Response拦截器')
   return config.data
+}, error => {
+  console.log(error)
+  store.commit('setLoadingStatus', false)
 })
 
 // Request interceptors
