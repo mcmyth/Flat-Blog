@@ -32,7 +32,7 @@
 <script>
 import Vditor from 'vditor'
 import 'vditor/src/assets/scss/index.scss'
-import { mobileToobBar } from '@/config/vditor.config'
+import { mobileToobBar, uploadConfig } from '@/config/vditor.config'
 import captchaKey from '@/components/captchaKey'
 export default {
   name: 'PostEdit',
@@ -75,6 +75,7 @@ export default {
         cache: {
           enable: false
         },
+        upload: uploadConfig,
         toolbar,
         after: () => {
           // this.contentEditor.setValue('hello, Vditor + Vue!')

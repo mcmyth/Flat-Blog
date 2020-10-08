@@ -1,3 +1,5 @@
+import { BlogConfig } from '@/config/blog.config'
+import store from '@/store'
 export const mobileToobBar = [
   'emoji',
   'link',
@@ -14,3 +16,13 @@ export const mobileToobBar = [
     ]
   }
 ]
+
+export const uploadConfig = {
+  accept: 'image/*,.mp3, .wav',
+  token: store.state.token,
+  url: BlogConfig.apiURL + 'user/media',
+  linkToImgUrl: '/api/upload/fetch',
+  filename(name) {
+    return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5.)]/g, '').replace(/[?\\/:|<>*[\]()$%{}@~]/g, '').replace('/\\s/g', '')
+  }
+}
