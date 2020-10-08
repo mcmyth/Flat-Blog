@@ -53,8 +53,13 @@ export default {
     this.setupEditor()
   },
   methods: {
-    show() {
-      console.log(this.contentEditor.getHTML())
+    async setupContent() {
+      const res = await this.$get(`post/edit?id=${this.$route.params.id.toLowerCase()}`)
+      this.contentEditor.setValue(res.content)
+      this.post.title = res.title
+      if (res.header_img !== undefined && res.header_img !== '') {
+        this.bannerIMG = res.header_img
+      }
     },
     setupEditor () {
       const that = this
@@ -78,33 +83,34 @@ export default {
         upload: uploadConfig,
         toolbar,
         after: () => {
-          // this.contentEditor.setValue('hello, Vditor + Vue!')
+          if (this.$route.params.id.toLowerCase() !== 'new') {
+            this.setupContent()
+          }
         }
       })
     },
     async submit() {
-      this.post.content = this.contentEditor.getHTML()
-      if (this.$route.params.id.toLowerCase() === 'new') {
-        console.log(this.post, this.captchaKey)
-        const captchaKey = this.captchaKey
-        const bannerImgInput = this.$refs.bannerIMG
-        const formData = new FormData()
-        formData.append('title', this.post.title)
-        formData.append('content', this.post.content)
-        formData.append('captchaKey', captchaKey)
-        formData.append('header_img', bannerImgInput.files[0])
-        const res = await this.$post('post/edit', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        })
-        console.log(res)
-      }
+      this.post.content = this.contentEditor.getValue()
+      const captchaKey = this.captchaKey
+      const bannerImgInput = this.$refs.bannerIMG
+      const formData = new FormData()
+      formData.append('id', this.$route.params.id)
+      formData.append('title', this.post.title)
+      formData.append('content', this.post.content)
+      formData.append('captchaKey', captchaKey)
+      formData.append('header_img', bannerImgInput.files[0])
+      const res = await this.$post('post/edit', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      console.log(res)
+      this.$noty.success(res.msg, {
+        killer: true
+      })
     },
     updateBanner() {
       const bannerImgInput = this.$refs.bannerIMG
       const file = bannerImgInput.files[0]
-      console.log(file)
       this.bannerIMG = URL.createObjectURL(file)
-      console.log(this.bannerIMG)
     }
   },
   watch: {
