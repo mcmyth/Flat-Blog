@@ -1,6 +1,6 @@
 @import "src/assets/style/public"
 $page-width: 80vw
-$min-page-width: 70vw
+$min-page-width: 80vw
 #postedit-container
   #postedit-body
     width: $page-width
@@ -18,6 +18,8 @@ $min-page-width: 70vw
       width: 100%
       margin-bottom: 20px
       position: relative
+      border-radius: 10px
+      overflow: hidden
       img
         height: 100%
         object-fit: cover
@@ -29,7 +31,6 @@ $min-page-width: 70vw
         height: 100%
         background-color: $bgcolor
         position: absolute
-        border-radius: 10px
         display: flex
         justify-content: center
         align-items: center
@@ -76,7 +77,9 @@ $min-page-width: 70vw
           margin: 0 0 0 15px
       & span:nth-child(2)
         text-align: right
-        justify-content: right
+      @media screen and (max-width: 600px)
+        flex-direction: column
+        margin-top: 15px
     #postedit-header
       position: relative
       border-bottom: solid #bababa 1px
