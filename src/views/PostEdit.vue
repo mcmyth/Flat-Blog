@@ -23,7 +23,7 @@
           <captcha-key ref="captchaKey"></captcha-key>
           <input v-model="captchaKey" type="text">
         </span>
-        <span><button @click="submit" id="submit-btn">提交</button></span>
+        <span><button @click="submit" id="submit-btn">{{ $route.params.id.toLowerCase() === 'new' ? '发布' : '更新'}}</button></span>
       </div>
     </div>
   </div>
@@ -55,10 +55,17 @@ export default {
   methods: {
     async setupContent() {
       const res = await this.$get(`post/edit?id=${this.$route.params.id.toLowerCase()}`)
-      this.contentEditor.setValue(res.content)
-      this.post.title = res.title
-      if (res.header_img !== undefined && res.header_img !== '') {
-        this.bannerIMG = res.header_img
+      if (res.status === 'ok') {
+        this.contentEditor.setValue(res.content)
+        this.post.title = res.title
+        if (res.header_img !== undefined && res.header_img !== '') {
+          this.bannerIMG = res.header_img
+        }
+      } else {
+        await this.$router.push('/postedit/new')
+        this.$noty.error(res.msg, {
+          killer: true
+        })
       }
     },
     setupEditor () {
@@ -102,10 +109,16 @@ export default {
       const res = await this.$post('post/edit', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
-      console.log(res)
-      this.$noty.success(res.msg, {
-        killer: true
-      })
+      if (res.status === 'ok') {
+        await this.$router.push('/postedit/' + res.post_id)
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+      } else {
+        this.$noty.error(res.msg, {
+          killer: true
+        })
+      }
     },
     updateBanner() {
       const bannerImgInput = this.$refs.bannerIMG
