@@ -56,7 +56,7 @@ export default {
     async setupContent() {
       const res = await this.$get(`post/edit?id=${this.$route.params.id.toLowerCase()}`)
       if (res.status === 'ok') {
-        this.contentEditor.setValue(res.content)
+        this.contentEditor.setValue(res.content_md)
         this.post.title = res.title
         if (res.header_img !== undefined && res.header_img !== '') {
           this.bannerIMG = res.header_img
@@ -103,14 +103,16 @@ export default {
       const formData = new FormData()
       formData.append('id', this.$route.params.id)
       formData.append('title', this.post.title)
-      formData.append('content', this.post.content)
+      formData.append('content_md', this.post.content)
       formData.append('captchaKey', captchaKey)
       formData.append('header_img', bannerImgInput.files[0])
       const res = await this.$post('post/edit', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       if (res.status === 'ok') {
-        await this.$router.push('/postedit/' + res.post_id)
+        if (this.$route.params.id.toLowerCase() === 'new') {
+          await this.$router.push('/postedit/' + res.post_id)
+        }
         this.$noty.success(res.msg, {
           killer: true
         })
