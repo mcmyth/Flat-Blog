@@ -52,6 +52,7 @@
         <span>Posts</span>
         <router-link v-if="isMe" tag="span" to="/postedit/new" id="post-add"><font-awesome-icon class="menu-icon login" :icon="['fas', 'plus']" /></router-link>
       </div>
+      <div id="void-content" v-show="postIsNull">还没有任何文章哦~</div>
       <div id="posts">
         <div v-for="(value, key, index) in post" :key="index" class="post">
           <div v-if="isMe" class="post-option">
@@ -94,6 +95,7 @@
 <script>
 import PageButton from '@/components/PageButton'
 import BlackMask from '@/components/BlackMask'
+import { BlogConfig } from '@/config/blog.config'
 const profileUpload = require('@/network/profileUpload')
 export default {
   name: 'profile',
@@ -109,6 +111,11 @@ export default {
       post: null
     }
   },
+  computed: {
+    postIsNull: function () {
+      return (this.post === null)
+    }
+  },
   methods: {
     move(event) {
       // if (document.documentElement.scrollTop > 300) return
@@ -120,22 +127,44 @@ export default {
       return `translate(calc(${horizontal * offset / 0.5}px - 50%), calc(${vertical * offset / 0.5}px - 50%))`
     },
     setupProfile() {
-      if (this.profile.avatar === '') this.profile.avatar = 'assets/default-avatar.svg'
+      if (this.profile.avatar === '') {
+        this.profile.avatar = 'assets/default-avatar.svg'
+      } else {
+        this.avatarImg = this.profile.avatar_img
+        this.bannerImg = this.profile.banner_img
+      }
+      if (this.avatarImg === undefined) {
+        this.avatarImg = BlogConfig.defaultAvatar
+      }
+      if (this.bannerImg === undefined) {
+        this.bannerImg = BlogConfig.defaultBanner
+      }
     },
     imgError(type) {
-      if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
-      if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
+      console.log(BlogConfig)
+      if (type === 'avatar') {
+        this.profile.avatar_img = BlogConfig.defaultAvatar
+        this.avatarImg = this.profile.avatar_img
+      }
+      if (type === 'banner') {
+        this.profile.banner_img = BlogConfig.defaultBanner
+        this.bannerImg = this.profile.banner_img
+      }
     },
     async setupPost() {
       let res
       const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
       if (this.isMe) {
-        res = await this.$get(`http://127.0.0.1:3003/post/list?${page}`)
+        res = await this.$get(`post/list?${page}`)
       } else {
-        res = await this.$get(`http://127.0.0.1:3003/post/list?${page}&id=${this.$route.params.id}`)
+        res = await this.$get(`post/list?${page}&id=${this.$route.params.id}`)
       }
-      this.post = res.post
-      this.page_count = res.page_count
+      if (res.post.length <= 0) {
+        this.page_count = 1
+      } else {
+        this.post = res.post
+        this.page_count = res.page_count
+      }
     },
     openProfileEditor() {
       this.$refs.headerEditor.scrollTop = 0
@@ -171,23 +200,28 @@ export default {
     PageButton,
     BlackMask
   },
-  created() {
+  async created() {
+    if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
       this.profile = this.$store.state.profile
+      console.log(this.profile)
       if (this.$route.params.id === this.profile.username) {
         // is Me
         this.isMe = true
         this.setupProfile()
-        this.setupPost()
+        await this.setupPost()
       } else {
         // is Not Me
         this.isMe = false
-        this.setupPost()
+        await this.setupPost()
+        this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
+        this.setupProfile()
       }
     } else {
-      this.profile.nickname = '未登录'
-      this.profile.avatar = 'assets/default-avatar.svg'
+      this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
+      this.setupProfile()
+      await this.setupPost()
     }
   },
   watch: {
