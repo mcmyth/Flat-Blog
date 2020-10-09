@@ -40,6 +40,7 @@ export default {
     pointer-events: unset
   &.active #confirm-dialog-body
     transform: translate(-50%, -50%)
+    opacity: 1
   #confirm-dialog-button
     display: flex
     margin: 0 auto 20px auto
@@ -58,6 +59,7 @@ export default {
         background-color: darken($base_color, 10%) !important
 
 #confirm-dialog-body
+  opacity: 0
   position: fixed
   width: 90vw
   max-width: 700px
@@ -68,7 +70,7 @@ export default {
   z-index: 12
   box-sizing: border-box
   border-radius: 20px
-  transition: transform .5s ease-in-out
+  transition: transform .5s ease-in-out , opacity .5s ease-in-out
   #confirm-dialog-title
     padding: 20px 15px
     text-align: center
