@@ -53,27 +53,24 @@
         <router-link v-if="isMe" tag="span" to="/postedit/new" id="post-add"><font-awesome-icon class="menu-icon login" :icon="['fas', 'plus']" /></router-link>
       </div>
       <div id="posts">
-        <div v-for="index of 5" :key="index" class="post">
+        <div v-for="(value, key, index) in post" :key="index" class="post">
           <div v-if="isMe" class="post-option">
-            <span class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
+            <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
-          <div class="post-title"><a href="/post">文章标题</a></div>
+          <div class="post-title"><a href="/post">{{ value.title }}</a></div>
           <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
-              2020/09/24
+              {{ value.update_date }}
             </span>
             <span class="post-author">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'user-circle']" />
-              MC Myth
+              {{ value.nickname }}
             </span>
           </div>
           <hr>
-          <div class="post-context">
-            balabalabalabalabalabalabalabalabalabalabala...balabalabalabalabalabalabala....balabalabalabalabalabalabalabala...
-            balabalabalabalabalabalabalabalabalabalabala...balabalabalabalabalabalabala....balabalabalabalabalabalabalabala...
-          </div>
+          <div class="post-context" v-html="value.content_html"></div>
           <div class="post-footer">
             <a href="javascript:void(0);" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
           </div>
@@ -87,7 +84,7 @@
 <!--          <span id="page-next"><font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></span>-->
 <!--        </div>-->
 <!--        <div id="page-count">共2页</div>-->
-        <PageButton :maxpage="10"></PageButton>
+        <PageButton :maxpage="page_count"></PageButton>
       </div>
     </div>
     <black-mask :class="isProfileEditorActive" @click.native="openProfileEditor"></black-mask>
@@ -107,7 +104,9 @@ export default {
       isProfileEditorActive: 'disable',
       bannerImg: null,
       avatarImg: null,
-      isMe: false
+      isMe: false,
+      page_count: 0,
+      post: null
     }
   },
   methods: {
@@ -126,6 +125,17 @@ export default {
     imgError(type) {
       if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
       if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
+    },
+    async setupPost() {
+      let res
+      const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
+      if (this.isMe) {
+        res = await this.$get(`http://127.0.0.1:3003/post/list?${page}`)
+      } else {
+        res = await this.$get(`http://127.0.0.1:3003/post/list?${page}&id=${this.$route.params.id}`)
+      }
+      this.post = res.post
+      this.page_count = res.page_count
     },
     openProfileEditor() {
       this.$refs.headerEditor.scrollTop = 0
@@ -169,9 +179,11 @@ export default {
         // is Me
         this.isMe = true
         this.setupProfile()
+        this.setupPost()
       } else {
         // is Not Me
         this.isMe = false
+        this.setupPost()
       }
     } else {
       this.profile.nickname = '未登录'
