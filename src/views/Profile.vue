@@ -57,7 +57,7 @@
         <div v-for="(value, key, index) in post" :key="index" class="post">
           <div v-if="isMe" class="post-option">
             <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
-            <span class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
+            <span @click="setConfirmStatus('active')" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
           <div class="post-title"><a href="/post">{{ value.title }}</a></div>
           <div class="post-detail">
@@ -89,11 +89,17 @@
       </div>
     </div>
     <black-mask :class="isProfileEditorActive" @click.native="openProfileEditor"></black-mask>
+    <confirm-dialog @status="setConfirmStatus" :class="isDeletePostActive">
+      <template v-slot:title>删除文章</template>
+      <template v-slot:content>即将永久移除该文章,确定删除吗?</template>
+    </confirm-dialog>
+    <black-mask :class="isDeletePostActive"></black-mask>
   </div>
 </template>
 
 <script>
 import PageButton from '@/components/PageButton'
+import ConfirmDialog from '@/components/DelPost'
 import BlackMask from '@/components/BlackMask'
 import { BlogConfig } from '@/config/blog.config'
 const profileUpload = require('@/network/profileUpload')
@@ -108,7 +114,8 @@ export default {
       avatarImg: null,
       isMe: false,
       page_count: 0,
-      post: null
+      post: null,
+      isDeletePostActive: 'disable'
     }
   },
   computed: {
@@ -166,6 +173,10 @@ export default {
         this.page_count = res.page_count
       }
     },
+    setConfirmStatus(status) {
+      this.isDeletePostActive = status
+    },
+    deletePost() {},
     openProfileEditor() {
       this.$refs.headerEditor.scrollTop = 0
       console.log(this.$refs.headerEditor)
@@ -198,7 +209,8 @@ export default {
   },
   components: {
     PageButton,
-    BlackMask
+    BlackMask,
+    ConfirmDialog
   },
   async created() {
     if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id

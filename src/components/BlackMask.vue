@@ -27,7 +27,6 @@ $small-width: 410px
   z-index: 11
   opacity: 0
   pointer-events: none
-  transition: opacity .2s ease-in-out
   &.active
     pointer-events: unset
     opacity: 1
