@@ -8,8 +8,21 @@ export const upload = (source, evnet, type) => {
       headers: { 'Content-Type': 'multipart/form-data' }
     }).then(res => {
       if (res.status === 'ok') {
-        if (type === 'banner_img') source.bannerImg = res.link + '?ramdom=' + Math.random() * 10
-        if (type === 'avatar_img') source.avatarImg = res.link + '?ramdom=' + Math.random() * 10
+        if (type === 'banner_img') {
+          const link = res.link + '?ramdom=' + Math.random() * 10
+          source.bannerImg = link
+          source.$store.commit('updateProfile', {
+            type,
+            link
+          })
+        }
+        if (type === 'avatar_img') {
+          const link = source.avatarImg = res.link + '?ramdom=' + Math.random() * 10
+          source.$store.commit('updateProfile', {
+            type,
+            link
+          })
+        }
       }
     })
   }

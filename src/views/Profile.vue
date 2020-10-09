@@ -22,7 +22,7 @@
               </div>
           </div>
           <div class="edit-container-item username">
-            <input v-model="profile.nickname" type="text" value="MC Myth"><br/>
+            <input :value="profile.nickname" ref="nickname" type="text"><br/>
             <span class="edit-container-tips">*仅支持10位英文/数字/下划线组成的字符</span><br/>
               <button @click="updateNickname">保存更改</button>
           </div>
@@ -143,11 +143,18 @@ export default {
     upload(event, type) { profileUpload.upload(this, event, type) },
     async updateNickname() {
       const res = await this.$post('user/profile', {
-        nickname: this.profile.nickname
+        nickname: this.$refs.nickname.value
       })
-      this.$noty.success(res.msg, {
-        killer: true
-      })
+      if (res.status === 'ok') {
+        this.profile.nickname = this.$refs.nickname.value
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+      } else {
+        this.$noty.error(res.msg, {
+          killer: true
+        })
+      }
     }
   },
   components: {

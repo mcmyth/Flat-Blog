@@ -32,13 +32,17 @@ export default new Vuex.Store({
         })
       }
     },
-    defaultProfile (state) {
+    defaultProfile(state) {
       state.profile.username = '未登录'
       state.profile.avatar_img = '/assets/default-avatar.svg'
       state.profile.banner_img = '/assets/default-banner.jpg'
     },
     setLoadingStatus (state, isLoading) {
       state.isLoading = isLoading
+    },
+    updateProfile(state, options) {
+      if (options.type === 'banner_img') state.profile.banner_img = options.link
+      if (options.type === 'avatar_img') state.profile.avatar_img = options.link
     }
   },
   getters: {
