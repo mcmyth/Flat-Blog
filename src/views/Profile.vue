@@ -160,11 +160,13 @@ export default {
     },
     async setupPost() {
       let res
+      const query = this.$route.query
+      const s = query.s === undefined ? '' : `&s=${query.s}`
       const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
       if (this.isMe) {
-        res = await this.$get(`post/user?${page}`)
+        res = await this.$get(`post/user?${page}${s}`)
       } else {
-        res = await this.$get(`post/user?${page}&id=${this.$route.params.id}`)
+        res = await this.$get(`post/user?${page}&id=${this.$route.params.id}${s}`)
       }
       if (res.post.length <= 0) {
         this.page_count = 1
@@ -252,6 +254,9 @@ export default {
           }
         }
       }
+    },
+    $route(to, from) {
+      this.setupPost()
     }
   }
 }

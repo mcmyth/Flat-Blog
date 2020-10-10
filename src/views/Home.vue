@@ -73,12 +73,14 @@ export default {
       if (type === 'banner') document.querySelector(`#${type}_${index}`).src = BlogConfig.defaultBanner
     },
     async setupPost() {
+      const query = this.$route.query
+      const s = query.s === undefined ? '' : `&s=${query.s}`
       let res
-      const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
+      const page = query.p === undefined ? 'page=1' : 'page=' + query.p
       if (this.isMe) {
-        res = await this.$get(`post/?${page}`)
+        res = await this.$get(`post/?${page}${s}`)
       } else {
-        res = await this.$get(`post/?${page}`)
+        res = await this.$get(`post/?${page}${s}`)
       }
       if (res.post.length <= 0) {
         this.page_count = 1
@@ -103,6 +105,9 @@ export default {
           this.profile = newValue
         }
       }
+    },
+    $route(to, from) {
+      this.setupPost()
     }
   }
 }

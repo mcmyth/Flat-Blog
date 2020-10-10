@@ -16,11 +16,10 @@
       <div id="search" :class="search_open" @mousedown="isSearchOpen()" >
         <div id="search-box" @mousedown="isSearchOpen()">
           <div  id="search-title">想要搜点什么呢?</div>
-          <input name="search_input" class="search_input" type="text" placeholder="Search..."  @keydown.enter="isSearchOpen()"/>
-          <div id="search-btn"><font-awesome-icon :icon="['fas', 'search']" /></div>
+          <input v-model="searchValue" name="search_input" class="search_input" type="text" placeholder="Search..."  @keydown.enter="isSearchOpen()"/>
+          <div @click="search" id="search-btn"><font-awesome-icon :icon="['fas', 'search']" /></div>
 <!--          <span class="line" @mousedown.stop = ""></span>-->
         </div>
-
       </div>
       <router-link to="/" tag="a"><li><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
       <a href="javascript:void(0)" @click="Login">
@@ -29,7 +28,7 @@
           {{ $store.state.isLogin ? '登出' : '登录'}}
        </li>
       </a>
-      <router-link to="" tag="a"><li @click="isSearchOpen()"><font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />搜索</li></router-link>
+      <a><li @click="isSearchOpen()"><font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />搜索</li></a>
     </ul>
       <black-mask  @click.native="isMenuOpen" class="menubar-mask" :active="menu_open"></black-mask>
   </nav>
@@ -44,7 +43,8 @@ export default {
     return {
       menu_open: 'close',
       viewport_width: 0,
-      search_open: ''
+      search_open: '',
+      searchValue: ''
     }
   },
   created() {
@@ -73,6 +73,21 @@ export default {
       } else {
         this.$router.push('/login')
       }
+    },
+    search() {
+      // const obj = this.$route.query
+      // let query = ''
+      // Object.keys(obj).forEach(function(key) {
+      //   if (key !== 's' && key !== '') {
+      //     query += `${key}=${obj[key]}&`
+      //   }
+      // })
+      // query = '?s=' + this.searchValue + '&' + query.substr(0, query.length - 1)
+      // location.href = location.protocol + '//' + location.host + location.pathname + query
+      if (/\/profile/.test(this.$route.path) !== true || /\/profile/.test(this.$route.path) !== true) {
+        this.$router.push('/')
+      }
+      location.href = location.protocol + '//' + location.host + location.pathname + '?s=' + this.searchValue
     }
   },
   components: {

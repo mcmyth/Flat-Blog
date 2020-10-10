@@ -43,14 +43,30 @@ export default {
       return this.current + index
     },
     getURL(page) {
-      return this.$route.path + '?p=' + page
+      const obj = this.$route.query
+      let query = ''
+      Object.keys(obj).forEach(function(key) {
+        if (key !== 'p' && key !== '') {
+          query += `${key}=${obj[key]}&`
+        }
+      })
+      query = query.substr(0, query.length - 1)
+      return this.$route.path + '?p=' + page + '&' + query
+    },
+    setupButton() {
+      let p = this.$route.query.p
+      if (p === undefined) p = 1
+      this.current = Number(p)
+      // console.log(this.$route.query)
     }
   },
   beforeMount() {
-    let p = this.$route.query.p
-    if (p === undefined) p = 1
-    this.current = Number(p)
-    // console.log(this.$route.query)
+    this.setupButton()
+  },
+  watch: {
+    $route(to, from) {
+      this.setupButton()
+    }
   }
 }
 </script>
