@@ -88,6 +88,7 @@ export default {
         this.$router.push('/')
       }
       location.href = location.protocol + '//' + location.host + location.pathname + '?s=' + this.searchValue
+      this.searchValue = ''
     }
   },
   components: {

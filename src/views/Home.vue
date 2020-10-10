@@ -7,7 +7,7 @@
           <div class="post">
             <div class="post-content">
               <div class="post-avatar"><img @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img" height="512" width="512"/></div>
-              <div class="post-title"><a href="/post/1">{{ value.title }}</a></div>
+              <div class="post-title"><a :href="'/post/' + value.id">{{ value.title }}</a></div>
               <hr>
               <div class="post-context">
                 <div class="post-text">{{ value.content_html }}</div>
