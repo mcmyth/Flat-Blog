@@ -57,7 +57,7 @@
         <div v-for="(value, key, index) in post" :key="index" class="post">
           <div v-if="isMe" class="post-option">
             <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
-            <span @click="setConfirmStatus('active')" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
+            <span @click="setConfirmStatus('active', value.id)" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
           <div class="post-title"><a href="/post">{{ value.title }}</a></div>
           <div class="post-detail">
@@ -89,7 +89,7 @@
       </div>
     </div>
     <black-mask :class="isProfileEditorActive" @click.native="openProfileEditor"></black-mask>
-    <confirm-dialog @status="setConfirmStatus" :class="isDeletePostActive">
+    <confirm-dialog :id="postCursor" :setpost="setupPost" @status="setConfirmStatus" :class="isDeletePostActive">
       <template v-slot:title>删除文章</template>
       <template v-slot:content>即将永久移除该文章,确定删除吗?</template>
     </confirm-dialog>
@@ -115,7 +115,8 @@ export default {
       isMe: false,
       page_count: 0,
       post: null,
-      isDeletePostActive: 'disable'
+      isDeletePostActive: 'disable',
+      postCursor: null
     }
   },
   computed: {
@@ -148,7 +149,6 @@ export default {
       }
     },
     imgError(type) {
-      console.log(BlogConfig)
       if (type === 'avatar') {
         this.profile.avatar_img = BlogConfig.defaultAvatar
         this.avatarImg = this.profile.avatar_img
@@ -173,8 +173,9 @@ export default {
         this.page_count = res.page_count
       }
     },
-    setConfirmStatus(status) {
+    setConfirmStatus(status, id) {
       this.isDeletePostActive = status
+      this.postCursor = id
     },
     deletePost() {},
     openProfileEditor() {

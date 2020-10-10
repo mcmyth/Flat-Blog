@@ -28,22 +28,21 @@ $foreground-color: #2196f3
 
 @mixin btn-post-option
   margin: 0 5px
-  background-color: rgba(0,0,0,.1)
+  background-color: $foreground-color
+  color: #fff
   border-radius: 50%
   width: 30px
   height: 30px
   text-align: center
   line-height: 30px
-  color: rgb(100, 100, 100)
   font-size: 12px
   display: inline-block
   cursor: pointer
   transition: background-color .2s ease-in-out
   &:hover
-    background-color: rgba(0,0,0,.2)
+    background-color: lighten($foreground-color,5%)
   &:active
-    color: white
-    background-color: rgba(0,0,0,.3)
+    background-color: darken($foreground-color,10%)
 @mixin shadow-ani
   box-shadow: rgba(0,0,0,.09) 5px 5px 0px
   &:hover

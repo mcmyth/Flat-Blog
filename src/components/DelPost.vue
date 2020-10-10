@@ -8,7 +8,7 @@
         <slot name="content"></slot>
       </div>
       <div id="confirm-dialog-button">
-        <button>Yes</button>
+        <button @click="delPost">Yes</button>
         <button @click="setStatus">No</button>
       </div>
     </div>
@@ -22,11 +22,18 @@ export default {
   },
   props: [
     'active',
-    'confirmNo'
+    'confirmNo',
+    'id',
+    'setpost'
   ],
   methods: {
     setStatus() {
       this.$emit('status', 'disable')
+    },
+    delPost() {
+      this.$get(`http://127.0.0.1:3003/post/del?id=${this.id}`)
+      this.setStatus()
+      this.setpost()
     }
   }
 }
@@ -61,7 +68,7 @@ export default {
 #confirm-dialog-body
   opacity: 0
   position: fixed
-  width: 90vw
+  width: 80vw
   max-width: 700px
   background-color: white
   top: 50%
