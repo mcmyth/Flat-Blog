@@ -2,25 +2,25 @@
   <div id="home-container">
     <div id="content">
       <div id="posts">
-        <div v-for="(item, index) in posts" :key="index" class="post-container">
-          <div class="post-image"><img alt="banner" src="../../public/assets/default-banner.jpg"/></div>
+        <div v-for="(value, index) in post" :key="index" class="post-container">
+          <div class="post-image"><img @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/></div>
           <div class="post">
             <div class="post-content">
-              <div class="post-avatar"><img alt="avatar" src="../../public/assets/default-avatar.svg" height="512" width="512"/></div>
-              <div class="post-title"><a href="/post/1">Title{{item}}</a></div>
+              <div class="post-avatar"><img @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img" height="512" width="512"/></div>
+              <div class="post-title"><a href="/post/1">{{ value.title }}</a></div>
               <hr>
               <div class="post-context">
-                <div class="post-text">balabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbalabalabalabalbala</div>
+                <div class="post-text">{{ value.content_html }}</div>
               </div>
               <div class="post-footer">
                 <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login"  :icon="['fas', 'clock']" />
-              2020/09/24 00:00
+              {{ value.update_date }}
             </span>
                   <span class="post-author">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'user-circle']" />
-              MC Myth
+              {{ value.nickname }}
             </span>
                 </div>
                 <div class="footer-more">
@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <PageButton :maxpage="1"></PageButton>
+        <PageButton :maxpage="page_count"></PageButton>
       </div>
     </div>
     <div id="user">
@@ -49,13 +49,15 @@
 
 <script>
 import PageButton from '@/components/PageButton'
+import { BlogConfig } from '@/config/blog.config'
 export default {
   name: 'Home',
   data() {
     return {
-      posts: ['', '', '', '', '', ''],
-      profile: {
-      }
+      page_count: null,
+      profile: {},
+      post: null,
+      BlogConfig: null
     }
   },
   components: {
@@ -65,10 +67,33 @@ export default {
     imgError(type) {
       if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
       if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
+    },
+    postImgError(type, index) {
+      if (type === 'avatar') document.querySelector(`#${type}_${index}`).src = BlogConfig.defaultAvatar
+      if (type === 'banner') document.querySelector(`#${type}_${index}`).src = BlogConfig.defaultBanner
+    },
+    async setupPost() {
+      let res
+      const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
+      if (this.isMe) {
+        res = await this.$get(`post/?${page}`)
+      } else {
+        res = await this.$get(`post/?${page}`)
+      }
+      if (res.post.length <= 0) {
+        this.page_count = 1
+      } else {
+        this.post = res.post
+        this.page_count = res.page_count
+      }
     }
   },
   mounted() {
     this.profile = this.$store.state.profile
+  },
+  created() {
+    this.BlogConfig = BlogConfig
+    this.setupPost()
   },
   watch: {
     '$store.state.profile': {

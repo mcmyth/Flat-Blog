@@ -54,7 +54,7 @@
       </div>
       <div id="void-content" v-show="postIsNull">还没有任何文章哦~</div>
       <div id="posts">
-        <div v-for="(value, key, index) in post" :key="index" class="post">
+        <div v-for="(value, index) in post" :key="index" class="post">
           <div v-if="isMe" class="post-option">
             <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span @click="setConfirmStatus('active', value.id)" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
@@ -162,9 +162,9 @@ export default {
       let res
       const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
       if (this.isMe) {
-        res = await this.$get(`post/list?${page}`)
+        res = await this.$get(`post/user?${page}`)
       } else {
-        res = await this.$get(`post/list?${page}&id=${this.$route.params.id}`)
+        res = await this.$get(`post/user?${page}&id=${this.$route.params.id}`)
       }
       if (res.post.length <= 0) {
         this.page_count = 1
