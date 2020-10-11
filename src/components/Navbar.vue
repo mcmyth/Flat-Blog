@@ -2,7 +2,7 @@
 <div id="navbar">
     <nav id="main-menubar" class="main-menubar-color">
     <div id="menu-header">
-      <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><img   @error="imgError('avatar')" :src="profile.avatar_img" class="logo" alt="avatar">
+      <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><img @error="imgError('avatar')" :src="profile.avatar_img" class="logo" alt="avatar">
       <span id="name">{{  $store.state.isLogin ? profile.nickname : $store.state.blogName }}</span>
       </a>
     </div>
@@ -21,9 +21,8 @@
       <div id="search" :class="search_open" @mousedown="isSearchOpen()" >
         <div id="search-box" @mousedown="isSearchOpen()">
           <div  id="search-title">想要搜点什么呢?</div>
-          <input v-model="searchValue" name="search_input" class="search_input" type="text" placeholder="Search..."  @keydown.enter="isSearchOpen()"/>
+          <input v-model="searchValue" name="search_input" class="search_input" type="text" placeholder="Search..." @keydown.enter="search"/>
           <div @click="search" id="search-btn"><font-awesome-icon :icon="['fas', 'search']" /></div>
-<!--          <span class="line" @mousedown.stop = ""></span>-->
         </div>
       </div>
       <router-link to="/" tag="a"><li><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
@@ -84,7 +83,6 @@ export default {
       }
     },
     imgError(type) {
-      console.log(111)
       if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
     },
     search() {

@@ -109,6 +109,7 @@ export default {
       const res = await this.$post('post/edit', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
+      this.$refs.captchaKey.refreshCaptchaKey()
       if (res.status === 'ok') {
         if (this.$route.params.id.toLowerCase() === 'new') {
           await this.$router.push('/postedit/' + res.post_id)
