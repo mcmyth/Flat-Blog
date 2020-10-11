@@ -2,16 +2,21 @@
 <div id="navbar">
     <nav id="main-menubar" class="main-menubar-color">
     <div id="menu-header">
-      <img src="@/assets/logo_70.jpg" class="logo" alt="MC Myth">
-      <span id="name">{{ $store.state.blogName }}</span>
+      <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><img   @error="imgError('avatar')" :src="profile.avatar_img" class="logo" alt="avatar">
+      <span id="name">{{  $store.state.isLogin ? profile.nickname : $store.state.blogName }}</span>
+      </a>
     </div>
     <div class="menu-btn" v-bind:class="menu_open" @click="isMenuOpen">
       <div class="menu-btn__burger"></div>
     </div>
     <ul :class="menu_open" id="menu-items">
       <div id="mobile_logo_container">
-        <img src="@/assets/logo_70.jpg" :class="'logo ' + menu_open" alt="MC Myth">
-        <span id="username">MC Myth</span>
+        <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
+        <img @error="imgError('avatar')"  :src="profile.avatar_img" :class="'logo ' + menu_open" alt="avatar">
+        </a>
+        <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
+        <span id="username">{{  $store.state.isLogin ? $store.state.profile.nickname : $store.state.blogName }}</span>
+        </a>
       </div>
       <div id="search" :class="search_open" @mousedown="isSearchOpen()" >
         <div id="search-box" @mousedown="isSearchOpen()">
@@ -44,13 +49,17 @@ export default {
       menu_open: 'close',
       viewport_width: 0,
       search_open: '',
-      searchValue: ''
+      searchValue: '',
+      profile: {
+        nickname: null
+      }
     }
   },
   created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
     document.body.style.padding = '74px 0 0 0'
+    this.profile = this.$store.state.profile
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.handleResize)
@@ -74,6 +83,10 @@ export default {
         this.$router.push('/login')
       }
     },
+    imgError(type) {
+      console.log(111)
+      if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
+    },
     search() {
       // const obj = this.$route.query
       // let query = ''
@@ -93,6 +106,16 @@ export default {
   },
   components: {
     BlackMask
+  },
+  watch: {
+    '$store.state.profile': {
+      deep: true,
+      handler: function (newValue, oldValue) {
+        if (newValue !== null) {
+          this.profile = newValue
+        }
+      }
+    }
   }
 }
 </script>

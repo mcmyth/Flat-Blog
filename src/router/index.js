@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
-import Home from '../views/Home.vue'
+import Home from '../views/Home'
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,27 +13,32 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login')
   },
   {
     path: '/profile/:id',
     name: 'Profile',
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/Profile')
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/Profile')
   },
   {
     path: '/post/:id',
     name: 'Post',
-    component: () => import('../views/Post.vue')
+    component: () => import('../views/Post')
   },
   {
     path: '/postedit/:id',
     name: 'PostEdit',
-    component: () => import('../views/PostEdit.vue')
+    component: () => import('../views/PostEdit')
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../components/Error404')
   }
 ]
 

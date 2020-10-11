@@ -24,7 +24,7 @@
             </span>
                 </div>
                 <div class="footer-more">
-                  <a href="javascript:void(0);" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
+                  <a  :href="'/post/' + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
                 </div>
               </div>
             </div>

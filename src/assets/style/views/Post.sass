@@ -92,9 +92,17 @@ $min-page-width: 70vw
           position: absolute
           top: -3px
           border-top: solid #bababa 1px
+        @media screen and (max-width: 350px)
+          flex-direction: column
+          height: 70px
+          span
+            text-align: center
+            margin: 2px 0
       #post-date
         color: lighten($font-color,40%)
         flex: 1
+        span
+          display: inline-block
       #post-option
         flex: 1
         text-align: right

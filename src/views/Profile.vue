@@ -59,7 +59,7 @@
             <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span @click="setConfirmStatus('active', value.id)" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
-          <div class="post-title"><a href="/post">{{ value.title }}</a></div>
+          <div class="post-title"><a :href="/post/ + value.id">{{ value.title }}</a></div>
           <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
@@ -73,7 +73,7 @@
           <hr>
           <div class="post-context" v-html="value.content_html"></div>
           <div class="post-footer">
-            <a href="javascript:void(0);" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
+            <a :href="/post/ + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@
       <template v-slot:title>删除文章</template>
       <template v-slot:content>即将永久移除该文章,确定删除吗?</template>
     </confirm-dialog>
-    <black-mask :class="isDeletePostActive"></black-mask>
+    <black-mask @click.native="setConfirmStatus('disable')" :class="isDeletePostActive"></black-mask>
   </div>
 </template>
 
@@ -159,6 +159,7 @@ export default {
       }
     },
     async setupPost() {
+      this.post = null
       let res
       const query = this.$route.query
       const s = query.s === undefined ? '' : `&s=${query.s}`
@@ -179,7 +180,6 @@ export default {
       this.isDeletePostActive = status
       this.postCursor = id
     },
-    deletePost() {},
     openProfileEditor() {
       this.$refs.headerEditor.scrollTop = 0
       console.log(this.$refs.headerEditor)
@@ -220,7 +220,6 @@ export default {
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
       this.profile = this.$store.state.profile
-      console.log(this.profile)
       if (this.$route.params.id === this.profile.username) {
         // is Me
         this.isMe = true

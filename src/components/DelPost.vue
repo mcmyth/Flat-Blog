@@ -30,8 +30,11 @@ export default {
     setStatus() {
       this.$emit('status', 'disable')
     },
-    delPost() {
-      this.$get(`http://127.0.0.1:3003/post/del?id=${this.id}`)
+    async delPost() {
+      await this.$get(`http://127.0.0.1:3003/post/del?id=${this.id}`)
+      if (/\/post/.test(this.$route.path) === true) {
+        this.$router.push('/profile/' + this.$store.state.profile.username)
+      }
       this.setStatus()
       this.setpost()
     }
