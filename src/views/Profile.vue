@@ -85,7 +85,7 @@
 <!--          <span id="page-next"><font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></span>-->
 <!--        </div>-->
 <!--        <div id="page-count">共2页</div>-->
-        <PageButton :maxpage="page_count"></PageButton>
+        <page-button v-show="!postIsNull" :maxpage="page_count"></page-button>
       </div>
     </div>
     <black-mask :class="isProfileEditorActive" @click.native="openProfileEditor"></black-mask>
@@ -219,9 +219,9 @@ export default {
     if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
-      this.profile = this.$store.state.profile
       if (this.$route.params.id === this.profile.username) {
         // is Me
+        this.profile = this.$store.state.profile
         this.isMe = true
         this.setupProfile()
         await this.setupPost()
@@ -243,10 +243,10 @@ export default {
       deep: true,
       handler: function (newValue, oldValue) {
         if (newValue !== null) {
-          this.profile = newValue
-          if (this.$route.params.id === this.profile.username) {
+          if (this.$route.params.id === this.$store.state.profile.username) {
             // is Me
             this.isMe = true
+            this.profile = newValue
           } else {
             // is Not Me
             this.isMe = false
