@@ -51,7 +51,8 @@ export default {
         }
       })
       query = query.substr(0, query.length - 1)
-      return this.$route.path + '?p=' + page + '&' + query
+      if (query !== '') query = '&' + query
+      return this.$route.path + '?p=' + page + query
     },
     setupButton() {
       let p = this.$route.query.p

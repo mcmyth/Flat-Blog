@@ -3,8 +3,8 @@
     <loading :style="isLoading === true ? 'opacity: 1' : 'opacity: 0;pointer-events:none;'"></loading>
     <navbar v-if="noNavbar.indexOf($route.path) === -1 && invalidRoute === false"></navbar>
     <back-to-top></back-to-top>
-    <error404 v-if="invalidRoute"></error404>
-    <router-view v-else/>
+    <router-view v-if="!invalidRoute"/>
+    <error404 v-else></error404>
   </div>
 </template>
 <script>
