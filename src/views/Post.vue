@@ -19,21 +19,27 @@
       <div id="post-context" v-html="post.content_html"></div>
       <div id="post-comment">
         <span id="submit-comment-title">有什么想说的吗?</span>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <button id="submit-comment">发表评论</button>
+        <textarea @keypress.ctrl.enter="postComment" v-model="commentValue" name="" id="" cols="30" rows="10"></textarea>
+        <button @click="postComment" id="submit-comment">发表评论</button>
       </div>
       <div id="post-comment-context">
-        <span id="post-comment-title">Comments</span>
-        <div v-for="(item, index) of 5" :key="index" class="post-comment">
+        <span v-show="!postIsNull" id="post-comment-title">Comments</span>
+        <div v-for="(value, index) in comment" :key="index" class="post-comment">
           <div class="post-comment-header">
             <span class="avatar">
-              <img @error="imgError('avatar')" src="../assets/logo_512.png" height="512" width="512"/>
-              <span class="comment-nickname">MC Myth</span>
+              <a :href="'/profile/' + value.user.username">
+              <img @error="avatarImgError(index)" :src="value.user.avatar_img" :id="'comment_avatar_' + index" height="512" width="512"/>
+              <span class="comment-nickname">{{ value.user.nickname }}</span>
+                </a>
             </span>
-            <span class="time">2020/09/25</span>
+            <span class="time">{{ value.comment_date }}</span>
           </div>
-          <div class="post-comment-context">Comment</div>
+          <div class="post-comment-context">{{ value.content }}</div>
+          <div class="post-comment-options">
+            <span @click="delComment(value.id)" v-if="value.user.id === $store.state.profile.id">删除评论</span>
+          </div>
         </div>
+        <page-button v-show="!postIsNull" :maxpage="page_count"></page-button>
       </div>
     </div>
     <confirm-dialog :id="post.id" :setpost="setupPost"  @status="setConfirmStatus" :class="isDeletePostActive">
@@ -48,12 +54,14 @@
 import { BlogConfig } from '@/config/blog.config'
 import ConfirmDialog from '@/components/DelPost'
 import BlackMask from '@/components/BlackMask'
+import PageButton from '@/components/PageButton'
 export default {
   name: 'Post',
   data() {
     return {
       BlogConfig,
       isDeletePostActive: 'disable',
+      commentValue: null,
       post: {
         id: null,
         title: null,
@@ -65,7 +73,14 @@ export default {
           banner_img: null,
           avatar_img: null
         }
-      }
+      },
+      comment: null,
+      page_count: null
+    }
+  },
+  computed: {
+    postIsNull: function () {
+      return (this.comment === null)
     }
   },
   methods: {
@@ -76,6 +91,9 @@ export default {
       if (type === 'banner') {
         this.post.header_img = BlogConfig.defaultBanner
       }
+    },
+    avatarImgError(index) {
+      document.querySelector(`#comment_avatar_${index}`).src = BlogConfig.defaultAvatar
     },
     async setupPost() {
       const res = await this.$get(`post/get?id=${this.$route.params.id}`)
@@ -89,16 +107,68 @@ export default {
       }
       this.post = res
     },
+    async setupComment() {
+      this.comment = null
+      this.commentValue = ''
+      const query = this.$route.query
+      const params = this.$route.params
+      const page = query.p === undefined ? 'page=1' : 'page=' + query.p
+      const res = await this.$get(`post/comment?id=${params.id}&${page}`)
+      if (res.comment.length <= 0) {
+        this.page_count = 1
+      } else {
+        this.comment = res.comment
+        this.page_count = res.page_count
+      }
+    },
     setConfirmStatus(status) {
       this.isDeletePostActive = status
+    },
+    async postComment() {
+      const res = await this.$post('post/comment', {
+        post_id: this.post.id,
+        comment_content: this.commentValue
+      })
+      if (res.status === 'ok') {
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+        await this.setupComment()
+      } else {
+        this.$noty.error(res.msg, {
+          killer: true
+        })
+      }
+      await this.setupComment()
+    },
+    async delComment(commentId) {
+      const postId = Number(this.$route.params.id)
+      console.log(commentId, postId)
+      const res = await this.$post('post/comment', {
+        mode: 'del',
+        post_id: postId,
+        comment_id: commentId
+      })
+      if (res.status === 'ok') {
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+        await this.setupComment()
+      } else {
+        this.$noty.error(res.msg, {
+          killer: true
+        })
+      }
     }
   },
   created() {
     this.setupPost()
+    this.setupComment()
   },
   components: {
     ConfirmDialog,
-    BlackMask
+    BlackMask,
+    PageButton
   }
 }
 </script>

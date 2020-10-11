@@ -160,6 +160,16 @@ $min-page-width: 70vw
       padding: 15px
       border-radius: 5px
       background-color: #ebedf0
+      .post-comment-options
+        display: flex
+        justify-content: flex-end
+        span:nth-child(1)
+          display: block
+          font-size: .8rem
+          cursor: pointer
+          transition: color .3s ease-in-out
+          &:hover
+            color: $foreground-color
       &:not(:last-child)
         margin-bottom: 20px
       .post-comment-header
@@ -186,6 +196,8 @@ $min-page-width: 70vw
             vertical-align: middle
             margin-right: 10px
             cursor: pointer
+          a:visited
+            color: unset
         @media screen and (max-width: 400px)
           .avatar img
             width: 20px
