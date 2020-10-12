@@ -4,13 +4,17 @@
       <div id="header-img"><img @error="imgError('banner')" :src="post.header_img"/></div>
       <div id="post-header">
         <div id="post-title">{{post.title}}</div>
-        <div id="post-avatar"><img  @error="imgError('avatar')" :src="post.user.avatar_img"/></div>
+        <div id="post-avatar">
+          <a :href="'/profile/' + post.user.username">
+            <img  @error="imgError('avatar')" :src="post.user.avatar_img"/>
+          </a>
+        </div>
         <div id="nickname">{{post.user.nickname}}</div>
         <div id="post-toolbar">
           <div id="post-date">
             <span>由 <span>{{ post.user.nickname }}</span> 更新于 <span>{{ post.update_date }}</span></span>
           </div>
-          <div id="post-option">
+          <div v-if="post.user.id === $store.state.profile.id" id="post-option">
             <router-link tag="span" :to="'/postedit/' + post.id" id="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></router-link>
             <span  @click="isDeletePostActive = 'active'" tag="span" id="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>

@@ -6,7 +6,11 @@
           <div class="post-image"><img @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/></div>
           <div class="post">
             <div class="post-content">
-              <div class="post-avatar"><img @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img" height="512" width="512"/></div>
+              <div class="post-avatar">
+                <a :href="'/profile/' + value.username">
+                  <img @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
+                </a>
+              </div>
               <div class="post-title"><a :href="'/post/' + value.id">{{ value.title }}</a></div>
               <hr>
               <div class="post-context">
@@ -19,8 +23,10 @@
               {{ value.update_date }}
             </span>
                   <span class="post-author">
-              <font-awesome-icon class="menu-icon login" :icon="['fas', 'user-circle']" />
-              {{ value.nickname }}
+                    <a :href="'/profile/' + value.username">
+                      <font-awesome-icon class="menu-icon login" :icon="['fas', 'user-circle']" />
+                      {{ value.nickname }}
+                    </a>
             </span>
                 </div>
                 <div class="footer-more">

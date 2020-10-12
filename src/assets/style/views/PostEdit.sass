@@ -57,14 +57,19 @@ $min-page-width: 80vw
           text-align: center
     #postedit-editor
       margin-top: 25px
+      span:nth-child(1)
+        font-size: .8rem
+        padding-bottom: 5px
+        display: inline-block
     #postedit-toolbar
       display: flex
       align-items: center
-      button#submit-btn
+      button#submit-btn,button#view-btn
         @include button
         margin-top: 10px
         display: inline-block
         padding: 10px 30px
+        margin-left: 10px
       & span
         flex: 1
       & span:nth-child(1)

@@ -41,11 +41,15 @@ nav#main-menubar
       box-sizing: border-box
       text-align: center
       border-radius: 8px
+      #search-content
+        display: flex
+        align-items: center
+        justify-content: center
+        margin: 20px 0
       #search-btn
         display: inline-block
         height: 40px
         width: 40px
-        margin-top: 20px
         background-color: #e0e0e0
         border-bottom-right-radius: 3px
         border-top-right-radius: 3px
@@ -63,7 +67,9 @@ nav#main-menubar
     .search_input
       @include input
       width: calc(80% - 40px)
-      margin-top: 20px
+      height: 40px
+      box-sizing: border-box
+      margin: 0
       border-bottom-right-radius: 0
       border-top-right-radius: 0
       &:focus + span
@@ -109,6 +115,8 @@ nav#main-menubar
         margin: 13px 25px 10px 25px
         border-radius: 50%
         box-shadow: rgba(0,0,0,0.1) 5px 5px 15px
+      a
+        margin-right: 0
     li
       cursor: pointer
       font-size: 1.2rem

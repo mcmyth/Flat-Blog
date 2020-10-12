@@ -120,6 +120,13 @@
     .post-detail
       flex: 2
       font-size: .9rem
+      a
+        transition: color .2s ease-in-out
+        &:hover
+          color: $foreground-color !important
+      a:visited,a
+        color: unset
+        text-decoration: none
     .footer-more
       flex: 1
       justify-content: right

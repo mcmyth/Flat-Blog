@@ -12,18 +12,26 @@
       <div id="postedit-header">
         <span id="hashtag">#</span>
         <input v-model="post.title" id="postedit-title" type="text" value="Title">
-        <div id="postedit-avatar"><img src="../assets/logo_512.png" height="512" width="512"/></div>
-        <div id="nickname">MC Myth</div>
+        <div id="postedit-avatar">
+          <a :href="'/profile/' + post.user.username">
+            <img @error="imgError('avatar')" :src="post.user.avatar_img"/>
+          </a>
+        </div>
+        <div id="nickname">{{ post.user.nickname }}</div>
       </div>
       <div id="postedit-editor">
+        <span>*上传的文件大小不得超过4MB</span>
         <div id="vditor"></div>
       </div>
       <div id="postedit-toolbar">
         <span>
           <captcha-key ref="captchaKey"></captcha-key>
-          <input v-model="captchaKey" type="text">
+          <input @keypress.enter="submit" v-model="captchaKey" type="text">
         </span>
-        <span><button @click="submit" id="submit-btn">{{ $route.params.id.toLowerCase() === 'new' ? '发布' : '更新'}}</button></span>
+        <span>
+          <router-link v-if="$route.params.id.toLowerCase() !== 'new'" :to="'/post/' + $route.params.id" tag="button" id="view-btn">查看文章</router-link>
+          <button @click="submit" id="submit-btn">{{ $route.params.id.toLowerCase() === 'new' ? '发布' : '更新'}}</button>
+        </span>
       </div>
     </div>
   </div>
@@ -34,10 +42,12 @@ import Vditor from 'vditor'
 import 'vditor/src/assets/scss/index.scss'
 import { mobileToobBar, uploadConfig } from '@/config/vditor.config'
 import captchaKey from '@/components/captchaKey'
+import { BlogConfig } from '@/config/blog.config'
 export default {
   name: 'PostEdit',
   data() {
     return {
+      BlogConfig,
       contentEditor: '',
       screenWidth: document.body.clientWidth,
       captchaKey: '',
@@ -45,8 +55,20 @@ export default {
       post: {
         banner: '',
         title: '',
-        content: ''
+        content: '',
+        user: {
+          avatar_img: null,
+          nickname: null,
+          username: null
+        }
       }
+    }
+  },
+  created() {
+    if (this.$route.params.id.toLowerCase() === 'new') {
+      this.post.user.avatar_img = this.$store.state.profile.avatar_img
+      this.post.user.nickname = this.$store.state.profile.nickname
+      this.post.user.username = this.$store.state.profile.username
     }
   },
   mounted() {
@@ -58,6 +80,9 @@ export default {
       if (res.status === 'ok') {
         this.contentEditor.setValue(res.content_md)
         this.post.title = res.title
+        this.post.user.avatar_img = res.user.avatar_img
+        this.post.user.nickname = res.user.nickname
+        this.post.user.username = res.user.username
         if (res.header_img !== undefined && res.header_img !== '') {
           this.bannerIMG = res.header_img
         }
@@ -66,6 +91,14 @@ export default {
         this.$noty.error(res.msg, {
           killer: true
         })
+      }
+    },
+    imgError(type) {
+      if (type === 'avatar') {
+        this.post.user.avatar_img = BlogConfig.defaultAvatar
+      }
+      if (type === 'banner') {
+        this.post.header_img = BlogConfig.defaultBanner
       }
     },
     setupEditor () {

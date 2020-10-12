@@ -21,8 +21,10 @@
       <div id="search" :class="search_open" @mousedown="isSearchOpen()" >
         <div id="search-box" @mousedown="isSearchOpen()">
           <div  id="search-title">想要搜点什么呢?</div>
-          <input v-model="searchValue" name="search_input" class="search_input" type="text" placeholder="Search..." @keydown.enter="search"/>
-          <div @click="search" id="search-btn"><font-awesome-icon :icon="['fas', 'search']" /></div>
+          <div id="search-content">
+            <input v-model="searchValue" name="search_input" class="search_input" type="text" placeholder="Search..." @keydown.enter="search"/>
+            <div @click="search" id="search-btn"><font-awesome-icon :icon="['fas', 'search']" /></div>
+          </div>
         </div>
       </div>
       <router-link to="/" tag="a"><li><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
