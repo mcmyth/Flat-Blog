@@ -1,0 +1,32 @@
+$font-color: #444
+$foreground-color: #2196f3
+$background-color: #414141
+$small-width: 410px
+#account-container
+  color: $background-color
+  background: linear-gradient(45deg, rgba(66, 183, 245, 0.8) 0%, rgba(66, 245, 189, 0.4) 100%)
+  width: 100vw
+  height: 100vh
+  position: absolute
+  top: 0
+  left: 0
+  font-size: 15px
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  font-family: sans-serif
+  #account-content
+    width: 600px
+    border-radius: 5px
+    background-color: white
+    overflow: hidden
+    position: relative
+    height: 520px
+    max-height: 90vh
+    overflow-y: auto
+    transition: height .2s ease-in-out
+    max-width: 90vw
+    @media screen and (max-width: $small-width)
+      height: 90vh !important
+      width: 90vw

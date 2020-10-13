@@ -36,6 +36,11 @@ const routes = [
     component: () => import('../views/PostEdit')
   },
   {
+    path: '/Verification',
+    name: 'Verification',
+    component: () => import('../views/Verification')
+  },
+  {
     path: '/404',
     name: '404',
     component: () => import('../components/Error404')

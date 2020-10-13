@@ -1,7 +1,7 @@
 <template>
   <div id="post-container">
     <div id="post-body">
-      <div id="header-img"><img @error="imgError('banner')" :src="post.header_img"/></div>
+      <div id="header-img" ><img  @error="imgError('banner')" :src="post.header_img"/></div>
       <div id="post-header">
         <div id="post-title">{{post.title}}</div>
         <div id="post-avatar">
@@ -169,6 +169,8 @@ export default {
     this.setupPost()
     this.setupComment()
   },
+  mounted() {
+  },
   components: {
     ConfirmDialog,
     BlackMask,
@@ -177,6 +179,6 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
   @import "src/assets/style/views/Post"
 </style>

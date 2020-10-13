@@ -32,7 +32,12 @@
           </div>
           <div class="edit-container-item password">
             <span>更改邮箱</span>
-            <button>发送验证邮件</button>
+            <div id="change-email">
+              <span v-if="profile.email_verified === 0">*您的邮箱还未验证,如果邮箱有误请修改</span>
+              <input class="readonly"  v-if="profile.email_verified === 1" type="text" :value="this.profile.email" readonly>
+              <input  v-else  type="text" v-model="email">
+              <button @click="changeEmail">发送验证邮件</button>
+            </div>
           </div>
         </div>
       </div>
@@ -108,6 +113,7 @@ export default {
   data() {
     return {
       imgTransform: '555',
+      email: null,
       profile: {},
       isProfileEditorActive: 'disable',
       bannerImg: null,
@@ -147,6 +153,7 @@ export default {
       if (this.bannerImg === undefined) {
         this.bannerImg = BlogConfig.defaultBanner
       }
+      this.email = this.profile.email
     },
     imgError(type) {
       if (type === 'avatar') {
@@ -182,7 +189,6 @@ export default {
     },
     openProfileEditor() {
       this.$refs.headerEditor.scrollTop = 0
-      console.log(this.$refs.headerEditor)
       if (this.isMe) this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
     },
     beforeUpload(type) {
@@ -208,6 +214,27 @@ export default {
           killer: true
         })
       }
+    },
+    async changeEmail() {
+      if (this.profile.email_verified === 0) {
+        const res = await this.$post('user/verification', {
+          type: 'email',
+          id: this.profile.id,
+          email: this.email
+        })
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+      }
+      if (this.profile.email_verified === 1) {
+        const res = await this.$post('user/verification', {
+          type: 'email',
+          id: this.profile.id
+        })
+        this.$noty.success(res.msg, {
+          killer: true
+        })
+      }
     }
   },
   components: {
@@ -219,7 +246,7 @@ export default {
     if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
-      if (this.$route.params.id === this.profile.username) {
+      if (this.$route.params.id === this.$store.state.profile.username) {
         // is Me
         this.profile = this.$store.state.profile
         this.isMe = true
