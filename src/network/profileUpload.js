@@ -11,14 +11,14 @@ export const upload = (source, evnet, type) => {
         if (type === 'banner_img') {
           const link = res.link + '?ramdom=' + Math.random() * 10
           source.bannerImg = link
-          source.$store.commit('updateProfile', {
+          source.$store.commit('updateProfileImg', {
             type,
             link
           })
         }
         if (type === 'avatar_img') {
           const link = source.avatarImg = res.link + '?ramdom=' + Math.random() * 10
-          source.$store.commit('updateProfile', {
+          source.$store.commit('updateProfileImg', {
             type,
             link
           })

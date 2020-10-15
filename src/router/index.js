@@ -36,9 +36,19 @@ const routes = [
     component: () => import('../views/PostEdit')
   },
   {
-    path: '/Verification',
+    path: '/verification',
     name: 'Verification',
     component: () => import('../views/Verification')
+  },
+  {
+    path: '/pwd',
+    name: 'Verification',
+    component: () => import('../views/Password')
+  },
+  {
+    path: '/email',
+    name: 'Email',
+    component: () => import('../views/Email')
   },
   {
     path: '/404',

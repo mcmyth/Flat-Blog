@@ -27,7 +27,7 @@
           <div id="pw-group" >
 <!--            <span><el-checkbox id="remember">REMEMBER ME</el-checkbox></span>-->
             <span><input type="checkbox" id="remember" ref="remember" name="remember"><label for="remember">REMEMBER ME</label></span>
-            <span>FORGOT?</span>
+            <router-link tag="a" to="/pwd">FORGOT?</router-link>
           </div>
           <button id="login-button" @click="login">LOGIN</button>
         </div>
@@ -85,6 +85,7 @@ export default {
       this.password = ''
     },
     refreshCaptchaKey() {
+      this.captchaKey = ''
       if (this.isRegisterActive === '') {
         this.$refs.LoginCaptchaKey.refreshCaptchaKey()
       } else {
@@ -113,7 +114,7 @@ export default {
         } else {
           localStorage.removeItem('account')
         }
-        this.$router.push('/')
+        await this.$router.push('/')
       } else {
         this.$noty.error(res.msg, {
           killer: true
@@ -133,8 +134,10 @@ export default {
           killer: true
         })
         localStorage.setItem('accessToken', res.token)
+        this.$store.commit('setToken', res.token)
         this.$store.commit('updateLoginState')
-        this.$router.push('/')
+        this.$store.commit('updateProfile')
+        await this.$router.push('/')
       } else {
         this.$noty.error(res.msg, {
           killer: true

@@ -7,11 +7,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import VueNoty from 'vuejs-noty'
 import 'vuejs-noty/dist/vuejs-noty.css'
+import xss from 'xss'
 // import { far } from '@fortawesome/free-regular-svg-icons'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 // import ElementUi from 'element-ui'
 import { get, post } from './network/network'
 import cookie from 'vue-cookie'
+Vue.prototype.xss = xss
 Vue.prototype.$cookie = cookie
 Vue.prototype.$get = get
 Vue.prototype.$post = post

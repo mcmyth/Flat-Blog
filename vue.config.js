@@ -10,6 +10,21 @@ module.exports = {
       .use('pug-html-loader')
       .loader('pug-html-loader')
       .end()
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .loader('vue-loader')
+      .tap(options => {
+        options.compilerOptions.directives = {
+          html(node, directiveMeta) {
+            (node.props || (node.props = [])).push({
+              name: 'innerHTML',
+              value: `xss(_s(${directiveMeta.value}))`
+            })
+          }
+        }
+        return options
+      })
     if (process.env.use_analyzer) {
       config
         .plugin('webpack-bundle-analyzer')

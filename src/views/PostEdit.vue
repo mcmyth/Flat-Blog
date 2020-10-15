@@ -151,6 +151,7 @@ export default {
           killer: true
         })
       } else {
+        this.captchaKey = ''
         this.$noty.error(res.msg, {
           killer: true
         })

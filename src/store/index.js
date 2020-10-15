@@ -24,12 +24,7 @@ export default new Vuex.Store({
     },
     getProfile(state) {
       if (state.token !== '' && state.profile.s === null) {
-        state.profile.s = 'ok'
-        Vue.prototype.$get(state.apiURL + 'user/profile', {
-          headers: { Authorization: state.token }
-        }).then(res => {
-          state.profile = res
-        })
+        this.commit('updateProfile')
       }
     },
     defaultProfile(state) {
@@ -40,9 +35,18 @@ export default new Vuex.Store({
     setLoadingStatus (state, isLoading) {
       state.isLoading = isLoading
     },
-    updateProfile(state, options) {
+    updateProfileImg(state, options) {
       if (options.type === 'banner_img') state.profile.banner_img = options.link
       if (options.type === 'avatar_img') state.profile.avatar_img = options.link
+    },
+    updateProfile(state) {
+      state.profile.s = 'ok'
+      Vue.prototype.$get(state.apiURL + 'user/profile', {
+        headers: { Authorization: state.token }
+      }).then(res => {
+        console.log(res)
+        state.profile = res
+      })
     }
   },
   getters: {
