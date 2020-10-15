@@ -28,7 +28,7 @@
           </div>
           <div class="edit-container-item password">
             <span>修改密码</span>
-            <button>发送验证邮件</button>
+            <button  @click="changePassword">发送验证邮件</button>
           </div>
           <div class="edit-container-item password">
             <span>更改邮箱</span>
@@ -209,6 +209,7 @@ export default {
         this.$noty.success(res.msg, {
           killer: true
         })
+        await this.setupPost()
       } else {
         this.$noty.error(res.msg, {
           killer: true
@@ -235,6 +236,15 @@ export default {
           killer: true
         })
       }
+    },
+    async changePassword() {
+      const res = await this.$post('user/verification', {
+        type: 'password',
+        id: this.profile.id
+      })
+      this.$noty.success(res.msg, {
+        killer: true
+      })
     }
   },
   components: {

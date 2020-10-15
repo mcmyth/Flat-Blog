@@ -147,6 +147,13 @@ $small-width: 410px
           color: $foreground-color
           justify-content: flex-end
           text-align: right
+        a
+          text-decoration: none
+          color: $foreground-color !important
+          &:hover
+            text-decoration: underline
+          &:visited
+            color: unset
       #login-button
         @include button
 

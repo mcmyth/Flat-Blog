@@ -27,6 +27,55 @@ $small-width: 410px
     overflow-y: auto
     transition: height .2s ease-in-out
     max-width: 90vw
+    box-sizing: border-box
+    a
+      text-decoration: none
+      color: $foreground-color !important
+      &:hover
+        text-decoration: underline
+      &:visited
+        color: unset
+    #account-title
+      font-size: 1.6rem
+      color: $foreground-color
+      margin-bottom: 15px
     @media screen and (max-width: $small-width)
       height: 90vh !important
       width: 90vw
+  .logo
+    $size: 100px
+    position: relative
+    height: $size
+    width: $size
+    border-radius: 50%
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #ffffff
+    font-size: $size / 2
+    animation: jump 1s ease-in-out
+    &.ok
+      background-color: #4caf50
+    &.error
+      background-color: #EE5353
+  #description
+    margin-top: 30px
+    animation: fadeIn .4s ease-in-out
+    #description-title
+      font-size: 1.5rem
+@keyframes jump
+  0%
+    transform: scale(1.5)
+  25%
+    transform: scale(1.1)
+  50%
+    transform: scale(1.2)
+  100%
+    transform: scale(1)
+@keyframes fadeIn
+  0%
+    transform: translateY(20px)
+    opacity: 0
+  100%
+    opacity: 1
+    transform: translateY(0)
