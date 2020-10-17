@@ -147,7 +147,6 @@ export default {
     },
     async delComment(commentId) {
       const postId = Number(this.$route.params.id)
-      console.log(commentId, postId)
       const res = await this.$post('post/comment', {
         mode: 'del',
         post_id: postId,

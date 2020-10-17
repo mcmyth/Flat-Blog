@@ -1,14 +1,14 @@
 <template>
   <div id="login-container">
     <div id="account-box" :class="isRegisterActive">
-      <div id="login-tips">Register Here...</div>
+      <div id="login-tips">Sign up here...</div>
       <div @click="changeRegisterActive" id="show-register-box"  :title="isRegisterActive === '' ? 'Register' : 'Login' ">
         <font-awesome-icon v-if="this.isRegisterActive === ''" class="menu-icon login" :icon="['fas', 'user-circle']" />
         <font-awesome-icon v-if="this.isRegisterActive === 'register-active'" class="menu-icon register" :icon="['fas', 'times']" />
       </div>
       <!--Login UI-->
       <div id="login-box">
-        <div id="login-title">ACCOUNT LOGIN</div>
+        <div id="login-title">SIGN IN</div>
         <div id="login-form">
           <div id="login-username">
             USERNAME<br/>
@@ -34,7 +34,7 @@
       </div>
       <!--Register UI-->
       <div :class="isRegisterActive" id="register-box">
-        <div id="register-title">REGISTER ACCOUNT</div>
+        <div id="register-title">SING UP</div>
         <div id="register-form">
           <div id="register-username">
             USERNAME<br/>

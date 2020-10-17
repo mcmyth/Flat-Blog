@@ -253,6 +253,7 @@ export default {
     ConfirmDialog
   },
   async created() {
+    if (!this.$store.state.isLogin && this.$route.params.id === undefined) await this.$router.push('/login')
     if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
     const token = localStorage.getItem('accessToken')
     if (token !== null) {
@@ -273,6 +274,11 @@ export default {
       this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
       this.setupProfile()
       await this.setupPost()
+      if (this.profile.status === 'error') {
+        this.$noty.error(this.profile.msg, {
+          killer: true
+        })
+      }
     }
   },
   watch: {

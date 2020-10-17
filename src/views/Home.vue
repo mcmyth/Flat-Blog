@@ -8,7 +8,7 @@
             <div class="post-content">
               <div class="post-avatar">
                 <a :href="'/profile/' + value.username">
-                  <img @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
+                  <img :title="value.username" @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
                 </a>
               </div>
               <div class="post-title"><a :href="'/post/' + value.id">{{ value.title }}</a></div>
@@ -19,7 +19,7 @@
               <div class="post-footer">
                 <div class="post-detail">
             <span class="post-time">
-              <font-awesome-icon class="menu-icon login"  :icon="['fas', 'clock']" />
+              <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
               {{ value.update_date }}
             </span>
                   <span class="post-author">
@@ -46,7 +46,7 @@
           </div>
           <div id="user-avatar"><img @error="imgError('avatar')" :src="profile.avatar_img"/></div>
           <div id="user-nickname">{{profile.nickname}}</div>
-          <div id="user-username">{{profile.username}}</div>
+          <div id="user-username">{{$store.state.isLogin ? '@' + profile.username : '未登录'}}</div>
           <a :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
         </div>
     </div>
