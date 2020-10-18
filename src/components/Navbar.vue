@@ -2,7 +2,8 @@
 <div id="navbar">
     <nav id="main-menubar" class="main-menubar-color">
     <div id="menu-header">
-      <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><img @error="imgError('avatar')" :src="profile.avatar_img" class="logo" alt="avatar">
+      <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
+        <img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="profile.avatar_img" class="logo" alt="avatar">
       <span id="name">{{  $store.state.isLogin ? profile.nickname : $store.state.blogName }}</span>
       </a>
     </div>
@@ -12,7 +13,7 @@
     <ul :class="menu_open" id="menu-items">
       <div id="mobile_logo_container">
         <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
-        <img @error="imgError('avatar')"  :src="profile.avatar_img" :class="'logo ' + menu_open" alt="avatar">
+        <img onload="this.style.opacity = 1" @error="imgError('avatar')"  :src="profile.avatar_img" :class="'logo ' + menu_open" alt="avatar">
         </a>
         <a class="profile" :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
         <span id="username">{{  $store.state.isLogin ? $store.state.profile.nickname : $store.state.blogName }}</span>

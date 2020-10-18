@@ -45,9 +45,9 @@
     <div id="user">
         <div class="user-panel" id="user-main">
           <div id="user-image">
-            <img id="user-banner" @error="imgError('banner')"  :src="profile.banner_img"/>
+            <img id="user-banner" onload="this.style.opacity = 1" @error="imgError('banner')"  :src="profile.banner_img"/>
           </div>
-          <div id="user-avatar"><img @error="imgError('avatar')" :src="profile.avatar_img"/></div>
+          <div id="user-avatar"><img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="profile.avatar_img"/></div>
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{$store.state.isLogin ? '@' + profile.username : '未登录'}}</div>
           <a :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>

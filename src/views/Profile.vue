@@ -43,7 +43,7 @@
       </div>
       <img @error="imgError('banner')" id="banner" :style="'transform:' + imgTransform" :src="bannerImg === null ? $store.state.profile.banner_img : bannerImg" height="1080" width="1920" alt="header"/>
       <div @click="openProfileEditor" id="avatar">
-        <img @error="imgError('avatar')" :src="avatarImg === null ? $store.state.profile.avatar_img : avatarImg" height="512" width="512"/>
+        <img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="avatarImg === null ? $store.state.profile.avatar_img : avatarImg"/>
         <div v-if="isMe" id="avatar-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></div>
       </div>
     </div>
