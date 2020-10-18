@@ -1,4 +1,16 @@
 @import "/src/assets/style/public"
+$small-width: 850px
+@mixin new_post
+  float: right
+  color: $foreground-color
+  display: flex
+  align-items: center
+  cursor: pointer
+  user-select: none
+  &:hover
+    color: darken($foreground-color, 10%)
+  & svg
+    font-size: 12px
 #home-container
   display: flex
   width: 75vw
@@ -15,6 +27,86 @@
     border: 10px
     box-sizing: border-box
     padding-top: 16px
+    #user-post
+      padding: 0 35px
+      .user-post-tips-top
+        display: none
+        @media screen and (max-width: $small-width)
+          display: inline
+      .user-post-tips
+        @media screen and (max-width: $small-width)
+          display: none
+      #post-list
+        max-height: 250px
+        transition: max-height .3s ease-in-out
+        overflow: hidden
+        clear: both
+        ul
+          margin: 5px 0 0 0
+          padding: 0
+          li
+            line-height: 15px
+            font-size: 1rem
+            color: #8a8a8a
+            padding: 10px 0
+            word-break: break-all
+            border-bottom: dashed 1px #bababa
+            a
+              color: #8a8a8a
+              &:hover
+                color: $foreground-color
+        .post-list-new
+          @include new_post
+        @media screen and (max-width: $small-width)
+          .post-list-new
+            display: none !important
+        #post-list-title
+          color: $foreground-color
+          display: none
+          align-items: center
+        @media screen and (min-width: $small-width)
+          max-height: 1000px !important
+          #post-list-title
+            display: inline-block !important
+      #show-post
+        visibility: hidden
+        position: absolute
+        & + label
+          color: $foreground-color
+          user-select: none
+          visibility: hidden
+          & span
+            cursor: pointer
+          .user-post-tips
+            pointer-events: none
+          @media screen and (max-width: 300px)
+            .user-post-option
+              display: flex !important
+              flex-direction: column
+              letter-spacing: 2px
+              width: 100%
+              text-align: center
+              float: none
+              margin-bottom: 5px
+          .post-list-new
+            display: none
+            float: right
+            @include new_post
+          @media screen and (max-width: $small-width)
+            visibility: visible
+            .post-list-new
+              display: inline-block
+          &:hover
+            color: darken($foreground-color, 10%)
+        & + label .icon-arrow
+          transition: transform .3s linear
+          transform-origin: 50% 50%
+          transform: rotate(180deg)
+        &:checked + label .icon-arrow
+          transform: rotate(0deg)
+          display: inline-block
+      #show-post:checked ~ #post-list
+        max-height: 0
     a
       text-decoration: none
     .user-panel
@@ -174,8 +266,11 @@
     margin-top: 10px
     @include button
     width: 80%
+    margin-bottom: 0
+    @media screen and (max-width: $small-width)
+      margin-bottom: 15px
 
-@media screen and (max-width: 850px)
+@media screen and (max-width: $small-width)
   #home-container
     flex-direction: column
     margin: 20px auto !important

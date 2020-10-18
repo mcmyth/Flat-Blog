@@ -53,6 +53,22 @@
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{$store.state.isLogin ? '@' + profile.username : '未登录'}}</div>
           <a :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
+          <div id="user-post">
+            <span class="user-post-tips-top"><span v-if="!userPostIsNull">来写篇文章吧 <font-awesome-icon class="icon-arrow" :icon="['fas', 'angle-right']" /></span></span>
+            <input type="checkbox" id="show-post" checked/>
+            <label for="show-post">
+              <span class="user-post-option"><span v-if="userPostIsNull">最近文章 <font-awesome-icon class="icon-arrow" :icon="['fas', 'angle-up']" /></span></span>
+              <span class="user-post-option"><router-link tag="a" to="/postedit/new" class="post-list-new">发表文章 <font-awesome-icon class="icon-plus" :icon="['fas', 'plus']" /></router-link></span>
+            </label>
+            <div id="post-list">
+              <span id="post-list-title" v-if="userPostIsNull">最近文章</span>
+              <span class="user-post-tips"><span v-if="!userPostIsNull">来写篇文章吧 <font-awesome-icon class="icon-arrow" :icon="['fas', 'angle-right']" /></span></span>
+              <router-link tag="a" to="/postedit/new" class="post-list-new">发表文章 <font-awesome-icon class="icon-plus" :icon="['fas', 'plus']" /></router-link>
+              <ul>
+                <li v-for="(item, index) in userPost" :key="index"><router-link :to="'/post/' + item.id" tag="a">{{ item.title }}</router-link></li>
+              </ul>
+            </div>
+          </div>
         </div>
     </div>
   </div>
@@ -69,11 +85,17 @@ export default {
       page_count: null,
       profile: {},
       post: null,
+      userPost: [],
       BlogConfig: null
     }
   },
   components: {
     PageButton
+  },
+  computed: {
+    userPostIsNull() {
+      return (this.userPost.length > 0)
+    }
   },
   methods: {
     imgError(type) {
@@ -101,6 +123,8 @@ export default {
         this.post = res.post
         this.page_count = res.page_count
       }
+      res = await this.$get(`post/user?page=1&id=${this.profile.id}`)
+      this.userPost = res.post.slice(0, 5)
     }
   },
   mounted() {
