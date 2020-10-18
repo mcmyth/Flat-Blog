@@ -256,13 +256,17 @@ export default {
           // is Me
           this.profile = this.$store.state.profile
           this.isMe = true
+          this.profile.email = this.$store.state.profile.email
           this.setupProfile()
           await this.setupPost()
         } else {
           // is Not Me
           await this.setupPost()
           this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
-          if (this.profile.id === this.$store.state.profile.id) { this.isMe = true } else { this.isMe = false }
+          if (this.profile.id === this.$store.state.profile.id) {
+            this.isMe = true
+            this.profile.email = this.$store.state.profile.email
+          } else { this.isMe = false }
           this.setupProfile()
         }
       } else {

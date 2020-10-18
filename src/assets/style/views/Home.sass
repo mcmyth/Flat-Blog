@@ -11,7 +11,7 @@
     margin-bottom: 30px
     width: 80vw
   #user
-    width: 300px
+    width: 400px
     border: 10px
     box-sizing: border-box
     padding-top: 16px
@@ -36,6 +36,8 @@
           top: 50%
           min-width: 120%
           height: 120%
+          object-fit: cover
+          object-position: left center
       #user-avatar
         $avatar-size: 70px
         border-radius: 50%
@@ -47,9 +49,12 @@
         top: 130px
         left: 50%
         transform: translateX(-50%)
+        background-color: white
         img
           height: $avatar-size
           width: $avatar-size
+          object-fit: cover
+          object-position: left center
     #user-nickname
       font-weight: bold
       font-size: 1.1rem
@@ -61,6 +66,18 @@
 #posts
   position: relative
   margin: 15px 30px 0 0
+  #void-content
+    text-align: center
+    background-color: white
+    box-shadow: rgba(0, 0, 0, 0.09) 5px 5px 0
+    border-radius: 15px
+    height: calc(100vh - 220px)
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #8d949d
+    font-size: 1.5rem
+    #void-title
   .post-content
     .post-avatar
       width: 30px

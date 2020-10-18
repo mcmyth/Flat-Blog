@@ -97,6 +97,7 @@ export default {
       // })
       // query = '?s=' + this.searchValue + '&' + query.substr(0, query.length - 1)
       // location.href = location.protocol + '//' + location.host + location.pathname + query
+      this.$store.commit('setLoadingStatus', true)
       if (/\/profile/.test(this.$route.path) !== true || /\/profile/.test(this.$route.path) !== true) {
         this.$router.push('/')
       }

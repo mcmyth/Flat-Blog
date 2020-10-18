@@ -2,6 +2,9 @@
   <div id="home-container">
     <div id="content">
       <div id="posts">
+        <div id="void-content" v-show="postIsNull">
+          <span id="void-title">空空如也~~</span>
+        </div>
         <div v-for="(value, index) in post" :key="index" class="post-container">
           <div class="post-image"><img @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/></div>
           <div class="post">
@@ -36,7 +39,7 @@
             </div>
           </div>
         </div>
-        <PageButton :maxpage="page_count"></PageButton>
+        <PageButton v-show="!postIsNull" :maxpage="page_count"></PageButton>
       </div>
     </div>
     <div id="user">
@@ -60,6 +63,7 @@ export default {
   name: 'Home',
   data() {
     return {
+      postIsNull: null,
       page_count: null,
       profile: {},
       post: null,
@@ -90,6 +94,7 @@ export default {
       }
       if (res.post.length <= 0) {
         this.page_count = 1
+        this.postIsNull = true
       } else {
         this.post = res.post
         this.page_count = res.page_count
