@@ -147,6 +147,10 @@ $min-page-width: 70vw
         width: 100%
         height: 100%
         border-radius: 50%
+        object-fit: cover
+        object-position: left center
+        opacity: 0
+        transition: opacity .1s ease-in-out
       &:hover + #nickname
         transform: translateX(-0) !important
         transition: transform .3s ease-in-out , opacity .3s ease-in-out !important
@@ -203,6 +207,10 @@ $min-page-width: 70vw
             vertical-align: middle
             margin-right: 10px
             cursor: pointer
+            object-fit: cover
+            object-position: left center
+            opacity: 0
+            transition: opacity .1s ease-in-out
           a:visited
             color: unset
         @media screen and (max-width: 400px)

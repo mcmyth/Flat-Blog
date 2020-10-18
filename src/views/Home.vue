@@ -6,12 +6,14 @@
           <span id="void-title">空空如也~~</span>
         </div>
         <div v-for="(value, index) in post" :key="index" class="post-container">
-          <div class="post-image"><img @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/></div>
+          <div class="post-image">
+            <img onload="this.style.opacity = 1" @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/>
+          </div>
           <div class="post">
             <div class="post-content">
               <div class="post-avatar">
                 <a :href="'/profile/' + value.username">
-                  <img :title="value.username" @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
+                  <img onload="this.style.opacity = 1" :title="value.username" @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
                 </a>
               </div>
               <div class="post-title"><a :href="'/post/' + value.id">{{ value.title }}</a></div>

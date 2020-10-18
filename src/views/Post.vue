@@ -6,7 +6,7 @@
         <div id="post-title">{{post.title}}</div>
         <div id="post-avatar">
           <a :href="'/profile/' + post.user.username">
-            <img  @error="imgError('avatar')" :src="post.user.avatar_img"/>
+            <img onload="this.style.opacity = 1"  @error="imgError('avatar')" :src="post.user.avatar_img"/>
           </a>
         </div>
         <div id="nickname">{{post.user.nickname}}</div>
@@ -32,7 +32,7 @@
           <div class="post-comment-header">
             <span class="avatar">
               <a :href="'/profile/' + value.user.username">
-              <img @error="avatarImgError(index)" :src="value.user.avatar_img" :id="'comment_avatar_' + index" height="512" width="512"/>
+              <img onload="this.style.opacity = 1" @error="avatarImgError(index)" :src="value.user.avatar_img" :id="'comment_avatar_' + index"/>
               <span class="comment-nickname">{{ value.user.nickname }}</span>
                 </a>
             </span>
