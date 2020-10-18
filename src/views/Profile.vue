@@ -34,7 +34,7 @@
             <span>更改邮箱</span>
             <div id="change-email">
               <span v-if="profile.email_verified === 0">*您的邮箱还未验证,如果邮箱有误请修改</span>
-              <input class="readonly"  v-if="profile.email_verified === 1" type="text" :value="this.profile.email" readonly>
+              <input class="readonly"  v-if="profile.email_verified === 1" type="text" :value="profile.email" readonly>
               <input  v-else  type="text" v-model="email">
               <button @click="changeEmail">发送验证邮件</button>
             </div>
@@ -188,8 +188,9 @@ export default {
       this.postCursor = id
     },
     openProfileEditor() {
+      if (!this.isMe) return
       this.$refs.headerEditor.scrollTop = 0
-      if (this.isMe) this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
+      this.isProfileEditorActive = this.isProfileEditorActive === 'disable' ? 'active' : 'disable'
     },
     beforeUpload(type) {
       if (type === 'banner_img') {
@@ -245,6 +246,35 @@ export default {
       this.$noty.success(res.msg, {
         killer: true
       })
+    },
+    async loadProfile() {
+      if (!this.$store.state.isLogin && this.$route.params.id === undefined) await this.$router.push('/login')
+      if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
+      const token = localStorage.getItem('accessToken')
+      if (token !== null) {
+        if (this.$route.params.id === this.$store.state.profile.id) {
+          // is Me
+          this.profile = this.$store.state.profile
+          this.isMe = true
+          this.setupProfile()
+          await this.setupPost()
+        } else {
+          // is Not Me
+          await this.setupPost()
+          this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
+          if (this.profile.id === this.$store.state.profile.id) { this.isMe = true } else { this.isMe = false }
+          this.setupProfile()
+        }
+      } else {
+        this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
+        this.setupProfile()
+        await this.setupPost()
+        if (this.profile.status === 'error') {
+          this.$noty.error(this.profile.msg, {
+            killer: true
+          })
+        }
+      }
     }
   },
   components: {
@@ -252,54 +282,8 @@ export default {
     BlackMask,
     ConfirmDialog
   },
-  async created() {
-    if (!this.$store.state.isLogin && this.$route.params.id === undefined) await this.$router.push('/login')
-    if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
-    const token = localStorage.getItem('accessToken')
-    if (token !== null) {
-      if (this.$route.params.id === this.$store.state.profile.username) {
-        // is Me
-        this.profile = this.$store.state.profile
-        this.isMe = true
-        this.setupProfile()
-        await this.setupPost()
-      } else {
-        // is Not Me
-        this.isMe = false
-        await this.setupPost()
-        this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
-        this.setupProfile()
-      }
-    } else {
-      this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
-      this.setupProfile()
-      await this.setupPost()
-      if (this.profile.status === 'error') {
-        this.$noty.error(this.profile.msg, {
-          killer: true
-        })
-      }
-    }
-  },
-  watch: {
-    '$store.state.profile': {
-      deep: true,
-      handler: function (newValue, oldValue) {
-        if (newValue !== null) {
-          if (this.$route.params.id === this.$store.state.profile.username) {
-            // is Me
-            this.isMe = true
-            this.profile = newValue
-          } else {
-            // is Not Me
-            this.isMe = false
-          }
-        }
-      }
-    },
-    $route(to, from) {
-      this.setupPost()
-    }
+  created() {
+    this.loadProfile()
   }
 }
 </script>

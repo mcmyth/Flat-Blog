@@ -44,7 +44,6 @@ export default new Vuex.Store({
       Vue.prototype.$get(state.apiURL + 'user/profile', {
         headers: { Authorization: state.token }
       }).then(res => {
-        console.log(res)
         state.profile = res
       })
     }
