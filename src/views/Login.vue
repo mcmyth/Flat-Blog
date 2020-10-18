@@ -136,8 +136,8 @@ export default {
         localStorage.setItem('accessToken', res.token)
         this.$store.commit('setToken', res.token)
         this.$store.commit('updateLoginState')
-        this.$store.commit('updateProfile')
-        await this.$router.push('/')
+        await this.$store.dispatch('updateProfile')
+        await this.$router.push('/setup')
       } else {
         this.$noty.error(res.msg, {
           killer: true
