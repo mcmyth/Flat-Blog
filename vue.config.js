@@ -1,3 +1,6 @@
+// const PrerenderSPAPlugin = require('prerender-spa-plugin')
+// const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
+// const path = require('path')
 module.exports = {
   chainWebpack: config => {
     config.module
@@ -5,11 +8,11 @@ module.exports = {
       .use('url-loader')
       .loader('url-loader')
       .tap(options => Object.assign(options, { limit: 20000 }))
-    config.module.rule('pug')
-      .test(/\.pug$/)
-      .use('pug-html-loader')
-      .loader('pug-html-loader')
-      .end()
+    // config.module.rule('pug')
+    //   .test(/\.pug$/)
+    //   .use('pug-html-loader')
+    //   .loader('pug-html-loader')
+    //   .end()
     config.module
       .rule('vue')
       .use('vue-loader')
@@ -30,6 +33,26 @@ module.exports = {
         .plugin('webpack-bundle-analyzer')
         .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
     }
+    // npm install prerender-spa-plugin -S
+    // if (process.env.NODE_ENV !== 'production') return
+    // config
+    //   .plugin('prerender-spa-plugin')
+    //   .use(PrerenderSPAPlugin)
+    //   .init(Plugin => new Plugin({
+    //     staticDir: path.join(__dirname, 'dist'),
+    //     routes: [
+    //       '/',
+    //       '/login'
+    //     ],
+    //     renderer: new Renderer({
+    //       renderAfterDocumentEvent: 'render-event',
+    //       renderAfterElementExists: '#app',
+    //       timeout: 2000,
+    //       // maxConcurrentRoutes: 5,
+    //       renderAfterTime: 5000,
+    //       headless: false
+    //     })
+    //   }))
   },
   css: {
     sourceMap: true
