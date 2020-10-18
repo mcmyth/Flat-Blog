@@ -1,0 +1,111 @@
+@import "src/assets/style/views/Account"
+@import "src/assets/style/public"
+#account-content
+  padding: 20px 20px
+  overflow: hidden
+  .black-mask
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-radius: 10px
+    transition: background-color .3s ease-in-out
+    background-color: rgba(0,0,0,.2)
+    .icon-container
+      text-align: center
+      margin-bottom: 5px
+  .item-title
+    font-size: .9rem
+    color: $foreground-color
+    margin: 5px 0
+    display: block
+  #header-banner
+    width: 100%
+    height: 150px
+    background-color: #d7e0ee
+    border-radius: 10px
+    color: white
+    margin: 20px auto
+    font-size: 1.2rem
+    cursor: pointer
+    background-size: cover
+    &:hover .black-mask
+      background-color: rgba(0,0,0,.3)
+    .icon-container
+      font-size: 50px
+  #avatar-container
+    flex: 1
+    display: flex
+    align-items: center
+    order: 2
+    #upload-avatar-text
+      font-size: .9rem
+  #avatar
+    width: 128px
+    height: 128px
+    border-radius: 50%
+    background-color: #bec8d6
+    color: white
+    overflow: hidden
+    cursor: pointer
+    background-size: cover
+    &:hover .black-mask
+      background-color: rgba(0,0,0,.3)
+    .icon-container
+      font-size: 30px
+  #profile
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin: 30px 0
+    @media screen and (max-width: 600px)
+      flex-direction: column
+      #avatar-container
+        display: flex
+        justify-content: center
+        order: 1
+      #username
+        text-align: center
+        order: 2
+  #username
+    order: 1
+    flex: 1.8
+    .item-title
+      margin-top: 10px
+      display: block
+    .tips
+      font-size: .8rem
+      color: #868686
+      width: 100%
+      display: inline-block
+    input
+      @include input
+      max-width: 150px
+      display: inline-block
+      margin: 15px 10px 0 0
+    button
+      @include button
+      margin: 15px 0
+      padding: 10px 20px
+      display: inline-block
+#change-email
+  margin: 30px 0 30px 0
+  .tips
+    font-size: .8rem
+    display: block
+    color: #ee4b4b
+  input
+    @include input
+    max-width: 150px
+    margin: 10px 10px 0 0
+  button
+    @include button
+    display: inline-block
+    padding: 10px 20px
+#complete
+  @include button
+  padding: 10px 20px
+  width: 80%
+  margin: 30px auto 0 auto

@@ -42,13 +42,18 @@ const routes = [
   },
   {
     path: '/pwd',
-    name: 'Verification',
+    name: 'Password',
     component: () => import('../views/Password')
   },
   {
     path: '/email',
     name: 'Email',
     component: () => import('../views/Email')
+  },
+  {
+    path: '/setup',
+    name: 'Setup',
+    component: () => import('../views/Setup')
   },
   {
     path: '/404',

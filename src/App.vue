@@ -16,7 +16,7 @@ export default {
   name: 'App',
   data() {
     return {
-      noNavbar: ['/login', '/verification', '/pwd', '/email'],
+      noNavbar: ['/login', '/verification', '/pwd', '/email', '/setup'],
       isLoading: false
     }
   },
