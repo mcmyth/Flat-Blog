@@ -28,14 +28,14 @@
               {{ value.update_date }}
             </span>
                   <span class="post-author">
-                    <a :href="'/profile/' + value.username">
+                    <router-link tag="a" :to="'/profile/' + value.username">
                       <font-awesome-icon class="menu-icon login" :icon="['fas', 'user-circle']" />
                       {{ value.nickname }}
-                    </a>
+                    </router-link>
             </span>
                 </div>
                 <div class="footer-more">
-                  <a  :href="'/post/' + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
+                  <router-link tag="a"  :to="'/post/' + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></router-link>
                 </div>
               </div>
             </div>
@@ -65,7 +65,9 @@
               <span class="user-post-tips"><span v-if="!userPostIsNull">来写篇文章吧 <font-awesome-icon class="icon-arrow" :icon="['fas', 'angle-right']" /></span></span>
               <router-link tag="a" to="/postedit/new" class="post-list-new">发表文章 <font-awesome-icon class="icon-plus" :icon="['fas', 'plus']" /></router-link>
               <ul>
-                <li v-for="(item, index) in userPost" :key="index"><router-link :to="'/post/' + item.id" tag="a">{{ item.title }}</router-link></li>
+                <li v-for="(item, index) in userPost" :key="index">
+                  <router-link :to="'/post/' + item.id" tag="a"><font-awesome-icon class="icon-arrow" :icon="['fas', 'angle-right']" /> {{ item.title }}</router-link>
+                </li>
               </ul>
             </div>
           </div>

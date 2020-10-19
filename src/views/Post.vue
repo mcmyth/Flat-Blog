@@ -20,7 +20,9 @@
           </div>
         </div>
       </div>
-      <div id="post-context" v-html="post.content_html"></div>
+      <pre>
+        <div id="post-context" v-html="post.content_html"></div>
+      </pre>
       <div id="post-comment">
         <span id="submit-comment-title">有什么想说的吗?</span>
         <textarea @keypress.ctrl.enter="postComment" v-model="commentValue" name="" id="" cols="30" rows="10"></textarea>
@@ -110,6 +112,7 @@ export default {
         return
       }
       this.post = res
+      document.title = `${res.title} - ${this.BlogConfig.blogName}`
     },
     async setupComment() {
       this.comment = null

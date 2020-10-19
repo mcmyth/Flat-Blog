@@ -15,12 +15,13 @@ $small-width: 850px
   display: flex
   width: 75vw
   justify-content: center
-  margin: 70px auto 20px auto
+  margin: 20px auto 0 auto
   font-size: 15px
+  min-height: calc(100vh - 155px)
   #content
     font-size: 15px
     color: $font-color
-    margin-bottom: 30px
+    margin-bottom: 15px
     width: 80vw
   #user
     width: 400px
@@ -37,10 +38,12 @@ $small-width: 850px
         @media screen and (max-width: $small-width)
           display: none
       #post-list
-        max-height: 250px
-        transition: max-height .3s ease-in-out
+        max-height: 550px
         overflow: hidden
         clear: both
+        margin-bottom: 15px
+        @media screen and (max-width: $small-width)
+          transition: max-height .3s ease-in-out
         ul
           margin: 5px 0 0 0
           padding: 0
@@ -53,8 +56,8 @@ $small-width: 850px
             border-bottom: dashed 1px #bababa
             a
               color: #8a8a8a
-              &:hover
-                color: $foreground-color
+            &:hover a
+              color: $foreground-color
         .post-list-new
           @include new_post
         @media screen and (max-width: $small-width)
@@ -116,6 +119,19 @@ $small-width: 850px
       padding-bottom: 15px
       margin-bottom: 15px
       transition: box-shadow 0.3s ease-in-out
+      @media screen and (min-width: $small-width) and (min-height: 250px)
+        position: sticky
+        top: 100px
+        overflow-y: auto
+        max-height: calc(100vh - 200px)
+        &::-webkit-scrollbar-track
+          background-color: #E9E9E9
+        &::-webkit-scrollbar
+          width: 10px
+          background-color: #F5F5F5
+        &::-webkit-scrollbar-thumb
+          background-color: #00aaee
+          background-image: -webkit-gradient(linear, 0 0, 0 100%,color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent))
       &:hover
         box-shadow: rgba(0,0,0,.09) 7px 7px 0px
       #user-image
@@ -228,16 +244,14 @@ $small-width: 850px
         &:hover
           color: $foreground-color
     .post-detail
-      span:not(:last-child)
-        margin-right: 15px
+      margin: 10px 0
+      span
         display: inline-block
+        margin-right: 10px
   .post-footer
     margin-top: 15px
-    display: flex
-    align-items: center
     .post-detail
       flex: 2
-      font-size: .9rem
       a
         transition: color .2s ease-in-out
         &:hover
@@ -251,7 +265,7 @@ $small-width: 850px
       text-align: right
       a.post-more
         @include button
-        font-size: 10px
+        font-size: .9rem
         display: inline-block
         text-decoration: none
         padding: 8px 13px
@@ -273,7 +287,6 @@ $small-width: 850px
 @media screen and (max-width: $small-width)
   #home-container
     flex-direction: column
-    margin: 20px auto !important
     width: 90vw
   #content
     order: 2
@@ -302,7 +315,6 @@ $small-width: 850px
       width: 100%
       order: 2
       margin-top: 10px
-      font-size: 10px !important
       color: #aeaeae
     .footer-more
       order: 1

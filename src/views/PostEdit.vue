@@ -11,7 +11,7 @@
       </div>
       <div id="postedit-header">
         <span id="hashtag">#</span>
-        <input v-model="post.title" id="postedit-title" type="text" value="Title">
+        <input v-model="post.title" id="postedit-title" maxlength="255" type="text" value="Title">
         <div id="postedit-avatar">
           <a :href="'/profile/' + post.user.username">
             <img @error="imgError('avatar')" :src="post.user.avatar_img"/>
@@ -65,7 +65,9 @@ export default {
     }
   },
   created() {
+    if (!this.$store.state.isLogin) this.$router.push('/login')
     if (this.$route.params.id.toLowerCase() === 'new') {
+      document.title = `发表文章 - ${this.BlogConfig.blogName}`
       this.post.user.avatar_img = this.$store.state.profile.avatar_img
       this.post.user.nickname = this.$store.state.profile.nickname
       this.post.user.username = this.$store.state.profile.username
@@ -86,6 +88,7 @@ export default {
         if (res.header_img !== undefined && res.header_img !== '') {
           this.bannerIMG = res.header_img
         }
+        document.title = `${res.title} - ${this.BlogConfig.blogName}`
       } else {
         await this.$router.push('/postedit/new')
         this.$noty.error(res.msg, {

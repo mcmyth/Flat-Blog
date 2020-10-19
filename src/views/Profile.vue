@@ -112,6 +112,7 @@ export default {
   name: 'profile',
   data() {
     return {
+      BlogConfig,
       imgTransform: '555',
       email: null,
       profile: {},
@@ -154,6 +155,7 @@ export default {
         this.bannerImg = BlogConfig.defaultBanner
       }
       this.email = this.profile.email
+      document.title = `${this.profile.nickname} - ${this.BlogConfig.blogName}`
     },
     imgError(type) {
       if (type === 'avatar') {
@@ -207,6 +209,7 @@ export default {
       })
       if (res.status === 'ok') {
         this.profile.nickname = this.$refs.nickname.value
+        document.title = `${this.profile.nickname} - ${this.BlogConfig.blogName}`
         this.$noty.success(res.msg, {
           killer: true
         })
@@ -248,7 +251,10 @@ export default {
       })
     },
     async loadProfile() {
-      if (!this.$store.state.isLogin && this.$route.params.id === undefined) await this.$router.push('/login')
+      if (!this.$store.state.isLogin && this.$route.params.id === undefined) {
+        await this.$router.push('/login')
+        return
+      }
       if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
       const token = localStorage.getItem('accessToken')
       if (token !== null) {

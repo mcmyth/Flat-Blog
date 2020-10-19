@@ -7,6 +7,7 @@
         <font-awesome-icon v-if="this.isRegisterActive === 'register-active'" class="menu-icon register" :icon="['fas', 'times']" />
       </div>
       <!--Login UI-->
+      <router-link tag="span" to="/" id="back-to-home"><font-awesome-icon :icon="['fas', 'arrow-left']" /></router-link>
       <div id="login-box">
         <div id="login-title">SIGN IN</div>
         <div id="login-form">
@@ -65,10 +66,12 @@
 
 <script>
 import captchaKey from '@/components/captchaKey'
+import { BlogConfig } from '@/config/blog.config'
 export default {
   name: 'Login',
   data() {
     return {
+      BlogConfig,
       isRegisterActive: '',
       captchaKey: '',
       username: '',
@@ -146,6 +149,7 @@ export default {
     }
   },
   mounted() {
+    document.title = `登录 - ${this.BlogConfig.blogName}`
     this.refreshCaptchaKey()
     const rememberUser = JSON.parse(window.localStorage.getItem('account'))
     if (rememberUser !== null) {

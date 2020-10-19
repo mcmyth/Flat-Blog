@@ -21,7 +21,7 @@
       </div>
       <div id="search" :class="search_open" @mousedown="isSearchOpen()" >
         <div id="search-box" @mousedown="isSearchOpen()">
-          <div  id="search-title">想要搜点什么呢?</div>
+          <div  id="search-title">文章搜索</div>
           <div id="search-content">
             <input v-model="searchValue" name="search_input" class="search_input" type="text" placeholder="Search..." @keydown.enter="search"/>
             <div @click="search" id="search-btn"><font-awesome-icon :icon="['fas', 'search']" /></div>
@@ -31,11 +31,11 @@
       <router-link to="/" tag="a"><li><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
       <a href="javascript:void(0)" @click="Login">
         <li>
-          <font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />
+          <font-awesome-icon class="menu-icon" :icon=" ['fas', 'user']" />
           {{ $store.state.isLogin ? '登出' : '登录'}}
        </li>
       </a>
-      <a><li @click="isSearchOpen()"><font-awesome-icon class="menu-icon" :icon=" ['fas', 'home']" />搜索</li></a>
+      <a><li @click="isSearchOpen()"><font-awesome-icon class="menu-icon" :icon=" ['fas', 'search']" />搜索</li></a>
     </ul>
       <black-mask  @click.native="isMenuOpen" class="menubar-mask" :active="menu_open"></black-mask>
   </nav>

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
 import Home from '../views/Home'
+import { BlogConfig } from '@/config/blog.config'
 Vue.use(VueRouter)
 
 const routes = [
@@ -11,6 +12,9 @@ const routes = [
     component: Home
   },
   {
+    meta: {
+      title: '登录'
+    },
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login')
@@ -36,29 +40,36 @@ const routes = [
     component: () => import('../views/PostEdit')
   },
   {
+    meta: {
+      title: '账户验证'
+    },
     path: '/verification',
     name: 'Verification',
     component: () => import('../views/Verification')
   },
   {
+    meta: {
+      title: '更改密码'
+    },
     path: '/pwd',
     name: 'Password',
     component: () => import('../views/Password')
   },
   {
+    meta: {
+      title: '更改邮箱'
+    },
     path: '/email',
     name: 'Email',
     component: () => import('../views/Email')
   },
   {
+    meta: {
+      title: '完善资料'
+    },
     path: '/setup',
     name: 'Setup',
     component: () => import('../views/Setup')
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('../components/Error404')
   }
 ]
 
@@ -69,6 +80,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = `${to.meta.title} - ${BlogConfig.blogName}`
+  }
   const token = localStorage.getItem('accessToken')
   if (token !== null) {
     store.commit('setToken', token)

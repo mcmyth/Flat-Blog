@@ -35,6 +35,12 @@ $min-page-width: 70vw
       word-break: break-all
       margin: 15px 0
       color: #24292E
+      font-family: Helvetica,sans-serif
+      a
+        color: $foreground-color
+        text-decoration: none
+        &:hover
+          text-decoration: underline
       /deep/ img
         max-width: 100% !important
     #post-comment
@@ -61,7 +67,7 @@ $min-page-width: 70vw
         float: right
         margin: 0
         @include button
-        padding: 5px 15px
+        padding: 10px 20px
         margin-top: 10px !important
     #post-header
       position: relative
@@ -119,7 +125,7 @@ $min-page-width: 70vw
         display: inline-block
         font-size: 1.5rem
         margin-bottom: 10px
-        max-width: calc(100% - 40px)
+        max-width: calc(100% - 50px)
         color: #737373
         box-sizing: border-box
         word-break: break-all
