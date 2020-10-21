@@ -38,7 +38,7 @@
         <div id="register-title">SING UP</div>
         <div id="register-form">
           <div id="register-username">
-            USERNAME<br/>
+            USERNAME (UNCHANGEABLE)<br/>
             <input  v-model="username" id="reg-name" type="text">
             <label for="reg-name"><span>长度3-8且必须包含大写或小写字母,可包含数字或下划线</span></label>
           </div>

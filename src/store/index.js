@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    loaded: false,
     blogName: BlogConfig.blogName,
     apiURL: BlogConfig.apiURL,
     isLogin: false,
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setToken(state, token) {
       state.token = token
+    },
+    setLoadStatus(state, status) {
+      state.loaded = status
     },
     getProfile(state) {
       if (state.token !== '' && state.profile.s === null) {

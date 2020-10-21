@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: '/profile',
-    name: 'Profile',
+    name: 'DefaultProfile',
     component: () => import('../views/Profile')
   },
   {
@@ -83,6 +83,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = `${to.meta.title} - ${BlogConfig.blogName}`
   }
+  document.documentElement.scrollTop = 0
   const token = localStorage.getItem('accessToken')
   if (token !== null) {
     store.commit('setToken', token)

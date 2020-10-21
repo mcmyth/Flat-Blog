@@ -60,7 +60,7 @@ body,html{
   font-size: 15px;
   color: #535353;
   background-color: #ececec;
-  /*font-family: Helvetica, Noto, sans-serif;*/
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 #noty_layout__topRight {
   margin-top: 60px !important;

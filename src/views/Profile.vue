@@ -64,7 +64,7 @@
             <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span @click="setConfirmStatus('active', value.id)" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
-          <div class="post-title"><a :href="/post/ + value.id">{{ value.title }}</a></div>
+          <div class="post-title"><a :style="isMe ? '' : 'max-width: 100%;'" :href="/post/ + value.id">{{ value.title }}</a></div>
           <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />

@@ -20,7 +20,10 @@
         <div id="nickname">{{ post.user.nickname }}</div>
       </div>
       <div id="postedit-editor">
-        <span>*上传的文件大小不得超过4MB</span>
+        <div id="postedit-tips">
+          <span>*上传的文件大小不得超过4MB</span>
+          <span><a href="https://ld246.com/guide/markdown">使用说明</a></span>
+        </div>
         <div id="vditor"></div>
       </div>
       <div id="postedit-toolbar">

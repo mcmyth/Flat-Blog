@@ -5,7 +5,7 @@
         <div id="void-content" v-show="postIsNull">
           <span id="void-title">空空如也~~</span>
         </div>
-        <div v-for="(value, index) in post" :key="index" class="post-container">
+        <div v-for="(value, index) in post" :key="index" class="post-container" >
           <div class="post-image">
             <img onload="this.style.opacity = 1" @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/>
           </div>
@@ -41,15 +41,15 @@
             </div>
           </div>
         </div>
-        <PageButton v-show="!postIsNull" :maxpage="page_count"></PageButton>
+        <page-button v-show="!postIsNull && $store.state.loaded" :maxpage="page_count"></page-button>
       </div>
     </div>
-    <div id="user">
+    <div id="user" v-show="$store.state.loaded">
         <div class="user-panel" id="user-main">
           <div id="user-image">
             <img id="user-banner" onload="this.style.opacity = 1" @error="imgError('banner')"  :src="profile.banner_img"/>
           </div>
-          <div id="user-avatar"><img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="profile.avatar_img"/></div>
+          <div id="user-avatar"><router-link :to="'/profile/' + profile.username"><img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="profile.avatar_img"/></router-link></div>
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{$store.state.isLogin ? '@' + profile.username : '未登录'}}</div>
           <a :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>

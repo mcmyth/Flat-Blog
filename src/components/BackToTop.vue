@@ -1,6 +1,6 @@
 <template>
   <div @click="backtop" class="circle" :class="isActive">
-      <div class="wave">
+      <div class="wave" title="返回顶部">
         <div class="cell1" :style="'bottom:' + top * 100 + '%'"></div>
         <div class="cell2" :style="'bottom:' + top2 * 100 + '%'"></div>
       </div>

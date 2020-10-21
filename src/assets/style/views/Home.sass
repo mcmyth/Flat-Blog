@@ -51,13 +51,15 @@ $small-width: 850px
             line-height: 15px
             font-size: 1rem
             color: #8a8a8a
-            padding: 10px 0
             word-break: break-all
             border-bottom: dashed 1px #bababa
             a
+              padding: 10px 0
               color: #8a8a8a
-            &:hover a
-              color: $foreground-color
+              display: inline-block
+              width: 100%
+              &:hover
+                color: $foreground-color
         .post-list-new
           @include new_post
         @media screen and (max-width: $small-width)

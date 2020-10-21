@@ -9,6 +9,9 @@ $min-page-width: 70vw
   #post-body
     overflow: hidden
     width: $page-width
+    &.hide
+      opacity: 0
+      pointer-events: none
     @media screen and (max-width: 600px)
       width: $min-page-width
       padding: 15px
@@ -16,7 +19,7 @@ $min-page-width: 70vw
     background: white
     padding: 25px
     border-radius: 10px !important
-    transition: box-shadow 0.3s ease-in-out
+    transition: box-shadow .3s ease-in-out, opacity .3s ease-in-out
     @include base-container
     #header-img
       height: 180px
@@ -35,20 +38,12 @@ $min-page-width: 70vw
       word-break: break-all
       margin: 15px 0
       color: #24292E
-      font-family: Helvetica,sans-serif
-      p
-        margin: 0
       pre
         margin: 0
         font-size: 1rem
         font-family: Helvetica,sans-serif
       a
-        color: $foreground-color
-        text-decoration: none
-        &:hover
-          text-decoration: underline
-      /deep/ img
-        max-width: 100% !important
+        @include a
     #post-comment
       border-top: solid #bababa 1px
       padding-top: 15px

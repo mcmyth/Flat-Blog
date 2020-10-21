@@ -57,10 +57,13 @@ $min-page-width: 80vw
           text-align: center
     #postedit-editor
       margin-top: 25px
-      span:nth-child(1)
+      #postedit-tips
         font-size: .8rem
         padding-bottom: 5px
-        display: inline-block
+        display: flex
+        justify-content: space-between
+        a
+          @include a
     #postedit-toolbar
       display: flex
       align-items: center
