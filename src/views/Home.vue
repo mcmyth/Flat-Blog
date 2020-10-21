@@ -12,11 +12,11 @@
           <div class="post">
             <div class="post-content">
               <div class="post-avatar">
-                <a :href="'/profile/' + value.username">
+                <router-link :to="'/profile/' + value.username">
                   <img onload="this.style.opacity = 1" :title="value.username" @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
-                </a>
+                </router-link>
               </div>
-              <div class="post-title"><a :href="'/post/' + value.id">{{ value.title }}</a></div>
+              <div class="post-title"><router-link :to="'/post/' + value.id">{{ value.title }}</router-link></div>
               <hr>
               <div class="post-context">
                 <div class="post-text">{{ value.content_html }}</div>
@@ -52,7 +52,7 @@
           <div id="user-avatar"><router-link :to="'/profile/' + profile.username"><img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="profile.avatar_img"/></router-link></div>
           <div id="user-nickname">{{profile.nickname}}</div>
           <div id="user-username">{{$store.state.isLogin ? '@' + profile.username : '未登录'}}</div>
-          <a :href="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></a>
+          <router-link :to="$store.state.isLogin ? '/profile/' + profile.username : '/login'"><button id="user-profile-btn">{{ $store.state.isLogin ? '个人中心' : '登录'}}</button></router-link>
           <div id="user-post">
             <span class="user-post-tips-top"><span v-if="!userPostIsNull">来写篇文章吧 <font-awesome-icon class="icon-arrow" :icon="['fas', 'angle-right']" /></span></span>
             <input type="checkbox" id="show-post" checked/>

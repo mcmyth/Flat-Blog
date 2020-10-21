@@ -5,9 +5,9 @@
       <div id="post-header">
         <div id="post-title">{{post.title}}</div>
         <div id="post-avatar">
-          <a :href="'/profile/' + post.user.username">
+          <router-link :to="'/profile/' + post.user.username">
             <img onload="this.style.opacity = 1"  @error="imgError('avatar')" :src="post.user.avatar_img"/>
-          </a>
+          </router-link>
         </div>
         <div id="nickname">{{post.user.nickname}}</div>
         <div id="post-toolbar">
@@ -31,10 +31,10 @@
         <div v-for="(value, index) in comment" :key="index" class="post-comment">
           <div class="post-comment-header">
             <span class="avatar">
-              <a :href="'/profile/' + value.user.username">
+              <router-link :to="'/profile/' + value.user.username">
               <img onload="this.style.opacity = 1" @error="avatarImgError(index)" :src="value.user.avatar_img" :id="'comment_avatar_' + index"/>
               <span class="comment-nickname">{{ value.user.nickname }}</span>
-                </a>
+                </router-link>
             </span>
             <span class="time">{{ value.comment_date }}</span>
           </div>

@@ -13,9 +13,9 @@
         <span id="hashtag">#</span>
         <input v-model="post.title" id="postedit-title" maxlength="255" type="text" value="Title">
         <div id="postedit-avatar">
-          <a :href="'/profile/' + post.user.username">
+          <router-link :to="'/profile/' + post.user.username">
             <img @error="imgError('avatar')" :src="post.user.avatar_img"/>
-          </a>
+          </router-link>
         </div>
         <div id="nickname">{{ post.user.nickname }}</div>
       </div>

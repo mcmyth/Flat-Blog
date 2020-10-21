@@ -64,7 +64,7 @@
             <span @click="$router.push('/postedit/' + value.id)" class="post-edit"><font-awesome-icon class="menu-icon login" :icon="['fas', 'pen']" /></span>
             <span @click="setConfirmStatus('active', value.id)" class="post-delete"><font-awesome-icon class="menu-icon login" :icon="['fas', 'trash']" /></span>
           </div>
-          <div class="post-title"><a :style="isMe ? '' : 'max-width: 100%;'" :href="/post/ + value.id">{{ value.title }}</a></div>
+          <div class="post-title"><router-link :style="isMe ? '' : 'max-width: 100%;'" :to="/post/ + value.id">{{ value.title }}</router-link></div>
           <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
@@ -78,7 +78,7 @@
           <hr>
           <div class="post-context" v-html="value.content_html"></div>
           <div class="post-footer">
-            <a :href="/post/ + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
+            <router-link :to="/post/ + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></router-link>
           </div>
         </div>
       </div>

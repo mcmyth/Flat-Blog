@@ -2,19 +2,19 @@
   <div id="page-container">
     <div id="page-btn">
       <span id="page-previous" v-if="current > 1" class="">
-        <a :href="getURL(current - 1)"><font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-left']" /></a>
+        <router-link :to="getURL(current - 1)"><font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-left']" /></router-link>
       </span>
       <span v-for="index of maxbtn" :key='getPrevious(index)' class="page-number previous before">
-        <a :href="getURL(getPrevious(index))" v-if="getPrevious(index) > 0">{{ getPrevious(index)}} </a>
+        <router-link :to="getURL(getPrevious(index))" v-if="getPrevious(index) > 0">{{ getPrevious(index)}} </router-link>
       </span>
       <span class="page-number middle">
         <a>{{getMiddle()}}</a>
       </span>
       <span v-for="index of maxbtn" :key='getNext(index)' class="page-number next after">
-        <a :href="getURL(getNext(index))" v-if="getNext(index) <= maxpage">{{ getNext(index)}}</a>
+        <router-link :to="getURL(getNext(index))" v-if="getNext(index) <= maxpage">{{ getNext(index)}}</router-link>
       </span>
       <span id="page-next" v-if="current < maxpage">
-        <a :href="getURL(current + 1)"><font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></a>
+        <router-link :to="getURL(current + 1)"><font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></router-link>
       </span>
     </div>
     <div id="page-count">共{{ maxpage }}页</div>
