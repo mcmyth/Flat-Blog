@@ -1,6 +1,8 @@
 # Flat Blog
 
-![npm version](https://img.shields.io/badge/npm-6.14.6-blue)![vue version](https://img.shields.io/badge/vue-2.6.11-brightgreen)![license](https://img.shields.io/badge/license-MIT-brightgreen)
+![npm version](https://img.shields.io/badge/npm-6.14.6-blue)
+![vue version](https://img.shields.io/badge/vue-2.6.11-brightgreen)
+![license](https://img.shields.io/badge/license-MIT-brightgreen)
 
 **\*后端请移步到[Flat-Blog-Server](https://github.com/mcmyth/Flat-Blog-Server)**
 
