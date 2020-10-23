@@ -1,8 +1,19 @@
 // const PrerenderSPAPlugin = require('prerender-spa-plugin')
 // const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 // const path = require('path')
+const env = require('./src/config/env.config')
+const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
+  publicPath: isProd ? `https://${env.cos.assetsDomain}/${env.cos.remoteBasePath}` : '/',
   chainWebpack: config => {
+    if (isProd) {
+      config.set('externals', {
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        vuex: 'Vuex'
+      })
+    } else {
+    }
     config.module
       .rule('images')
       .use('url-loader')
