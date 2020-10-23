@@ -50,7 +50,7 @@ npm run lint
 
 ##### 配置后端api的URL
 
-`src/config/`
+`src/config/blog.config.js`
 
 ```JavaScript
 export const BlogConfig = {
