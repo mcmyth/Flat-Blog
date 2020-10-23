@@ -12,7 +12,6 @@ module.exports = {
         'vue-router': 'VueRouter',
         vuex: 'Vuex'
       })
-    } else {
     }
     config.module
       .rule('images')
