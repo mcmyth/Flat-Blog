@@ -1,7 +1,7 @@
 $foreground-color: #2196f3
 $font-color: #2b2b2b
 $page-width: 80vw
-$min-page-width: 70vw
+$min-page-width: 80vw
 @import "src/assets/style/public"
 #post-container
   font-size: 15px
@@ -9,12 +9,14 @@ $min-page-width: 70vw
   #post-body
     overflow: hidden
     width: $page-width
+    max-width: 95%
     &.hide
       opacity: 0
       pointer-events: none
     @media screen and (max-width: 600px)
       width: $min-page-width
       padding: 15px
+      box-sizing: border-box
     margin: 25px auto
     background: white
     padding: 25px
@@ -56,8 +58,7 @@ $min-page-width: 70vw
         max-width: $page-width
         width: $page-width !important
         @media screen and (max-width: 600px)
-          width: $min-page-width
-          max-width: $min-page-width
+          max-width: 100%
         outline: none
         box-sizing: border-box
         margin: 0 !important
@@ -102,7 +103,7 @@ $min-page-width: 70vw
           content: ''
           width: $page-width
           @media screen and (max-width: 600px)
-            width: $min-page-width
+            max-width: 100%
           position: absolute
           top: -3px
           border-top: solid #bababa 1px

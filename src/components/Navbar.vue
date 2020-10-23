@@ -13,10 +13,10 @@
     <ul :class="menu_open" id="menu-items">
       <div id="mobile_logo_container">
         <router-link class="profile" :to="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
-        <img onload="this.style.opacity = 1" @error="imgError('avatar')"  :src="profile.avatar_img" :class="'logo ' + menu_open" alt="avatar">
+        <img @click="closeMenu" onload="this.style.opacity = 1" @error="imgError('avatar')"  :src="profile.avatar_img" :class="'logo ' + menu_open" alt="avatar">
         </router-link>
         <router-link class="profile" :to="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
-        <span id="username">{{  $store.state.isLogin ? $store.state.profile.nickname : $store.state.blogName }}</span>
+        <span @click="closeMenu" id="username">{{  $store.state.isLogin ? $store.state.profile.nickname : $store.state.blogName }}</span>
         </router-link>
       </div>
       <div id="search" :class="search_open" @mousedown="isSearchOpen()" >
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <router-link to="/" tag="a"><li><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
+      <router-link to="/" tag="a"><li @click="closeMenu"><font-awesome-icon class="menu-icon" :icon="['fas', 'home']" />主页</li></router-link>
       <a href="javascript:void(0)" @click="Login">
         <li>
           <font-awesome-icon class="menu-icon" :icon=" ['fas', 'user']" />
@@ -37,7 +37,7 @@
       </a>
       <a><li @click="isSearchOpen()"><font-awesome-icon class="menu-icon" :icon=" ['fas', 'search']" />搜索</li></a>
     </ul>
-      <black-mask  @click.native="isMenuOpen" class="menubar-mask" :active="menu_open"></black-mask>
+      <black-mask  @click.native="closeMenu" class="menubar-mask" :active="menu_open"></black-mask>
   </nav>
 </div>
 </template>
@@ -70,7 +70,11 @@ export default {
     isMenuOpen() {
       this.menu_open === 'open' ? this.menu_open = 'close' : this.menu_open = 'open'
     },
+    closeMenu () {
+      this.menu_open = 'close'
+    },
     isSearchOpen() {
+      this.closeMenu()
       this.search_open === '' ? this.search_open = 'search-active' : this.search_open = ''
     },
     handleResize (event) {

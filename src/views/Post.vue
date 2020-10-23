@@ -10,7 +10,7 @@
           </router-link>
         </div>
         <div id="nickname">{{post.user.nickname}}</div>
-        <div id="post-toolbar">
+        <div id="post-toolbar" :style="post.user.id === $store.state.profile.id ? '' : 'height: 30px;'">
           <div id="post-date">
             <span>由 <span>{{ post.user.nickname }}</span> 更新于 <span>{{ post.update_date }}</span></span>
           </div>
