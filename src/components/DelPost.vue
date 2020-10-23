@@ -31,8 +31,7 @@ export default {
       this.$emit('status', 'disable')
     },
     async delPost() {
-      await this.$get(`http://127.0.0.1:3003/post/del?id=${this.id}`)
-      console.log(/\/post\//.test(this.$route.path))
+      await this.$get(`post/del?id=${this.id}`)
       if (/\/post\//.test(this.$route.path)) {
         await this.$router.push('/profile/' + this.$store.state.profile.username)
         return
