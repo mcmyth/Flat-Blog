@@ -208,6 +208,13 @@ $min-page-width: 80vw
           flex: 1
           font-size: .9rem
           color: #5b5b5b
+          a .comment-nickname
+            color: #5b5b5b
+            transition: color .3s ease-in-out
+            &:hover
+              color: $foreground-color
+            &:visited
+              color: unset
           img
             width: 40px
             height: 40px
@@ -219,8 +226,6 @@ $min-page-width: 80vw
             object-position: left center
             opacity: 0
             transition: opacity .1s ease-in-out
-          a:visited
-            color: unset
         @media screen and (max-width: 400px)
           .avatar img
             width: 20px
