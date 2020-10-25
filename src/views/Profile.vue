@@ -294,6 +294,14 @@ export default {
       }
     }
   },
+  watch: {
+    $route: {
+      handler() {
+        this.loadProfile()
+      },
+      deep: true
+    }
+  },
   components: {
     PageButton,
     BlackMask,
