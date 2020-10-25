@@ -101,8 +101,8 @@ export default {
   },
   methods: {
     imgError(type) {
-      if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
-      if (type === 'banner') this.profile.banner_img = '/assets/default-banner.jpg'
+      if (type === 'avatar') this.profile.avatar_img = BlogConfig.defaultAvatar
+      if (type === 'banner') this.profile.banner_img = BlogConfig.defaultBanner
     },
     postImgError(type, index) {
       if (type === 'avatar') document.querySelector(`#${type}_${index}`).src = BlogConfig.defaultAvatar

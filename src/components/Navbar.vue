@@ -44,6 +44,7 @@
 
 <script>
 import BlackMask from '@/components/BlackMask'
+import { BlogConfig } from '@/config/blog.config'
 export default {
   name: 'Navbar',
   data: function() {
@@ -90,7 +91,7 @@ export default {
       }
     },
     imgError(type) {
-      if (type === 'avatar') this.profile.avatar_img = '/assets/default-avatar.svg'
+      if (type === 'avatar') this.profile.avatar_img = BlogConfig.defaultAvatar
     },
     search() {
       // const obj = this.$route.query
