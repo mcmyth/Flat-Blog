@@ -130,6 +130,7 @@ export default {
     }
   },
   mounted() {
+    document.title = `${this.BlogConfig.blogName}`
     this.profile = this.$store.state.profile
   },
   created() {
