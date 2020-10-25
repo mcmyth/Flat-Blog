@@ -19,7 +19,7 @@
               <div class="post-title"><router-link :to="'/post/' + value.id">{{ value.title }}</router-link></div>
               <hr>
               <div class="post-context">
-                <div class="post-text">{{ value.content_html }}</div>
+                <div class="post-text" v-html="value.content_html"></div>
               </div>
               <div class="post-footer">
                 <div class="post-detail">

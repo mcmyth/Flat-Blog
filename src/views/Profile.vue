@@ -268,7 +268,14 @@ export default {
         } else {
           // is Not Me
           await this.setupPost()
-          this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
+          const res = await this.$get(`user/profile?id=${this.$route.params.id}`)
+          if (res.status === 'error') {
+            this.$noty.error(res.msg, {
+              killer: true
+            })
+            return
+          }
+          this.profile = res
           if (this.profile.id === this.$store.state.profile.id) {
             this.isMe = true
             this.profile.email = this.$store.state.profile.email
