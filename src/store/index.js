@@ -55,7 +55,13 @@ export default new Vuex.Store({
       const profile = await Vue.prototype.$get(context.state.apiURL + 'user/profile', {
         headers: { Authorization: context.state.token }
       })
-      this.commit('updateProfile', profile)
+      if (profile.status === 'ok') {
+        this.commit('updateProfile', profile)
+      } else {
+        localStorage.removeItem('accessToken')
+        this.commit('updateLoginState')
+        this.commit('defaultProfile')
+      }
     }
   },
   modules: {
