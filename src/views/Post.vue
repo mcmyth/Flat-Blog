@@ -172,7 +172,15 @@ export default {
     this.setupPost()
     this.setupComment()
   },
-  mounted() {
+  watch: {
+    $route: {
+      handler() {
+        this.setupComment().then(() => {
+          document.documentElement.scrollTop = document.querySelector('#post-comment-context').offsetTop + 200
+        })
+      },
+      deep: true
+    }
   },
   components: {
     ConfirmDialog,
