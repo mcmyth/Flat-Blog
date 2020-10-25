@@ -13,6 +13,9 @@ import xss from 'xss'
 // import ElementUi from 'element-ui'
 import { get, post } from './network/network'
 import cookie from 'vue-cookie'
+// import 'viewerjs/dist/viewer.min.css'
+import Viewer from 'v-viewer'
+Vue.use(Viewer)
 Vue.prototype.xss = xss
 Vue.prototype.$cookie = cookie
 Vue.prototype.$get = get

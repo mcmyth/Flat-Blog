@@ -7,7 +7,7 @@
         </div>
         <div v-for="(value, index) in post" :key="index" class="post-container" >
           <div class="post-image">
-            <img onload="this.style.opacity = 1" @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/>
+            <img v-viewer onload="this.style.opacity = 1" @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/>
           </div>
           <div class="post">
             <div class="post-content">
@@ -47,7 +47,7 @@
     <div id="user" v-show="$store.state.loaded">
         <div class="user-panel" id="user-main">
           <div id="user-image">
-            <img id="user-banner" onload="this.style.opacity = 1" @error="imgError('banner')"  :src="profile.banner_img"/>
+            <img v-viewer id="user-banner" onload="this.style.opacity = 1" @error="imgError('banner')"  :src="profile.banner_img"/>
           </div>
           <div id="user-avatar"><router-link :to="'/profile/' + profile.username"><img onload="this.style.opacity = 1" @error="imgError('avatar')" :src="profile.avatar_img"/></router-link></div>
           <div id="user-nickname">{{profile.nickname}}</div>

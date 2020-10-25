@@ -1,7 +1,7 @@
 <template>
   <div id="post-container">
     <div id="post-body" :class="$store.state.loaded ? '' : 'hide'">
-      <div id="header-img" ><img onload="this.style.opacity = 1"  @error="imgError('banner')" :src="post.header_img"/></div>
+      <div id="header-img" v-viewer><img onload="this.style.opacity = 1"  @error="imgError('banner')" :src="post.header_img"/></div>
       <div id="post-header">
         <div id="post-title">{{post.title}}</div>
         <div id="post-avatar">
@@ -20,10 +20,10 @@
           </div>
         </div>
       </div>
-        <div id="post-context"></div>
+        <div id="post-context" v-viewer></div>
       <div id="post-comment">
         <span id="submit-comment-title">发表评论</span>
-        <textarea @keypress.ctrl.enter="postComment" v-model="commentValue" name="" id="" cols="30" rows="10"></textarea>
+        <textarea @keypress.ctrl.enter="postComment" v-model="commentValue" name="" id="" cols="30" rows="10" maxlength="255"></textarea>
         <button @click="postComment" id="submit-comment">提交留言</button>
       </div>
       <div id="post-comment-context">
@@ -176,7 +176,7 @@ export default {
     $route: {
       handler() {
         this.setupComment().then(() => {
-          document.documentElement.scrollTop = document.querySelector('#post-comment-context').offsetTop + 200
+          document.documentElement.scrollTop = document.querySelector('#post-comment-context').offsetTop - 150
         })
       },
       deep: true
