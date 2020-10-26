@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     async setupProfile() {
+      await this.$store.dispatch('updateProfile')
       this.profile = this.$store.state.profile
       this.email = this.profile.email
       this.bannerImg = this.profile.banner_img
@@ -115,7 +116,11 @@ export default {
     }
   },
   created() {
-    this.setupProfile()
+    if (this.$store.state.isLogin) {
+      this.setupProfile()
+    } else {
+      this.$router.push('/')
+    }
   }
 }
 </script>
