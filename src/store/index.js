@@ -34,7 +34,7 @@ export default new Vuex.Store({
     defaultProfile(state) {
       state.profile.username = '未登录'
       state.profile.avatar_img = BlogConfig.defaultAvatar
-      state.profile.banner_img = BlogConfig.defaultAvatar
+      state.profile.banner_img = BlogConfig.defaultBanner
     },
     setLoadingStatus (state, isLoading) {
       state.isLoading = isLoading
