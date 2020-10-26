@@ -7,7 +7,7 @@
           <span>选择图片进行上传...<br/>(不上传以用户主页头图作为封面)</span>
         </div>
         <input @change="updateBanner" v-show="false" ref="bannerIMG" class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg"/>
-        <img :src="bannerIMG" height="1080" width="1920"/>
+        <img :src="bannerIMG" onload="this.style.opacity = 1"/>
       </div>
       <div id="postedit-header">
         <span id="hashtag">#</span>

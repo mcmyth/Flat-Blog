@@ -12,7 +12,7 @@
     </div>
     <ul :class="menu_open" id="menu-items">
       <div id="mobile_logo_container">
-        <router-link class="profile" :to="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
+        <router-link @click="this.closeMenu()" class="profile" :to="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
         <img @click="closeMenu" onload="this.style.opacity = 1" @error="imgError('avatar')"  :src="profile.avatar_img" :class="'logo ' + menu_open" alt="avatar">
         </router-link>
         <router-link class="profile" :to="$store.state.isLogin ? '/profile/' + profile.username : '/login'">
