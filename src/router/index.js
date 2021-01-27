@@ -85,7 +85,7 @@ router.beforeEach((to, from, next) => {
   }
   document.documentElement.scrollTop = 0
   const token = localStorage.getItem('accessToken')
-  if (token !== null) {
+  if (token !== null && token !== 'undefined') {
     store.commit('setToken', token)
     store.commit('getProfile')
   } else {

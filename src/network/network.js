@@ -28,15 +28,25 @@ instance.interceptors.request.use(config => {
   store.commit('setLoadStatus', false)
   store.commit('setLoadingStatus', true)
   const token = localStorage.getItem('accessToken')
-  const timestamp = Number(Date.parse(new Date()).toString().substr(0, 10))
   if (token) {
-    store.commit('setToken', token)
-    config.headers.common.Authorization = store.state.token
+    if (token === 'undefined' || token === null) {
+      // token无效或过期后移除登录状态
+      localStorage.removeItem('accessToken')
+      store.commit('setToken', '')
+      store.commit('updateLoginState')
+      store.commit('defaultProfile')
+    } else {
+      store.commit('setToken', token)
+      config.headers.common.Authorization = store.state.token
+    }
     const jwt = decodeJwt(token)
+    const timestamp = Number(Date.parse(new Date()).toString().substr(0, 10))
     if (timestamp > jwt.exp - 3600) {
       // Will expire soon
       getNewToken().then((res) => {
-        localStorage.setItem('accessToken', res.token)
+        if (res.token !== undefined) {
+          localStorage.setItem('accessToken', res.token)
+        }
       })
     }
   }

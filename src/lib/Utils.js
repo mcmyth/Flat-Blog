@@ -7,6 +7,10 @@ export const emailIsValid = v => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v)
 export const decodeJwt = (token) => {
   const raw = String(token).split(' ').pop()
   const base64Url = raw.split('.')[1]
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  return JSON.parse(window.atob(base64))
+  if (base64Url !== undefined) {
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    return JSON.parse(window.atob(base64))
+  } else {
+    return ''
+  }
 }
