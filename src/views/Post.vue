@@ -23,9 +23,12 @@
         </div>
         <div id="post-context" v-viewer></div>
         <div id="post-comment">
-          <span id="submit-comment-title">发表评论</span>
-          <textarea @keypress.ctrl.enter="postComment" v-model="commentValue" name="" id="" cols="30" rows="10" maxlength="255"></textarea>
-          <button @click="postComment" id="submit-comment">提交留言</button>
+          <span id="submit-comment-title" v-if="$store.state.isLogin">发表评论</span>
+          <textarea v-if="$store.state.isLogin" @keypress.ctrl.enter="postComment" v-model="commentValue" name="" id="" cols="30" rows="10" maxlength="255"></textarea>
+          <button v-if="$store.state.isLogin" @click="postComment" id="submit-comment">提交留言</button>
+          <div id="submit-comment-not-login" v-else>
+            <span>您还未登录,请先<router-link to="/login">登录</router-link>再发表评论</span>
+          </div>
         </div>
         <div id="post-comment-context">
           <span v-show="!postIsNull" id="post-comment-title">Comments</span>

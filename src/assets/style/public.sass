@@ -1,5 +1,6 @@
 $font-color: #444
 $foreground-color: #2196f3
+$base-container-color: #F9F9F9
 @mixin button
   background-color: $foreground-color
   color: #fff
@@ -53,7 +54,7 @@ $foreground-color: #2196f3
 
 @mixin base-container
   color: #808080
-  background-color: #F9F9F9
+  background-color: $base-container-color
   border-radius: 5px
   @include shadow-ani
 

@@ -4,6 +4,7 @@ $page-width: 80vw
 $min-page-width: 95vw
 @import "src/assets/style/public"
 #post-container
+  min-height: calc(100vh - 160px)
   font-size: 15px
   color: $font-color
   #post-body
@@ -56,6 +57,33 @@ $min-page-width: 95vw
       border-top: solid #bababa 1px
       padding-top: 15px
       margin-top: 10px
+      #submit-comment-not-login
+        max-width: $page-width
+        width: $page-width
+        text-align: center
+        position: relative
+        height: 50px
+        display: flex
+        align-items: center
+        justify-content: center
+        margin: 30px auto
+        a
+          @include a
+        &:before
+          $width: 100%
+          content: ''
+          position: absolute
+          height: 1px
+          width: $width
+          max-width: 500px
+          top: 50%
+          left: 50%
+          transform: translateX(-50%)
+          background-color: #bababa
+        span
+          background-color: $base-container-color
+          position: relative
+          padding: 0 20px
       #submit-comment-title
         color: #7e7e7e
         margin-bottom: 10px
