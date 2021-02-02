@@ -70,6 +70,14 @@ const routes = [
     path: '/setup',
     name: 'Setup',
     component: () => import('../views/Setup')
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: () => import('../views/Error404'),
+    meta: {
+      title: '404 NOT FOUND'
+    }
   }
 ]
 
