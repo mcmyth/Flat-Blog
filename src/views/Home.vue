@@ -1,50 +1,51 @@
 <template>
-  <div id="home-container">
-    <div id="content">
-      <div id="posts">
-        <div id="void-content" v-show="postIsNull">
-          <span id="void-title">空空如也~~</span>
-        </div>
-        <div v-for="(value, index) in post" :key="index" class="post-container" >
-          <div class="post-image">
-            <img v-viewer onload="this.style.opacity = 1" @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/>
+  <base-layout>
+    <div id="home-container">
+      <div id="content">
+        <div id="posts">
+          <div id="void-content" v-show="postIsNull">
+            <span id="void-title">空空如也~~</span>
           </div>
-          <div class="post">
-            <div class="post-content">
-              <div class="post-avatar">
-                <router-link :to="'/profile/' + value.username">
-                  <img onload="this.style.opacity = 1" :title="value.username" @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
-                </router-link>
-              </div>
-              <div class="post-title"><router-link :to="'/post/' + value.id">{{ value.title }}</router-link></div>
-              <hr>
-              <div class="post-context">
-                <div class="post-text" v-html="value.content_html"></div>
-              </div>
-              <div class="post-footer">
-                <div class="post-detail">
+          <div v-for="(value, index) in post" :key="index" class="post-container" >
+            <div class="post-image">
+              <img v-viewer onload="this.style.opacity = 1" @error="postImgError('banner',index)" :id="'banner_' + index" alt="banner" :src="value.banner_img"/>
+            </div>
+            <div class="post">
+              <div class="post-content">
+                <div class="post-avatar">
+                  <router-link :to="'/profile/' + value.username">
+                    <img onload="this.style.opacity = 1" :title="value.username" @error="postImgError('avatar',index)" :id="'avatar_' + index" alt="avatar" :src="value.avatar_img"/>
+                  </router-link>
+                </div>
+                <div class="post-title"><router-link :to="'/post/' + value.id">{{ value.title }}</router-link></div>
+                <hr>
+                <div class="post-context">
+                  <div class="post-text" v-html="value.content_html"></div>
+                </div>
+                <div class="post-footer">
+                  <div class="post-detail">
             <span class="post-time">
               <font-awesome-icon class="menu-icon login" :icon="['fas', 'clock']" />
               {{ value.update_date }}
             </span>
-                  <span class="post-author">
+                    <span class="post-author">
                     <router-link tag="a" :to="'/profile/' + value.username">
                       <font-awesome-icon class="menu-icon login" :icon="['fas', 'user-circle']" />
                       {{ value.nickname }}
                     </router-link>
             </span>
-                </div>
-                <div class="footer-more">
-                  <router-link tag="a"  :to="'/post/' + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></router-link>
+                  </div>
+                  <div class="footer-more">
+                    <router-link tag="a"  :to="'/post/' + value.id" class="post-more">阅读全文 <font-awesome-icon class="menu-icon login" :icon="['fas', 'angle-right']" /></router-link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <page-button v-show="!postIsNull && $store.state.loaded" :maxpage="page_count"></page-button>
         </div>
-        <page-button v-show="!postIsNull && $store.state.loaded" :maxpage="page_count"></page-button>
       </div>
-    </div>
-    <div id="user" v-show="$store.state.loaded">
+      <div id="user" v-show="$store.state.loaded">
         <div class="user-panel" id="user-main">
           <div id="user-image">
             <img v-viewer id="user-banner" onload="this.style.opacity = 1" @error="imgError('banner')"  :src="profile.banner_img"/>
@@ -72,11 +73,14 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
-  </div>
+  </base-layout>
+
 </template>
 
 <script>
+import BaseLayout from '@/components/BaseLayout'
 import PageButton from '@/components/PageButton'
 import { BlogConfig } from '@/config/blog.config'
 export default {
@@ -92,7 +96,8 @@ export default {
     }
   },
   components: {
-    PageButton
+    PageButton,
+    BaseLayout
   },
   computed: {
     userPostIsNull() {

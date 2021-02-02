@@ -1,43 +1,45 @@
 <template>
-  <div id="postedit-container">
-    <div id="postedit-body">
-      <div id="header-img">
-        <div @click="$refs.bannerIMG.click()" :class="bannerIMG !== '' ? 'active' : ''" id="header-img-upload">
-          <font-awesome-icon :icon="['fas', 'arrow-circle-up']" />
-          <span>选择图片进行上传...<br/>(不上传以用户主页头图作为封面)</span>
+  <base-layout>
+    <div id="postedit-container">
+      <div id="postedit-body">
+        <div id="header-img">
+          <div @click="$refs.bannerIMG.click()" :class="bannerIMG !== '' ? 'active' : ''" id="header-img-upload">
+            <font-awesome-icon :icon="['fas', 'arrow-circle-up']" />
+            <span>选择图片进行上传...<br/>(不上传以用户主页头图作为封面)</span>
+          </div>
+          <input @change="updateBanner" v-show="false" ref="bannerIMG" class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg"/>
+          <img :src="bannerIMG" onload="this.style.opacity = 1"/>
         </div>
-        <input @change="updateBanner" v-show="false" ref="bannerIMG" class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg"/>
-        <img :src="bannerIMG" onload="this.style.opacity = 1"/>
-      </div>
-      <div id="postedit-header">
-        <span id="hashtag">#</span>
-        <input v-model="post.title" id="postedit-title" maxlength="255" type="text" value="Title">
-        <div id="postedit-avatar">
-          <router-link :to="'/profile/' + post.user.username">
-            <img @error="imgError('avatar')" :src="post.user.avatar_img"/>
-          </router-link>
+        <div id="postedit-header">
+          <span id="hashtag">#</span>
+          <input v-model="post.title" id="postedit-title" maxlength="255" type="text" value="Title">
+          <div id="postedit-avatar">
+            <router-link :to="'/profile/' + post.user.username">
+              <img @error="imgError('avatar')" :src="post.user.avatar_img"/>
+            </router-link>
+          </div>
+          <div id="nickname">{{ post.user.nickname }}</div>
         </div>
-        <div id="nickname">{{ post.user.nickname }}</div>
-      </div>
-      <div id="postedit-editor">
-        <div id="postedit-tips">
-          <span>*上传的文件大小不得超过4MB</span>
-          <span><a href="https://ld246.com/guide/markdown">使用说明</a></span>
+        <div id="postedit-editor">
+          <div id="postedit-tips">
+            <span>*上传的文件大小不得超过4MB</span>
+            <span><a href="https://ld246.com/guide/markdown">使用说明</a></span>
+          </div>
+          <div id="vditor"></div>
         </div>
-        <div id="vditor"></div>
-      </div>
-      <div id="postedit-toolbar">
+        <div id="postedit-toolbar">
         <span>
           <captcha-key ref="captchaKey"></captcha-key>
           <input @keypress.enter="submit" v-model="captchaKey" type="text">
         </span>
-        <span>
+          <span>
           <router-link v-if="$route.params.id.toLowerCase() !== 'new'" :to="'/post/' + $route.params.id" tag="button" id="view-btn">查看文章</router-link>
           <button @click="submit" id="submit-btn">{{ $route.params.id.toLowerCase() === 'new' ? '发布' : '更新'}}</button>
         </span>
+        </div>
       </div>
     </div>
-  </div>
+  </base-layout>
 </template>
 
 <script>
@@ -46,6 +48,7 @@ import 'vditor/src/assets/scss/index.scss'
 import { mobileToobBar, uploadConfig } from '@/config/vditor.config'
 import captchaKey from '@/components/captchaKey'
 import { BlogConfig } from '@/config/blog.config'
+import BaseLayout from '@/components/BaseLayout'
 export default {
   name: 'PostEdit',
   data() {
@@ -177,7 +180,8 @@ export default {
     }
   },
   components: {
-    captchaKey
+    captchaKey,
+    BaseLayout
   }
 }
 </script>
