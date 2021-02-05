@@ -131,8 +131,10 @@ export default {
         this.post = res.post
         this.page_count = res.page_count
       }
-      res = await this.$get(`post/user?page=1&id=${this.profile.id}`)
-      this.userPost = res.post.slice(0, 5)
+      if (typeof this.profile.id !== 'undefined') {
+        res = await this.$get(`post/user?page=1&id=${this.profile.id}`)
+        this.userPost = res.post.slice(0, 5)
+      }
     }
   },
   mounted() {

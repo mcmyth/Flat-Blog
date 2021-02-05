@@ -33,8 +33,8 @@
           <input @keypress.enter="submit" v-model="captchaKey" type="text">
         </span>
           <span>
-          <router-link v-if="$route.params.id.toLowerCase() !== 'new'" :to="'/post/' + $route.params.id" tag="button" id="view-btn">查看文章</router-link>
-          <button @click="submit" id="submit-btn">{{ $route.params.id.toLowerCase() === 'new' ? '发布' : '更新'}}</button>
+          <router-link v-if="id.toLowerCase() !== 'new'" :to="'/post/' + $route.params.id" tag="button" id="view-btn">查看文章</router-link>
+          <button @click="submit" id="submit-btn">{{ id.toLowerCase() === 'new' ? '发布' : '更新'}}</button>
         </span>
         </div>
       </div>
@@ -58,6 +58,7 @@ export default {
       screenWidth: document.body.clientWidth,
       captchaKey: '',
       bannerIMG: '',
+      id: 'new',
       post: {
         banner: '',
         title: '',
@@ -72,7 +73,10 @@ export default {
   },
   created() {
     if (!this.$store.state.isLogin) this.$router.push('/login')
-    if (this.$route.params.id.toLowerCase() === 'new') {
+    if (typeof this.$route.params.id !== 'undefined') {
+      this.id = this.$route.params.id
+    }
+    if (this.id.toLowerCase() === 'new') {
       document.title = `发表文章 - ${this.BlogConfig.blogName}`
       this.post.user.avatar_img = this.$store.state.profile.avatar_img
       this.post.user.nickname = this.$store.state.profile.nickname
@@ -84,7 +88,7 @@ export default {
   },
   methods: {
     async setupContent() {
-      const res = await this.$get(`post/edit?id=${this.$route.params.id.toLowerCase()}`)
+      const res = await this.$get(`post/edit?id=${this.id.toLowerCase()}`)
       if (res.status === 'ok') {
         this.contentEditor.setValue(res.content_md)
         this.post.title = res.title
@@ -132,7 +136,7 @@ export default {
         upload: uploadConfig,
         toolbar,
         after: () => {
-          if (this.$route.params.id.toLowerCase() !== 'new') {
+          if (this.id.toLowerCase() !== 'new') {
             this.setupContent()
           }
         }
@@ -143,7 +147,7 @@ export default {
       const captchaKey = this.captchaKey
       const bannerImgInput = this.$refs.bannerIMG
       const formData = new FormData()
-      formData.append('id', this.$route.params.id)
+      formData.append('id', this.id)
       formData.append('title', this.post.title)
       formData.append('content_md', this.post.content)
       formData.append('captchaKey', captchaKey)
@@ -153,7 +157,7 @@ export default {
       })
       this.$refs.captchaKey.refreshCaptchaKey()
       if (res.status === 'ok') {
-        if (this.$route.params.id.toLowerCase() === 'new') {
+        if (this.id.toLowerCase() === 'new') {
           await this.$router.push('/postedit/' + res.post_id)
         }
         this.$noty.success(res.msg, {

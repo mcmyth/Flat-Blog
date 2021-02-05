@@ -263,6 +263,7 @@ export default {
       if (token !== null) {
         if (this.$route.params.id === this.$store.state.profile.id) {
           // is Me
+          await this.$store.dispatch('updateProfile')
           this.profile = this.$store.state.profile
           this.isMe = true
           this.profile.email = this.$store.state.profile.email
