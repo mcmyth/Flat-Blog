@@ -174,7 +174,7 @@ export default {
       this.post = null
       let res
       const query = this.$route.query
-      const s = query.s === undefined ? '' : `&s=${query.s}`
+      const s = query.search === undefined ? '' : `&s=${query.search}`
       const page = this.$route.query.p === undefined ? 'page=1' : 'page=' + this.$route.query.p
       if (this.isMe) {
         res = await this.$get(`post/user?${page}${s}`)

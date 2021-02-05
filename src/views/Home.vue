@@ -114,8 +114,9 @@ export default {
       if (type === 'banner') document.querySelector(`#${type}_${index}`).src = BlogConfig.defaultBanner
     },
     async setupPost() {
+      this.post = []
       const query = this.$route.query
-      const s = query.s === undefined ? '' : `&s=${query.s}`
+      const s = query.search === undefined ? '' : `&s=${query.search}`
       let res
       const page = query.p === undefined ? 'page=1' : 'page=' + query.p
       if (this.isMe) {

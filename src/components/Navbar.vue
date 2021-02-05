@@ -93,21 +93,21 @@ export default {
     imgError(type) {
       if (type === 'avatar') this.profile.avatar_img = BlogConfig.defaultAvatar
     },
-    search() {
-      // const obj = this.$route.query
-      // let query = ''
-      // Object.keys(obj).forEach(function(key) {
-      //   if (key !== 's' && key !== '') {
-      //     query += `${key}=${obj[key]}&`
-      //   }
-      // })
-      // query = '?s=' + this.searchValue + '&' + query.substr(0, query.length - 1)
-      // location.href = location.protocol + '//' + location.host + location.pathname + query
-      this.$store.commit('setLoadingStatus', true)
-      if (/\/profile/.test(this.$route.path) !== true || /\/profile/.test(this.$route.path) !== true) {
-        this.$router.push('/')
+    async search() {
+      try {
+        if (this.searchValue !== '') {
+          await this.$router.push({
+            query: { search: this.searchValue }
+          })
+        } else {
+          await this.$router.push({
+            query: {}
+          })
+        }
+      } catch (e) {
+        console.log(e.message)
       }
-      location.href = location.protocol + '//' + location.host + location.pathname + '?s=' + this.searchValue
+      this.isSearchOpen()
       this.searchValue = ''
     }
   },
