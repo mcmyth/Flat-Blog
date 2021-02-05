@@ -146,7 +146,7 @@ export default {
     },
     setupProfile() {
       if (this.profile.avatar === '') {
-        this.profile.avatar = 'assets/default-avatar.svg'
+        this.profile.avatar = BlogConfig.defaultBanner
       } else {
         this.avatarImg = this.profile.avatar_img
         this.bannerImg = this.profile.banner_img
@@ -274,6 +274,8 @@ export default {
           await this.setupPost()
           const res = await this.$get(`user/profile?id=${this.$route.params.id}`)
           if (res.status === 'error') {
+            this.bannerImg = BlogConfig.defaultBanner
+            this.avatarImg = BlogConfig.defaultAvatar
             this.profile = {
               nickname: '该用户不存在',
               username: '404'
