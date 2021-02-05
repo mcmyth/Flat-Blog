@@ -258,6 +258,8 @@ export default {
         await this.$router.push('/login')
         return
       }
+      this.bannerImg = BlogConfig.defaultBanner
+      this.avatarImg = BlogConfig.defaultAvatar
       if (this.$route.params.id === undefined) this.$route.params.id = this.$store.state.profile.id
       const token = localStorage.getItem('accessToken')
       if (token !== null) {
@@ -267,11 +269,8 @@ export default {
           this.profile = this.$store.state.profile
           this.isMe = true
           this.profile.email = this.$store.state.profile.email
-          this.setupProfile()
-          await this.setupPost()
         } else {
           // is Not Me
-          await this.setupPost()
           const res = await this.$get(`user/profile?id=${this.$route.params.id}`)
           if (res.status === 'error') {
             this.bannerImg = BlogConfig.defaultBanner
@@ -287,8 +286,9 @@ export default {
             this.isMe = true
             this.profile.email = this.$store.state.profile.email
           } else { this.isMe = false }
-          this.setupProfile()
         }
+        this.setupProfile()
+        await this.setupPost()
       } else {
         this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
         if (this.profile.status === 'error') {
