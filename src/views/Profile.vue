@@ -58,7 +58,7 @@
           <span>Posts</span>
           <router-link v-if="isMe" tag="span" to="/postedit/new" id="post-add"><font-awesome-icon class="menu-icon login" :icon="['fas', 'plus']" /></router-link>
         </div>
-        <div id="void-content" v-show="postIsNull">还没有任何文章哦~</div>
+        <div id="void-content" v-show="postIsNull">{{ $route.query.search ? '没有搜索到匹配的文章' : '还没有任何文章哦~' }}</div>
         <div id="posts">
           <div v-for="(value, index) in post" :key="index" class="post">
             <div v-if="isMe" class="post-option">
@@ -273,9 +273,10 @@ export default {
           await this.setupPost()
           const res = await this.$get(`user/profile?id=${this.$route.params.id}`)
           if (res.status === 'error') {
-            this.$noty.error(res.msg, {
-              killer: true
-            })
+            this.profile = {
+              nickname: '该用户不存在',
+              username: '404'
+            }
             return
           }
           this.profile = res
@@ -287,13 +288,14 @@ export default {
         }
       } else {
         this.profile = await this.$get(`user/profile?id=${this.$route.params.id}`)
+        if (this.profile.status === 'error') {
+          this.profile = {
+            nickname: '该用户不存在',
+            username: '404'
+          }
+        }
         this.setupProfile()
         await this.setupPost()
-        if (this.profile.status === 'error') {
-          this.$noty.error(this.profile.msg, {
-            killer: true
-          })
-        }
       }
     }
   },

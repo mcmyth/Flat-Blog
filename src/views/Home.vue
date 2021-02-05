@@ -3,7 +3,7 @@
     <div id="home-container">
       <div id="content">
         <div id="posts">
-          <div id="void-content" v-show="postIsNull">
+          <div id="void-content" v-show="this.post.length <= 0">
             <span id="void-title">空空如也~~</span>
           </div>
           <div v-for="(value, index) in post" :key="index" class="post-container" >
