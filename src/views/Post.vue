@@ -2,7 +2,9 @@
   <base-layout>
     <div id="post-container">
       <div id="post-body" :class="$store.state.loaded ? '' : 'hide'">
-        <div id="header-img" v-viewer><img onload="this.style.opacity = 1"  @error="imgError('banner')" :src="post.header_img"/></div>
+        <div id="header-img" v-viewer>
+          <img onload="this.style.opacity = 1"  @error="imgError('banner')" :src="post.header_img"/>
+        </div>
         <div id="post-header">
           <div id="post-title">{{post.title}}</div>
           <div id="post-avatar">
@@ -109,7 +111,7 @@ export default {
     },
     async setupPost() {
       const res = await this.$get(`post/get?id=${this.$route.params.id}`)
-      if (res.header_img === '') res.header_img = res.user.banner_img
+      if (res.header_img === null || res.header_img === '') res.header_img = res.user.banner_img
       if (res.status === 'error') {
         await this.$router.push('/')
         this.$noty.error(res.msg, {

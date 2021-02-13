@@ -72,21 +72,24 @@ export default {
     }
   },
   created() {
-    if (!this.$store.state.isLogin) this.$router.push('/login')
-    if (typeof this.$route.params.id !== 'undefined') {
-      this.id = this.$route.params.id
-    }
-    if (this.id.toLowerCase() === 'new') {
-      document.title = `发表文章 - ${this.BlogConfig.blogName}`
-      this.post.user.avatar_img = this.$store.state.profile.avatar_img
-      this.post.user.nickname = this.$store.state.profile.nickname
-      this.post.user.username = this.$store.state.profile.username
-    }
+    this.init()
   },
   mounted() {
     this.setupEditor()
   },
   methods: {
+    init() {
+      if (!this.$store.state.isLogin) this.$router.push('/login')
+      if (typeof this.$route.params.id !== 'undefined') {
+        this.id = this.$route.params.id
+      }
+      if (this.id.toLowerCase() === 'new') {
+        document.title = `发表文章 - ${this.BlogConfig.blogName}`
+        this.post.user.avatar_img = this.$store.state.profile.avatar_img
+        this.post.user.nickname = this.$store.state.profile.nickname
+        this.post.user.username = this.$store.state.profile.username
+      }
+    },
     async setupContent() {
       const res = await this.$get(`post/edit?id=${this.id.toLowerCase()}`)
       if (res.status === 'ok') {
@@ -95,7 +98,7 @@ export default {
         this.post.user.avatar_img = res.user.avatar_img
         this.post.user.nickname = res.user.nickname
         this.post.user.username = res.user.username
-        if (res.header_img !== undefined && res.header_img !== '') {
+        if (res.header_img !== undefined && res.header_img !== '' && res.header_img !== null) {
           this.bannerIMG = res.header_img
         }
         document.title = `${res.title} - ${this.BlogConfig.blogName}`
@@ -160,6 +163,8 @@ export default {
         if (this.id.toLowerCase() === 'new') {
           await this.$router.push('/postedit/' + res.post_id)
         }
+        this.init()
+        document.title = `${this.post.title} - ${this.BlogConfig.blogName}`
         this.$noty.success(res.msg, {
           killer: true
         })
